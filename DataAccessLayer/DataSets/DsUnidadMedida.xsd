@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsUnidadMedida" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsUnidadMedida" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DsUnidadMedida" msprop:Generator_UserDSName="DsUnidadMedida">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="unidad_medida" msprop:Generator_TableClassName="unidad_medidaDataTable" msprop:Generator_TableVarName="tableunidad_medida" msprop:Generator_TablePropName="unidad_medida" msprop:Generator_RowDeletingName="unidad_medidaRowDeleting" msprop:Generator_UserTableName="unidad_medida" msprop:Generator_RowChangingName="unidad_medidaRowChanging" msprop:Generator_RowEvHandlerName="unidad_medidaRowChangeEventHandler" msprop:Generator_RowDeletedName="unidad_medidaRowDeleted" msprop:Generator_RowEvArgName="unidad_medidaRowChangeEvent" msprop:Generator_RowChangedName="unidad_medidaRowChanged" msprop:Generator_RowClassName="unidad_medidaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idunidad_medida" msprop:Generator_ColumnVarNameInTable="columnidunidad_medida" msprop:Generator_ColumnPropNameInRow="idunidad_medida" msprop:Generator_ColumnPropNameInTable="idunidad_medidaColumn" msprop:Generator_UserColumnName="idunidad_medida" type="xs:int" minOccurs="0" />
+              <xs:element name="descripcionunidad_medida" msprop:Generator_ColumnVarNameInTable="columndescripcionunidad_medida" msprop:Generator_ColumnPropNameInRow="descripcionunidad_medida" msprop:Generator_ColumnPropNameInTable="descripcionunidad_medidaColumn" msprop:Generator_UserColumnName="descripcionunidad_medida" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="valor_unidad_medida" msprop:Generator_TableClassName="valor_unidad_medidaDataTable" msprop:Generator_TableVarName="tablevalor_unidad_medida" msprop:Generator_TablePropName="valor_unidad_medida" msprop:Generator_RowDeletingName="valor_unidad_medidaRowDeleting" msprop:Generator_UserTableName="valor_unidad_medida" msprop:Generator_RowChangingName="valor_unidad_medidaRowChanging" msprop:Generator_RowEvHandlerName="valor_unidad_medidaRowChangeEventHandler" msprop:Generator_RowDeletedName="valor_unidad_medidaRowDeleted" msprop:Generator_RowEvArgName="valor_unidad_medidaRowChangeEvent" msprop:Generator_RowChangedName="valor_unidad_medidaRowChanged" msprop:Generator_RowClassName="valor_unidad_medidaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="idvalor_unidad_medida" msprop:Generator_ColumnVarNameInTable="columnidvalor_unidad_medida" msprop:Generator_ColumnPropNameInRow="idvalor_unidad_medida" msprop:Generator_ColumnPropNameInTable="idvalor_unidad_medidaColumn" msprop:Generator_UserColumnName="idvalor_unidad_medida" type="xs:int" minOccurs="0" />
+              <xs:element name="idunidad_medida" msprop:Generator_ColumnVarNameInTable="columnidunidad_medida" msprop:Generator_ColumnPropNameInRow="idunidad_medida" msprop:Generator_ColumnPropNameInTable="idunidad_medidaColumn" msprop:Generator_UserColumnName="idunidad_medida" type="xs:int" minOccurs="0" />
+              <xs:element name="descripcionvalor_unidad_medida" msprop:Generator_ColumnVarNameInTable="columndescripcionvalor_unidad_medida" msprop:Generator_ColumnPropNameInRow="descripcionvalor_unidad_medida" msprop:Generator_ColumnPropNameInTable="descripcionvalor_unidad_medidaColumn" msprop:Generator_UserColumnName="descripcionvalor_unidad_medida" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//unidad_medida" />
+      <xs:field xpath="idunidad_medida" />
+    </xs:unique>
+    <xs:keyref name="fk_unidad_medida" refer="Constraint1" msprop:rel_Generator_UserChildTable="valor_unidad_medida" msprop:rel_Generator_ChildPropName="Getvalor_unidad_medidaRows" msprop:rel_Generator_UserParentTable="unidad_medida" msprop:rel_Generator_UserRelationName="fk_unidad_medida" msprop:rel_Generator_RelationVarName="relationfk_unidad_medida" msprop:rel_Generator_ParentPropName="unidad_medidaRow">
+      <xs:selector xpath=".//valor_unidad_medida" />
+      <xs:field xpath="idunidad_medida" />
+    </xs:keyref>
+  </xs:element>
+</xs:schema>

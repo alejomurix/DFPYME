@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{32C4E445-4A1B-462D-85A6-8F371C6F84E6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataAccessLayer</RootNamespace>
+    <AssemblyName>DataAccessLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Devart.Data, Version=5.0.2806.0, Culture=neutral, PublicKeyToken=09af7300eec23701" />
+    <Reference Include="Devart.Data.PostgreSql, Version=7.22.2014.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=2.0.11.91, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Clases\Conexion.cs" />
+    <Compile Include="Clases\DaoAcumulado.cs" />
+    <Compile Include="Clases\DaoAnticipo.cs" />
+    <Compile Include="Clases\DaoApertura.cs" />
+    <Compile Include="Clases\DaoAplicaDescuento.cs" />
+    <Compile Include="Clases\DaoBanco.cs" />
+    <Compile Include="Clases\DaoBaseDatos.cs" />
+    <Compile Include="Clases\DaoBeneficio.cs" />
+    <Compile Include="Clases\DaoBodega.cs" />
+    <Compile Include="Clases\DaoBono.cs" />
+    <Compile Include="Clases\DaoBonoRifa.cs" />
+    <Compile Include="Clases\DaoCaja.cs" />
+    <Compile Include="Clases\DaoCaracteresEscape.cs" />
+    <Compile Include="Clases\DaoCierre.cs" />
+    <Compile Include="Clases\DaoCiudad.cs" />
+    <Compile Include="Clases\DaoColor.cs" />
+    <Compile Include="Clases\DaoCompraSimple.cs" />
+    <Compile Include="Clases\DaoComprobanteCruce.cs" />
+    <Compile Include="Clases\DaoConfiguracion.cs" />
+    <Compile Include="Clases\DaoConsecutivo.cs" />
+    <Compile Include="Clases\DaoConsecutivoInforme.cs" />
+    <Compile Include="Clases\DaoConsultaFacturaProducto.cs" />
+    <Compile Include="Clases\DaoConsultaSQL.cs" />
+    <Compile Include="Clases\DaoConsultaVentas.cs" />
+    <Compile Include="Clases\DaoContactoProveedor.cs" />
+    <Compile Include="Clases\DaoConversionProducto.cs" />
+    <Compile Include="Clases\DaoCuenta.cs" />
+    <Compile Include="Clases\DaoCuentaPagar.cs" />
+    <Compile Include="Clases\DaoCuentaPuc.cs" />
+    <Compile Include="Clases\DaoDepartamento.cs" />
+    <Compile Include="Clases\DaoDescuento.cs" />
+    <Compile Include="Clases\DaoDevolucion.cs" />
+    <Compile Include="Clases\DaoDian.cs" />
+    <Compile Include="Clases\DaoEgreso.cs" />
+    <Compile Include="Clases\DaoEmpresa.cs" />
+    <Compile Include="Clases\DaoEstado.cs" />
+    <Compile Include="Clases\DaoFacturaProveedor.cs" />
+    <Compile Include="Clases\DaoFacturaVenta.cs" />
+    <Compile Include="Clases\DaoFormaPago.cs" />
+    <Compile Include="Clases\DaoGrupoDescuento.cs" />
+    <Compile Include="Clases\DaoImpuestoBolsa.cs" />
+    <Compile Include="Clases\DaoIngreso.cs" />
+    <Compile Include="Clases\DaoInventario.cs" />
+    <Compile Include="Clases\DaoIva.cs" />
+    <Compile Include="Clases\DaoKardex.cs" />
+    <Compile Include="Clases\DaoLote.cs" />
+    <Compile Include="Clases\DaoMarca.cs" />
+    <Compile Include="Clases\DaoOtroIngreso.cs" />
+    <Compile Include="Clases\DaoPermiso.cs" />
+    <Compile Include="Clases\DaoPlantilla.cs" />
+    <Compile Include="Clases\DaoProductoFacturaProveedor.cs" />
+    <Compile Include="Clases\DaoProductoFacturaVenta.cs" />
+    <Compile Include="Clases\DaoPromocion.cs" />
+    <Compile Include="Clases\DaoProveedor.cs" />
+    <Compile Include="Clases\DaoPuc.cs" />
+    <Compile Include="Clases\DaoPunto.cs" />
+    <Compile Include="Clases\DaoRecargo.cs" />
+    <Compile Include="Clases\DaoRegimen.cs" />
+    <Compile Include="Clases\DaoCategoria.cs" />
+    <Compile Include="Clases\DaoRemision.cs" />
+    <Compile Include="Clases\DaoRetencion.cs" />
+    <Compile Include="Clases\DaoRetiro.cs" />
+    <Compile Include="Clases\DaoSaldo.cs" />
+    <Compile Include="Clases\DaoSistema.cs" />
+    <Compile Include="Clases\DaoSorteo.cs" />
+    <Compile Include="Clases\DaoTipoCuenta.cs" />
+    <Compile Include="Clases\DaoCliente.cs" />
+    <Compile Include="Clases\DaoProducto.cs" />
+    <Compile Include="Clases\DaoTipoDocumento.cs" />
+    <Compile Include="Clases\DaoTipoSorteo.cs" />
+    <Compile Include="Clases\DaoTipoUsuario.cs" />
+    <Compile Include="Clases\DaoTrasladoInventario.cs" />
+    <Compile Include="Clases\DaoTurno.cs" />
+    <Compile Include="Clases\DaoUsuario.cs" />
+    <Compile Include="Clases\DaoUtilidades.cs" />
+    <Compile Include="Clases\DaoValorUnidadMedida.cs" />
+    <Compile Include="Clases\DaoZona.cs" />
+    <Compile Include="Clases\DaoUnidadMedida.cs" />
+    <Compile Include="DataSets\DataBaseDS.cs">
+      <DependentUpon>DataBaseDS.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DataSets\DataBaseDS.Designer.cs">
+      <DependentUpon>DataBaseDS.xsd</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="DataSets\DsInventarios.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsInventarios.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSets\DsProveedor.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsProveedor.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSets\DsUnidadMedida.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsUnidadMedida.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Generator\DocumentElectronicLoad.cs" />
+    <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\ModelDS.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\RepositoryModel.cs" />
+    <Compile Include="Repository\RepositoryData.cs" />
+    <Compile Include="Standard\DTOXML.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{208DEB37-9A0E-47A9-893F-8CC70DE2B800}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{7DE51FF0-D3AA-47E9-9142-BA6704AF59B2}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WSFTechSoapDemo\WSFTechSoapDemo.csproj">
+      <Project>{C4A605EC-9B79-410A-BBD6-59ABF2D8D47A}</Project>
+      <Name>WSFTechSoapDemo</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Lib\Mono.Security.dll" />
+    <Content Include="Lib\Npgsql.dll" />
+    <Content Include="Lib\Npgsql.pdb" />
+    <Content Include="Lib\Npgsql.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSets\DataBaseDS.xsc">
+      <DependentUpon>DataBaseDS.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DataBaseDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataBaseDS.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DataSets\DataBaseDS.xss">
+      <DependentUpon>DataBaseDS.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsInventarios.xsc">
+      <DependentUpon>DsInventarios.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsInventarios.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsInventarios.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSets\DsInventarios.xss">
+      <DependentUpon>DsInventarios.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsProveedor.xsc">
+      <DependentUpon>DsProveedor.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsProveedor.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsProveedor.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSets\DsProveedor.xss">
+      <DependentUpon>DsProveedor.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsUnidadMedida.xsc">
+      <DependentUpon>DsUnidadMedida.xsd</DependentUpon>
+    </None>
+    <None Include="DataSets\DsUnidadMedida.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsUnidadMedida.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSets\DsUnidadMedida.xss">
+      <DependentUpon>DsUnidadMedida.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

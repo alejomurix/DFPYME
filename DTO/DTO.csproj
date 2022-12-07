@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{208DEB37-9A0E-47A9-893F-8CC70DE2B800}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DTO</RootNamespace>
+    <AssemblyName>DTO</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Clases\Anticipo.cs" />
+    <Compile Include="Clases\Apertura.cs" />
+    <Compile Include="Clases\Banco.cs" />
+    <Compile Include="Clases\Bodega.cs" />
+    <Compile Include="Clases\Bono.cs" />
+    <Compile Include="Clases\Caja.cs" />
+    <Compile Include="Clases\Canje.cs" />
+    <Compile Include="Clases\CaracteresEscape.cs" />
+    <Compile Include="Clases\Categoria.cs" />
+    <Compile Include="Clases\Ciudad.cs" />
+    <Compile Include="Clases\Cliente.cs" />
+    <Compile Include="Clases\ComprobanteCruce.cs" />
+    <Compile Include="Clases\ConceptoEgreso.cs" />
+    <Compile Include="Clases\Configuracion.cs" />
+    <Compile Include="Clases\ConsultaFacturaProducto.cs" />
+    <Compile Include="Clases\ConsultaImpuesto.cs" />
+    <Compile Include="Clases\ContactoProveedor.cs" />
+    <Compile Include="Clases\Conversion.cs" />
+    <Compile Include="Clases\Criterio.cs" />
+    <Compile Include="Clases\Cuenta.cs" />
+    <Compile Include="Clases\CuentaPagar.cs" />
+    <Compile Include="Clases\CustumClass.cs" />
+    <Compile Include="Clases\Departamento.cs" />
+    <Compile Include="Clases\Descuento.cs" />
+    <Compile Include="Clases\DetalleConversion.cs" />
+    <Compile Include="Clases\Devolucion.cs" />
+    <Compile Include="Clases\Dian.cs" />
+    <Compile Include="Clases\Egreso.cs" />
+    <Compile Include="Clases\ElColor.cs" />
+    <Compile Include="Clases\Empresa.cs" />
+    <Compile Include="Clases\Estado.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Clases\EstadoPunto.cs" />
+    <Compile Include="Clases\FacturaProveedor.cs" />
+    <Compile Include="Clases\FacturaVenta.cs" />
+    <Compile Include="Clases\FormaPago.cs" />
+    <Compile Include="Clases\Impuesto.cs" />
+    <Compile Include="Clases\ImpuestoBolsa.cs" />
+    <Compile Include="Clases\Ingreso.cs" />
+    <Compile Include="Clases\Inventario.cs" />
+    <Compile Include="Clases\InventarioFisico.cs" />
+    <Compile Include="Clases\Item.cs" />
+    <Compile Include="Clases\Iva.cs" />
+    <Compile Include="Clases\Kardex.cs" />
+    <Compile Include="Clases\Lote.cs" />
+    <Compile Include="Clases\Marca.cs" />
+    <Compile Include="Clases\PagoAnticipo.cs" />
+    <Compile Include="Clases\Permiso.cs" />
+    <Compile Include="Clases\Plantilla.cs" />
+    <Compile Include="Clases\ProductoFacturaProveedor.cs" />
+    <Compile Include="Clases\Producto.cs" />
+    <Compile Include="Clases\Promocion.cs" />
+    <Compile Include="Clases\Proveedor.cs" />
+    <Compile Include="Clases\Puc.cs" />
+    <Compile Include="Clases\Puntos.cs" />
+    <Compile Include="Clases\Recargo.cs" />
+    <Compile Include="Clases\ResumenInventario.cs" />
+    <Compile Include="Clases\Retencion.cs" />
+    <Compile Include="Clases\Saldo.cs" />
+    <Compile Include="Clases\Sistema.cs" />
+    <Compile Include="Clases\Sorteo.cs" />
+    <Compile Include="Clases\TipoCuenta.cs" />
+    <Compile Include="Clases\Regimen.cs" />
+    <Compile Include="Clases\TipoUsuario.cs" />
+    <Compile Include="Clases\TrasladoInventario.cs" />
+    <Compile Include="Clases\UnidadMedida.cs" />
+    <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="Clases\ValorUnidadMedida.cs" />
+    <Compile Include="Clases\Zona.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

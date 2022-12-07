@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{43E4321E-8AB8-4346-82C9-04D62648C754}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FormulariosSistema</RootNamespace>
+    <AssemblyName>FormulariosSistema</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>OpenXml\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="SpreadsheetLight, Version=3.4.0.0, Culture=neutral, PublicKeyToken=32fbb46dc1730c57, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>SpreadsheetLight\SpreadsheetLight.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomPanel.cs" />
+    <Compile Include="FrmCIIUList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCIIUList.Designer.cs">
+      <DependentUpon>FrmCIIUList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCompany.Designer.cs">
+      <DependentUpon>FrmCompany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConsultaImpuestos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConsultaImpuestos.Designer.cs">
+      <DependentUpon>FrmConsultaImpuestos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCustomer.Designer.cs">
+      <DependentUpon>FrmCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCustomerList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCustomerList.Designer.cs">
+      <DependentUpon>FrmCustomerList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDEOption.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDEOption.Designer.cs">
+      <DependentUpon>FrmDEOption.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmElectronicDocument.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmElectronicDocument.Designer.cs">
+      <DependentUpon>FrmElectronicDocument.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmElectronicDocument_.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmElectronicDocument_.Designer.cs">
+      <DependentUpon>FrmElectronicDocument_.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmIncomeFE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmIncomeFE.Designer.cs">
+      <DependentUpon>FrmIncomeFE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmListDE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmListDE.Designer.cs">
+      <DependentUpon>FrmListDE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPayment.Designer.cs">
+      <DependentUpon>FrmPayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmProductList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmProductList.Designer.cs">
+      <DependentUpon>FrmProductList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmResolucionNumeracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmResolucionNumeracion.Designer.cs">
+      <DependentUpon>FrmResolucionNumeracion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InformesForms\FrmReportViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InformesForms\FrmReportViewer.Designer.cs">
+      <DependentUpon>FrmReportViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintInvoice.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FrmCIIUList.resx">
+      <DependentUpon>FrmCIIUList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCompany.resx">
+      <DependentUpon>FrmCompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmConsultaImpuestos.resx">
+      <DependentUpon>FrmConsultaImpuestos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCustomer.resx">
+      <DependentUpon>FrmCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCustomerList.resx">
+      <DependentUpon>FrmCustomerList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDEOption.resx">
+      <DependentUpon>FrmDEOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmElectronicDocument.resx">
+      <DependentUpon>FrmElectronicDocument.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmElectronicDocument_.resx">
+      <DependentUpon>FrmElectronicDocument_.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmIncomeFE.resx">
+      <DependentUpon>FrmIncomeFE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmListDE.resx">
+      <DependentUpon>FrmListDE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPayment.resx">
+      <DependentUpon>FrmPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmProductList.resx">
+      <DependentUpon>FrmProductList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmResolucionNumeracion.resx">
+      <DependentUpon>FrmResolucionNumeracion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InformesForms\FrmReportViewer.resx">
+      <DependentUpon>FrmReportViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BussinesLayer\BussinesLayer.csproj">
+      <Project>{2B98CA73-F710-4C5C-AE64-C369CD9981C6}</Project>
+      <Name>BussinesLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomControl\CustomControl.csproj">
+      <Project>{C09C485C-6780-4FCE-911E-D011226ABCF5}</Project>
+      <Name>CustomControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{32C4E445-4A1B-462D-85A6-8F371C6F84E6}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{208DEB37-9A0E-47A9-893F-8CC70DE2B800}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{7DE51FF0-D3AA-47E9-9142-BA6704AF59B2}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WSFTechSoapDemo\WSFTechSoapDemo.csproj">
+      <Project>{C4A605EC-9B79-410A-BBD6-59ABF2D8D47A}</Project>
+      <Name>WSFTechSoapDemo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WSFTechSoapPro\WSFTechSoapPro.csproj">
+      <Project>{7BA6165E-43AA-4B81-B98A-11A43D113B50}</Project>
+      <Name>WSFTechSoapPro</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OpenXml\DocumentFormat.OpenXml.dll" />
+    <Content Include="OpenXml\DocumentFormat.OpenXml.xml" />
+    <Content Include="SpreadsheetLight\SpreadsheetLight.dll" />
+    <Content Include="SpreadsheetLight\SpreadsheetLight.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsDian" targetNamespace="http://tempuri.org/DsDian.xsd" xmlns:mstns="http://tempuri.org/DsDian.xsd" xmlns="http://tempuri.org/DsDian.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsDian" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsDian" msprop:Generator_UserDSName="DsDian">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TDian" msprop:Generator_TableClassName="TDianDataTable" msprop:Generator_TableVarName="tableTDian" msprop:Generator_TablePropName="TDian" msprop:Generator_RowDeletingName="TDianRowDeleting" msprop:Generator_RowChangingName="TDianRowChanging" msprop:Generator_RowEvHandlerName="TDianRowChangeEventHandler" msprop:Generator_RowDeletedName="TDianRowDeleted" msprop:Generator_UserTableName="TDian" msprop:Generator_RowChangedName="TDianRowChanged" msprop:Generator_RowEvArgName="TDianRowChangeEvent" msprop:Generator_RowClassName="TDianRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="print_dian" msprop:Generator_ColumnVarNameInTable="columnprint_dian" msprop:Generator_ColumnPropNameInRow="print_dian" msprop:Generator_ColumnPropNameInTable="print_dianColumn" msprop:Generator_UserColumnName="print_dian" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

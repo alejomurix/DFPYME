@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsFacturaCredito" targetNamespace="http://tempuri.org/DsFacturaCredito.xsd" xmlns:mstns="http://tempuri.org/DsFacturaCredito.xsd" xmlns="http://tempuri.org/DsFacturaCredito.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsFacturaCredito" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsFacturaCredito" msprop:Generator_UserDSName="DsFacturaCredito">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="FacturaCredito" msprop:Generator_TableClassName="FacturaCreditoDataTable" msprop:Generator_TableVarName="tableFacturaCredito" msprop:Generator_RowChangedName="FacturaCreditoRowChanged" msprop:Generator_TablePropName="FacturaCredito" msprop:Generator_RowDeletingName="FacturaCreditoRowDeleting" msprop:Generator_RowChangingName="FacturaCreditoRowChanging" msprop:Generator_RowEvHandlerName="FacturaCreditoRowChangeEventHandler" msprop:Generator_RowDeletedName="FacturaCreditoRowDeleted" msprop:Generator_RowClassName="FacturaCreditoRow" msprop:Generator_UserTableName="FacturaCredito" msprop:Generator_RowEvArgName="FacturaCreditoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NoFacturaC" msprop:Generator_ColumnVarNameInTable="columnNoFacturaC" msprop:Generator_ColumnPropNameInRow="NoFacturaC" msprop:Generator_ColumnPropNameInTable="NoFacturaCColumn" msprop:Generator_UserColumnName="NoFacturaC" type="xs:string" minOccurs="0" />
+              <xs:element name="NitC" msprop:Generator_ColumnVarNameInTable="columnNitC" msprop:Generator_ColumnPropNameInRow="NitC" msprop:Generator_ColumnPropNameInTable="NitCColumn" msprop:Generator_UserColumnName="NitC" type="xs:string" minOccurs="0" />
+              <xs:element name="ClienteC" msprop:Generator_ColumnVarNameInTable="columnClienteC" msprop:Generator_ColumnPropNameInRow="ClienteC" msprop:Generator_ColumnPropNameInTable="ClienteCColumn" msprop:Generator_UserColumnName="ClienteC" type="xs:string" minOccurs="0" />
+              <xs:element name="TotalC" msprop:Generator_ColumnVarNameInTable="columnTotalC" msprop:Generator_ColumnPropNameInRow="TotalC" msprop:Generator_ColumnPropNameInTable="TotalCColumn" msprop:Generator_UserColumnName="TotalC" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

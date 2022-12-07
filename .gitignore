@@ -1,0 +1,7 @@
+*.config
+*.dll
+bin
+Lib
+obj
+Recursos
+Service References

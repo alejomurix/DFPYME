@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsBono" targetNamespace="http://tempuri.org/DsBono.xsd" xmlns:mstns="http://tempuri.org/DsBono.xsd" xmlns="http://tempuri.org/DsBono.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsBono" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsBono" msprop:Generator_UserDSName="DsBono">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Bono" msprop:Generator_TableClassName="BonoDataTable" msprop:Generator_TableVarName="tableBono" msprop:Generator_RowChangedName="BonoRowChanged" msprop:Generator_TablePropName="Bono" msprop:Generator_RowDeletingName="BonoRowDeleting" msprop:Generator_RowChangingName="BonoRowChanging" msprop:Generator_RowEvHandlerName="BonoRowChangeEventHandler" msprop:Generator_RowDeletedName="BonoRowDeleted" msprop:Generator_RowClassName="BonoRow" msprop:Generator_UserTableName="Bono" msprop:Generator_RowEvArgName="BonoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="numerofactura" msprop:Generator_ColumnVarNameInTable="columnnumerofactura" msprop:Generator_ColumnPropNameInRow="numerofactura" msprop:Generator_ColumnPropNameInTable="numerofacturaColumn" msprop:Generator_UserColumnName="numerofactura" type="xs:string" minOccurs="0" />
+              <xs:element name="nitcliente" msprop:Generator_ColumnVarNameInTable="columnnitcliente" msprop:Generator_ColumnPropNameInRow="nitcliente" msprop:Generator_ColumnPropNameInTable="nitclienteColumn" msprop:Generator_UserColumnName="nitcliente" type="xs:string" minOccurs="0" />
+              <xs:element name="nombrescliente" msprop:Generator_ColumnVarNameInTable="columnnombrescliente" msprop:Generator_ColumnPropNameInRow="nombrescliente" msprop:Generator_ColumnPropNameInTable="nombresclienteColumn" msprop:Generator_UserColumnName="nombrescliente" type="xs:string" minOccurs="0" />
+              <xs:element name="valorbono" msprop:Generator_ColumnVarNameInTable="columnvalorbono" msprop:Generator_ColumnPropNameInRow="valorbono" msprop:Generator_ColumnPropNameInTable="valorbonoColumn" msprop:Generator_UserColumnName="valorbono" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsIvaDevolucion" targetNamespace="http://tempuri.org/DsIvaDevolucion.xsd" xmlns:mstns="http://tempuri.org/DsIvaDevolucion.xsd" xmlns="http://tempuri.org/DsIvaDevolucion.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsIvaDevolucion" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsIvaDevolucion" msprop:Generator_UserDSName="DsIvaDevolucion">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="IvaDevolucion" msprop:Generator_TableClassName="IvaDevolucionDataTable" msprop:Generator_TableVarName="tableIvaDevolucion" msprop:Generator_TablePropName="IvaDevolucion" msprop:Generator_RowDeletingName="IvaDevolucionRowDeleting" msprop:Generator_UserTableName="IvaDevolucion" msprop:Generator_RowChangingName="IvaDevolucionRowChanging" msprop:Generator_RowEvHandlerName="IvaDevolucionRowChangeEventHandler" msprop:Generator_RowDeletedName="IvaDevolucionRowDeleted" msprop:Generator_RowEvArgName="IvaDevolucionRowChangeEvent" msprop:Generator_RowChangedName="IvaDevolucionRowChanged" msprop:Generator_RowClassName="IvaDevolucionRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="IvaD" msprop:Generator_ColumnVarNameInTable="columnIvaD" msprop:Generator_ColumnPropNameInRow="IvaD" msprop:Generator_ColumnPropNameInTable="IvaDColumn" msprop:Generator_UserColumnName="IvaD" type="xs:string" minOccurs="0" />
+              <xs:element name="BaseD" msprop:Generator_ColumnVarNameInTable="columnBaseD" msprop:Generator_ColumnPropNameInRow="BaseD" msprop:Generator_ColumnPropNameInTable="BaseDColumn" msprop:Generator_UserColumnName="BaseD" type="xs:double" minOccurs="0" />
+              <xs:element name="VIvaD" msprop:Generator_ColumnVarNameInTable="columnVIvaD" msprop:Generator_ColumnPropNameInRow="VIvaD" msprop:Generator_ColumnPropNameInTable="VIvaDColumn" msprop:Generator_UserColumnName="VIvaD" type="xs:double" minOccurs="0" />
+              <xs:element name="SubTotalD" msprop:Generator_ColumnVarNameInTable="columnSubTotalD" msprop:Generator_ColumnPropNameInRow="SubTotalD" msprop:Generator_ColumnPropNameInTable="SubTotalDColumn" msprop:Generator_UserColumnName="SubTotalD" type="xs:int" minOccurs="0" />
+              <xs:element name="NoFrv" msprop:Generator_ColumnVarNameInTable="columnNoFrv" msprop:Generator_ColumnPropNameInRow="NoFrv" msprop:Generator_ColumnPropNameInTable="NoFrvColumn" msprop:Generator_UserColumnName="NoFrv" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

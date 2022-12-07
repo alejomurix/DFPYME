@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsIvaGravado" targetNamespace="http://tempuri.org/DsIvaGravado.xsd" xmlns:mstns="http://tempuri.org/DsIvaGravado.xsd" xmlns="http://tempuri.org/DsIvaGravado.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsIvaGravado" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsIvaGravado" msprop:Generator_UserDSName="DsIvaGravado">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="IvaGravado" msprop:Generator_TableClassName="IvaGravadoDataTable" msprop:Generator_TableVarName="tableIvaGravado" msprop:Generator_RowChangedName="IvaGravadoRowChanged" msprop:Generator_TablePropName="IvaGravado" msprop:Generator_RowDeletingName="IvaGravadoRowDeleting" msprop:Generator_RowChangingName="IvaGravadoRowChanging" msprop:Generator_RowEvHandlerName="IvaGravadoRowChangeEventHandler" msprop:Generator_RowDeletedName="IvaGravadoRowDeleted" msprop:Generator_RowClassName="IvaGravadoRow" msprop:Generator_UserTableName="IvaGravado" msprop:Generator_RowEvArgName="IvaGravadoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Iva" msprop:Generator_ColumnVarNameInTable="columnIva" msprop:Generator_ColumnPropNameInRow="Iva" msprop:Generator_ColumnPropNameInTable="IvaColumn" msprop:Generator_UserColumnName="Iva" type="xs:string" minOccurs="0" />
+              <xs:element name="Base" msprop:Generator_ColumnVarNameInTable="columnBase" msprop:Generator_ColumnPropNameInRow="Base" msprop:Generator_ColumnPropNameInTable="BaseColumn" msprop:Generator_UserColumnName="Base" type="xs:int" minOccurs="0" />
+              <xs:element name="VIva" msprop:Generator_ColumnVarNameInTable="columnVIva" msprop:Generator_ColumnPropNameInRow="VIva" msprop:Generator_ColumnPropNameInTable="VIvaColumn" msprop:Generator_UserColumnName="VIva" type="xs:int" minOccurs="0" />
+              <xs:element name="SubTotal" msprop:Generator_ColumnVarNameInTable="columnSubTotal" msprop:Generator_ColumnPropNameInRow="SubTotal" msprop:Generator_ColumnPropNameInTable="SubTotalColumn" msprop:Generator_UserColumnName="SubTotal" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2B98CA73-F710-4C5C-AE64-C369CD9981C6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BussinesLayer</RootNamespace>
+    <AssemblyName>BussinesLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bussines\BussinesModel.cs" />
+    <Compile Include="Bussines\BussinesData.cs" />
+    <Compile Include="Clases\BussinesAcumulado.cs" />
+    <Compile Include="Clases\BussinesAnticipo.cs" />
+    <Compile Include="Clases\BussinesApertura.cs" />
+    <Compile Include="Clases\BussinesAplicaDescuento.cs" />
+    <Compile Include="Clases\BussinesBaseDatos.cs" />
+    <Compile Include="Clases\BussinesBeneficio.cs" />
+    <Compile Include="Clases\BussinesBodega.cs" />
+    <Compile Include="Clases\BussinesBono.cs" />
+    <Compile Include="Clases\BussinesBonoRifa.cs" />
+    <Compile Include="Clases\BussinesCaja.cs" />
+    <Compile Include="Clases\BussinesCaracteresEscape.cs" />
+    <Compile Include="Clases\BussinesCategoria.cs" />
+    <Compile Include="Clases\BussinesCierre.cs" />
+    <Compile Include="Clases\BussinesCiudad.cs" />
+    <Compile Include="Clases\BussinesCliente.cs" />
+    <Compile Include="Clases\BussinesColor.cs" />
+    <Compile Include="Clases\BussinesCompraSimple.cs" />
+    <Compile Include="Clases\BussinesComprobanteCruce.cs" />
+    <Compile Include="Clases\BussinesConfiguracion.cs" />
+    <Compile Include="Clases\BussinesConsecutivo.cs" />
+    <Compile Include="Clases\BussinesConsecutivoInforme.cs" />
+    <Compile Include="Clases\BussinesConsultaFacturaProducto.cs" />
+    <Compile Include="Clases\BussinesConsultaSQL.cs" />
+    <Compile Include="Clases\BussinesConsultaVentas.cs" />
+    <Compile Include="Clases\BussinesContactoProveedor.cs" />
+    <Compile Include="Clases\BussinesConversionProducto.cs" />
+    <Compile Include="Clases\BussinesCuenta.cs" />
+    <Compile Include="Clases\BussinesCuentaPagar.cs" />
+    <Compile Include="Clases\BussinesCuentaPuc.cs" />
+    <Compile Include="Clases\BussinesDepartamento.cs" />
+    <Compile Include="Clases\BussinesDescuento.cs" />
+    <Compile Include="Clases\BussinesDevolucion.cs" />
+    <Compile Include="Clases\BussinesDian.cs" />
+    <Compile Include="Clases\BussinesEgreso.cs" />
+    <Compile Include="Clases\BussinesEmpresa.cs" />
+    <Compile Include="Clases\BussinesEstado.cs" />
+    <Compile Include="Clases\BussinesFacturaProveedor.cs" />
+    <Compile Include="Clases\BussinesFacturaVenta.cs" />
+    <Compile Include="Clases\BussinesFormaPago.cs" />
+    <Compile Include="Clases\BussinesGrupoDescuento.cs" />
+    <Compile Include="Clases\BussinesImpuestoBolsa.cs" />
+    <Compile Include="Clases\BussinesIngreso.cs" />
+    <Compile Include="Clases\BussinesInventario.cs" />
+    <Compile Include="Clases\BussinesIva.cs" />
+    <Compile Include="Clases\BussinesKardex.cs" />
+    <Compile Include="Clases\BussinesLote.cs" />
+    <Compile Include="Clases\BussinesMarca.cs" />
+    <Compile Include="Clases\BussinesOtroIngreso.cs" />
+    <Compile Include="Clases\BussinesPermiso.cs" />
+    <Compile Include="Clases\BussinesPlantilla.cs" />
+    <Compile Include="Clases\BussinesPromocion.cs" />
+    <Compile Include="Clases\BussinesProveedor.cs" />
+    <Compile Include="Clases\BussinesPuc.cs" />
+    <Compile Include="Clases\BussinesPunto.cs" />
+    <Compile Include="Clases\BussinesRecargo.cs" />
+    <Compile Include="Clases\BussinesRegimen.cs" />
+    <Compile Include="Clases\BussinesRemision.cs" />
+    <Compile Include="Clases\BussinesRetencion.cs" />
+    <Compile Include="Clases\BussinesRetiro.cs" />
+    <Compile Include="Clases\BussinesSaldo.cs" />
+    <Compile Include="Clases\BussinesSistema.cs" />
+    <Compile Include="Clases\BussinesSorteo.cs" />
+    <Compile Include="Clases\BussinesTipoCuenta.cs" />
+    <Compile Include="Clases\BussinesTipoDocumento.cs" />
+    <Compile Include="Clases\BussinesTipoSorteo.cs" />
+    <Compile Include="Clases\BussinesTipoUsuario.cs" />
+    <Compile Include="Clases\BussinesTrasladoInventario.cs" />
+    <Compile Include="Clases\BussinesTurno.cs" />
+    <Compile Include="Clases\BussinesUsuario.cs" />
+    <Compile Include="Clases\BussinesUtilidades.cs" />
+    <Compile Include="Clases\BussinesValorUnidadMedida.cs" />
+    <Compile Include="Clases\BussinesZona.cs" />
+    <Compile Include="Clases\BussinesUnidadMedida.cs" />
+    <Compile Include="Clases\BussinesProducto.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{32C4E445-4A1B-462D-85A6-8F371C6F84E6}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{208DEB37-9A0E-47A9-893F-8CC70DE2B800}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
+      <Project>{7DE51FF0-D3AA-47E9-9142-BA6704AF59B2}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

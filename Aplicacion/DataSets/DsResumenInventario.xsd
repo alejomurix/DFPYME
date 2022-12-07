@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsResumenInventario" targetNamespace="http://tempuri.org/DsResumenInventario.xsd" xmlns:mstns="http://tempuri.org/DsResumenInventario.xsd" xmlns="http://tempuri.org/DsResumenInventario.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsResumenInventario" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsResumenInventario" msprop:Generator_UserDSName="DsResumenInventario">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Inventario" msprop:Generator_TableClassName="InventarioDataTable" msprop:Generator_TableVarName="tableInventario" msprop:Generator_TablePropName="Inventario" msprop:Generator_RowDeletingName="InventarioRowDeleting" msprop:Generator_RowChangingName="InventarioRowChanging" msprop:Generator_RowEvHandlerName="InventarioRowChangeEventHandler" msprop:Generator_RowDeletedName="InventarioRowDeleted" msprop:Generator_UserTableName="Inventario" msprop:Generator_RowChangedName="InventarioRowChanged" msprop:Generator_RowEvArgName="InventarioRowChangeEvent" msprop:Generator_RowClassName="InventarioRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="codigointernoproducto" msprop:Generator_ColumnVarNameInTable="columncodigointernoproducto" msprop:Generator_ColumnPropNameInRow="codigointernoproducto" msprop:Generator_ColumnPropNameInTable="codigointernoproductoColumn" msprop:Generator_UserColumnName="codigointernoproducto" type="xs:string" minOccurs="0" />
+              <xs:element name="nombreproducto" msprop:Generator_ColumnVarNameInTable="columnnombreproducto" msprop:Generator_ColumnPropNameInRow="nombreproducto" msprop:Generator_ColumnPropNameInTable="nombreproductoColumn" msprop:Generator_UserColumnName="nombreproducto" type="xs:string" minOccurs="0" />
+              <xs:element name="descripcionvalor_unidad_medida" msprop:Generator_ColumnVarNameInTable="columndescripcionvalor_unidad_medida" msprop:Generator_ColumnPropNameInRow="descripcionvalor_unidad_medida" msprop:Generator_ColumnPropNameInTable="descripcionvalor_unidad_medidaColumn" msprop:Generator_UserColumnName="descripcionvalor_unidad_medida" type="xs:string" minOccurs="0" />
+              <xs:element name="cantidad_inventario" msprop:Generator_ColumnVarNameInTable="columncantidad_inventario" msprop:Generator_ColumnPropNameInRow="cantidad_inventario" msprop:Generator_ColumnPropNameInTable="cantidad_inventarioColumn" msprop:Generator_UserColumnName="cantidad_inventario" type="xs:string" minOccurs="0" />
+              <xs:element name="cantidad_inventario_fisico" msprop:Generator_ColumnVarNameInTable="columncantidad_inventario_fisico" msprop:Generator_ColumnPropNameInRow="cantidad_inventario_fisico" msprop:Generator_ColumnPropNameInTable="cantidad_inventario_fisicoColumn" msprop:Generator_UserColumnName="cantidad_inventario_fisico" type="xs:string" minOccurs="0" />
+              <xs:element name="cantidad_resumen" msprop:Generator_ColumnVarNameInTable="columncantidad_resumen" msprop:Generator_ColumnPropNameInRow="cantidad_resumen" msprop:Generator_ColumnPropNameInTable="cantidad_resumenColumn" msprop:Generator_UserColumnName="cantidad_resumen" type="xs:string" minOccurs="0" />
+              <xs:element name="valorproducto" msprop:Generator_ColumnVarNameInTable="columnvalorproducto" msprop:Generator_ColumnPropNameInRow="valorproducto" msprop:Generator_ColumnPropNameInTable="valorproductoColumn" msprop:Generator_UserColumnName="valorproducto" type="xs:string" minOccurs="0" />
+              <xs:element name="subtotal" msprop:Generator_ColumnVarNameInTable="columnsubtotal" msprop:Generator_ColumnPropNameInRow="subtotal" msprop:Generator_ColumnPropNameInTable="subtotalColumn" msprop:Generator_UserColumnName="subtotal" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
