@@ -77,7 +77,6 @@ namespace Aplicacion.Inventario.Consulta
             InitializeComponent();
            // CostoInventario = Convert.ToBoolean(AppConfiguracion.ValorSeccion("costo_inventario"));
 
-
             tsEditarPrecio.Visible = false;
             chkVerId.Visible = false;
             Id.Visible = true;
