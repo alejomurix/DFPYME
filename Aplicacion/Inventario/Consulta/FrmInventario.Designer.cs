@@ -40,14 +40,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.txtCodigoNombre = new System.Windows.Forms.TextBox();
             this.gbResultado = new System.Windows.Forms.GroupBox();
             this.chkVerId = new System.Windows.Forms.CheckBox();
+            this.dgvInventario = new Aplicacion.Inventario.Consulta.DataGridView_Plus();
             this.tsMenu = new System.Windows.Forms.ToolStrip();
             this.tsEditarPrecio = new System.Windows.Forms.ToolStripButton();
             this.tsBtnListarTodos = new System.Windows.Forms.ToolStripButton();
             this.tsBtnSalir = new System.Windows.Forms.ToolStripButton();
-            this.dgvInventario = new Aplicacion.Inventario.Consulta.DataGridView_Plus();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Producto = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,13 +60,14 @@
             this.Precio_ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Precio2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Precio3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Inventario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CostoMasIva = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Iva = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Utilidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbResultado.SuspendLayout();
-            this.tsMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
+            this.tsMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtCodigoNombre
@@ -100,6 +102,39 @@
             this.chkVerId.Text = "Ver ID articulo";
             this.chkVerId.UseVisualStyleBackColor = true;
             this.chkVerId.CheckedChanged += new System.EventHandler(this.chkVerId_CheckedChanged);
+            // 
+            // dgvInventario
+            // 
+            this.dgvInventario.AllowUserToAddRows = false;
+            this.dgvInventario.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvInventario.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.Codigo,
+            this.Producto,
+            this.Referencia,
+            this.Equivalente,
+            this.Marca,
+            this.Valor,
+            this.PrecioVenta,
+            this.Precio_,
+            this.Descto,
+            this.Precio2,
+            this.Precio3,
+            this.Inventario,
+            this.CostoMasIva,
+            this.Iva,
+            this.Utilidad});
+            this.dgvInventario.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvInventario.Location = new System.Drawing.Point(5, 40);
+            this.dgvInventario.Name = "dgvInventario";
+            this.dgvInventario.RowHeadersVisible = false;
+            this.dgvInventario.Size = new System.Drawing.Size(1160, 264);
+            this.dgvInventario.TabIndex = 0;
+            this.dgvInventario.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInventario_CellClick);
+            this.dgvInventario.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInventario_CellDoubleClick);
+            this.dgvInventario.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvInventario_CellValidating);
+            this.dgvInventario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgvInventario_KeyPress);
             // 
             // tsMenu
             // 
@@ -145,42 +180,10 @@
             this.tsBtnSalir.Text = "Salir [ESC]";
             this.tsBtnSalir.Click += new System.EventHandler(this.tsBtnSalir_Click);
             // 
-            // dgvInventario
-            // 
-            this.dgvInventario.AllowUserToAddRows = false;
-            this.dgvInventario.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dgvInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvInventario.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Id,
-            this.Codigo,
-            this.Producto,
-            this.Referencia,
-            this.Equivalente,
-            this.Marca,
-            this.Valor,
-            this.PrecioVenta,
-            this.Precio_,
-            this.Descto,
-            this.Precio2,
-            this.Inventario,
-            this.CostoMasIva,
-            this.Iva,
-            this.Utilidad});
-            this.dgvInventario.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvInventario.Location = new System.Drawing.Point(5, 40);
-            this.dgvInventario.Name = "dgvInventario";
-            this.dgvInventario.RowHeadersVisible = false;
-            this.dgvInventario.Size = new System.Drawing.Size(1160, 264);
-            this.dgvInventario.TabIndex = 0;
-            this.dgvInventario.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInventario_CellClick);
-            this.dgvInventario.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvInventario_CellDoubleClick);
-            this.dgvInventario.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvInventario_CellValidating);
-            this.dgvInventario.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgvInventario_KeyPress);
-            // 
             // Id
             // 
             this.Id.DataPropertyName = "CodigoInternoProducto";
-            this.Id.HeaderText = "Id";
+            this.Id.HeaderText = "Código";
             this.Id.Name = "Id";
             this.Id.ReadOnly = true;
             this.Id.Visible = false;
@@ -189,7 +192,7 @@
             // Codigo
             // 
             this.Codigo.DataPropertyName = "CodigoBarrasProducto";
-            this.Codigo.HeaderText = "Codigo";
+            this.Codigo.HeaderText = "Barras";
             this.Codigo.Name = "Codigo";
             this.Codigo.ReadOnly = true;
             this.Codigo.Width = 120;
@@ -281,11 +284,21 @@
             this.Precio2.HeaderText = "Precio 2";
             this.Precio2.Name = "Precio2";
             // 
+            // Precio3
+            // 
+            this.Precio3.DataPropertyName = "Price3";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.Precio3.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Precio3.HeaderText = "Precio 3";
+            this.Precio3.Name = "Precio3";
+            // 
             // Inventario
             // 
             this.Inventario.DataPropertyName = "Cantidad";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Inventario.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Inventario.DefaultCellStyle = dataGridViewCellStyle6;
             this.Inventario.HeaderText = "Inventario";
             this.Inventario.Name = "Inventario";
             this.Inventario.ReadOnly = true;
@@ -294,10 +307,10 @@
             // CostoMasIva
             // 
             this.CostoMasIva.DataPropertyName = "ValorCosto";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N0";
-            dataGridViewCellStyle6.NullValue = null;
-            this.CostoMasIva.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "N0";
+            dataGridViewCellStyle7.NullValue = null;
+            this.CostoMasIva.DefaultCellStyle = dataGridViewCellStyle7;
             this.CostoMasIva.HeaderText = "Costo IVA";
             this.CostoMasIva.Name = "CostoMasIva";
             this.CostoMasIva.Visible = false;
@@ -306,10 +319,10 @@
             // Iva
             // 
             this.Iva.DataPropertyName = "ValorIva";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "N0";
-            dataGridViewCellStyle7.NullValue = null;
-            this.Iva.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N0";
+            dataGridViewCellStyle8.NullValue = null;
+            this.Iva.DefaultCellStyle = dataGridViewCellStyle8;
             this.Iva.HeaderText = "IVA";
             this.Iva.Name = "Iva";
             this.Iva.Width = 50;
@@ -317,10 +330,10 @@
             // Utilidad
             // 
             this.Utilidad.DataPropertyName = "UtilidadPorcentualProducto";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "N0";
-            dataGridViewCellStyle8.NullValue = null;
-            this.Utilidad.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "N0";
+            dataGridViewCellStyle9.NullValue = null;
+            this.Utilidad.DefaultCellStyle = dataGridViewCellStyle9;
             this.Utilidad.HeaderText = "Util";
             this.Utilidad.Name = "Utilidad";
             this.Utilidad.Visible = false;
@@ -346,9 +359,9 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmConsultaInventario_KeyDown);
             this.gbResultado.ResumeLayout(false);
             this.gbResultado.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
             this.tsMenu.ResumeLayout(false);
             this.tsMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -376,6 +389,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Precio_;
         private System.Windows.Forms.DataGridViewTextBoxColumn Descto;
         private System.Windows.Forms.DataGridViewTextBoxColumn Precio2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Precio3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Inventario;
         private System.Windows.Forms.DataGridViewTextBoxColumn CostoMasIva;
         private System.Windows.Forms.DataGridViewTextBoxColumn Iva;

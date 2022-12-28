@@ -76,15 +76,22 @@ namespace Aplicacion.Inventario.Consulta
         {
             InitializeComponent();
            // CostoInventario = Convert.ToBoolean(AppConfiguracion.ValorSeccion("costo_inventario"));
-            tsEditarPrecio.Visible = true;
-            if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("costo_inventario")))
-            {
-                
 
+
+            tsEditarPrecio.Visible = false;
+            chkVerId.Visible = false;
+            Id.Visible = true;
+            Codigo.Visible = false;
+            Equivalente.Visible = false;
+            Marca.Visible = false;
+            
+            if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("costo_inventario"))) // siempre false
+            {
                 Precio2.Visible = false;
                 Inventario.Visible = false;
-                Valor.Visible = true;
+                //Valor.Visible = true;  // costo
             }
+            Valor.Visible = true;  // costo
 
             miBindingSource = new BindingSource();
             validacion = new Validacion();
