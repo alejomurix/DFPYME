@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://webservice.facturatech.co/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://webservice.facturatech.co/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://webservice.facturatech.co/">
+      <s:element name="uploadInvoiceFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="xmlBase64" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="uploadInvoiceFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="uploadInvoiceFileResult" type="tns:response_ws" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="response_ws">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="success" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="transaccionID" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Msgerror" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="uploadInvoiceFileLayout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="xmlBase64" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="uploadInvoiceFileLayoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="uploadInvoiceFileLayoutResult" type="tns:response_ws" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="documentStatusFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="transaccionID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="documentStatusFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="documentStatusFileResult" type="tns:response_docs" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="response_docs">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="success" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="status" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Msgerror" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="downloadXMLFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="prefijo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="folio" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="downloadXMLFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="downloadXMLFileResult" type="tns:response_xml" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="response_xml">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="success" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="resourceData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Msgerror" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="downloadPDFFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="prefijo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="folio" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="downloadPDFFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="downloadPDFFileResult" type="tns:response_pdf" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="response_pdf">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="success" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="resourceData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Msgerror" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="downloadCUFEFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="prefijo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="folio" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="downloadCUFEFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="downloadCUFEFileResult" type="tns:response_cufe" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="response_cufe">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="success" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="resourceData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Msgerror" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="downloadQRFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="prefijo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="folio" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="downloadQRFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="downloadQRFileResult" type="tns:response_qr" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="response_qr">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="success" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="resourceData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Msgerror" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="downloadQRImageFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="prefijo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="folio" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="downloadQRImageFileResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="downloadQRImageFileResult" type="tns:response_qr_image_file" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="response_qr_image_file">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="code" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="success" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="resourceData" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Msgerror" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="uploadInvoiceFileSoapIn">
+    <wsdl:part name="parameters" element="tns:uploadInvoiceFile" />
+  </wsdl:message>
+  <wsdl:message name="uploadInvoiceFileSoapOut">
+    <wsdl:part name="parameters" element="tns:uploadInvoiceFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="uploadInvoiceFileLayoutSoapIn">
+    <wsdl:part name="parameters" element="tns:uploadInvoiceFileLayout" />
+  </wsdl:message>
+  <wsdl:message name="uploadInvoiceFileLayoutSoapOut">
+    <wsdl:part name="parameters" element="tns:uploadInvoiceFileLayoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="documentStatusFileSoapIn">
+    <wsdl:part name="parameters" element="tns:documentStatusFile" />
+  </wsdl:message>
+  <wsdl:message name="documentStatusFileSoapOut">
+    <wsdl:part name="parameters" element="tns:documentStatusFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="downloadXMLFileSoapIn">
+    <wsdl:part name="parameters" element="tns:downloadXMLFile" />
+  </wsdl:message>
+  <wsdl:message name="downloadXMLFileSoapOut">
+    <wsdl:part name="parameters" element="tns:downloadXMLFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="downloadPDFFileSoapIn">
+    <wsdl:part name="parameters" element="tns:downloadPDFFile" />
+  </wsdl:message>
+  <wsdl:message name="downloadPDFFileSoapOut">
+    <wsdl:part name="parameters" element="tns:downloadPDFFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="downloadCUFEFileSoapIn">
+    <wsdl:part name="parameters" element="tns:downloadCUFEFile" />
+  </wsdl:message>
+  <wsdl:message name="downloadCUFEFileSoapOut">
+    <wsdl:part name="parameters" element="tns:downloadCUFEFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="downloadQRFileSoapIn">
+    <wsdl:part name="parameters" element="tns:downloadQRFile" />
+  </wsdl:message>
+  <wsdl:message name="downloadQRFileSoapOut">
+    <wsdl:part name="parameters" element="tns:downloadQRFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="downloadQRImageFileSoapIn">
+    <wsdl:part name="parameters" element="tns:downloadQRImageFile" />
+  </wsdl:message>
+  <wsdl:message name="downloadQRImageFileSoapOut">
+    <wsdl:part name="parameters" element="tns:downloadQRImageFileResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSV2DEMOSoap">
+    <wsdl:operation name="uploadInvoiceFile">
+      <wsdl:input message="tns:uploadInvoiceFileSoapIn" />
+      <wsdl:output message="tns:uploadInvoiceFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="uploadInvoiceFileLayout">
+      <wsdl:input message="tns:uploadInvoiceFileLayoutSoapIn" />
+      <wsdl:output message="tns:uploadInvoiceFileLayoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="documentStatusFile">
+      <wsdl:input message="tns:documentStatusFileSoapIn" />
+      <wsdl:output message="tns:documentStatusFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="downloadXMLFile">
+      <wsdl:input message="tns:downloadXMLFileSoapIn" />
+      <wsdl:output message="tns:downloadXMLFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="downloadPDFFile">
+      <wsdl:input message="tns:downloadPDFFileSoapIn" />
+      <wsdl:output message="tns:downloadPDFFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="downloadCUFEFile">
+      <wsdl:input message="tns:downloadCUFEFileSoapIn" />
+      <wsdl:output message="tns:downloadCUFEFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="downloadQRFile">
+      <wsdl:input message="tns:downloadQRFileSoapIn" />
+      <wsdl:output message="tns:downloadQRFileSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="downloadQRImageFile">
+      <wsdl:input message="tns:downloadQRImageFileSoapIn" />
+      <wsdl:output message="tns:downloadQRImageFileSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSV2DEMOSoap" type="tns:WSV2DEMOSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="uploadInvoiceFile">
+      <soap:operation soapAction="http://webservice.facturatech.co/uploadInvoiceFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadInvoiceFileLayout">
+      <soap:operation soapAction="http://webservice.facturatech.co/uploadInvoiceFileLayout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="documentStatusFile">
+      <soap:operation soapAction="http://webservice.facturatech.co/documentStatusFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadXMLFile">
+      <soap:operation soapAction="http://webservice.facturatech.co/downloadXMLFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadPDFFile">
+      <soap:operation soapAction="http://webservice.facturatech.co/downloadPDFFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadCUFEFile">
+      <soap:operation soapAction="http://webservice.facturatech.co/downloadCUFEFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadQRFile">
+      <soap:operation soapAction="http://webservice.facturatech.co/downloadQRFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadQRImageFile">
+      <soap:operation soapAction="http://webservice.facturatech.co/downloadQRImageFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSV2DEMOSoap12" type="tns:WSV2DEMOSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="uploadInvoiceFile">
+      <soap12:operation soapAction="http://webservice.facturatech.co/uploadInvoiceFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadInvoiceFileLayout">
+      <soap12:operation soapAction="http://webservice.facturatech.co/uploadInvoiceFileLayout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="documentStatusFile">
+      <soap12:operation soapAction="http://webservice.facturatech.co/documentStatusFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadXMLFile">
+      <soap12:operation soapAction="http://webservice.facturatech.co/downloadXMLFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadPDFFile">
+      <soap12:operation soapAction="http://webservice.facturatech.co/downloadPDFFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadCUFEFile">
+      <soap12:operation soapAction="http://webservice.facturatech.co/downloadCUFEFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadQRFile">
+      <soap12:operation soapAction="http://webservice.facturatech.co/downloadQRFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadQRImageFile">
+      <soap12:operation soapAction="http://webservice.facturatech.co/downloadQRImageFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSV2DEMO">
+    <wsdl:port name="WSV2DEMOSoap" binding="tns:WSV2DEMOSoap">
+      <soap:address location="https://webservice.facturatech.co/v2/BETA/WSV2DEMO.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSV2DEMOSoap12" binding="tns:WSV2DEMOSoap12">
+      <soap12:address location="https://webservice.facturatech.co/v2/BETA/WSV2DEMO.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

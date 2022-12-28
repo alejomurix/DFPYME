@@ -1,0 +1,194 @@
+CREATE OR REPLACE FUNCTION costo_producto_con_iva(character varying)
+  RETURNS SETOF double precision AS
+$BODY$
+DECLARE c double precision;
+BEGIN
+  FOR c IN 
+  SELECT mi_round((producto.precio_costo + (producto.precio_costo * iva.valoriva / 100)), 0)  
+  FROM iva, producto 
+  WHERE iva.idiva = producto.idiva AND codigointernoproducto = $1
+LOOP
+  RETURN NEXT c;
+END LOOP;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE VIEW view_ventas_iva AS 
+ SELECT 
+    producto_factura_venta.valor_iva AS iva,
+    producto_factura_venta.valorunitarioproducto_factura_venta AS base,
+    producto_factura_venta.valorunitarioproducto_factura_venta AS total, 
+    producto_factura_venta.valorunitarioproducto_factura_venta AS v_iva
+   FROM producto_factura_venta;
+
+CREATE OR REPLACE VIEW view_resumen_remision_venta AS 
+SELECT 
+  remision.fecha, 
+  remision.estado, 
+  producto_remision.codigoproducto AS codigo, 
+  producto_remision.valor_iva AS iva, 
+  SUM
+  (
+  mi_round_trunc
+  (
+    aproximacion_a_decena
+    (
+    CAST
+    ((
+    mi_round
+    (
+       (producto_remision.valor - 
+          (producto_remision.valor * producto_remision.valor_descuento / 100)) , 1
+    )
+    +
+    mi_round
+    (
+       mi_round
+       (
+          (producto_remision.valor - 
+             (producto_remision.valor * producto_remision.valor_descuento / 100)) , 1
+       )
+       * producto_remision.valor_iva / 100, 1
+    )
+    ) AS INTEGER) 
+    ) * producto_remision.cantidad, 0
+  )
+  ) AS total 
+FROM  
+  remision, 
+  producto_remision 
+WHERE 
+  remision.numero = producto_remision.numero_remision AND 
+  remision.estado = true AND 
+  remision.anulada = false
+GROUP BY 
+  remision.fecha, 
+  remision.estado, 
+  producto_remision.codigoproducto, 
+  producto_remision.valor_iva;
+ 
+CREATE OR REPLACE FUNCTION resumen_remision_ventas(date, date)
+  RETURNS SETOF view_ventas_iva AS
+$BODY$
+  DECLARE ventas view_ventas_iva;
+BEGIN
+  FOR ventas IN 
+  SELECT 
+    iva,
+    mi_round((SUM(total) / (1 + (iva / 100))), 0) AS base, 
+    SUM(total) AS total, 
+    SUM(total) - mi_round((SUM(total) / (1 + (iva / 100))), 0) AS v_iva
+  FROM 
+    view_resumen_remision_venta
+  WHERE 
+     fecha BETWEEN $1 AND $2 
+  GROUP BY 
+    iva 
+  ORDER BY
+    iva ASC
+LOOP
+  RETURN NEXT ventas;
+END LOOP;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE VIEW view_productos_cantidad_remision_venta AS 
+SELECT 
+  producto_remision.codigoproducto, 
+  producto_remision.cantidad 
+FROM 
+  producto_remision;
+
+CREATE OR REPLACE FUNCTION productos_cantidad_remision_venta(date, date)
+  RETURNS SETOF view_productos_cantidad_remision_venta AS
+$BODY$
+  DECLARE ventas view_productos_cantidad_remision_venta;
+BEGIN
+  FOR ventas IN 
+  SELECT 
+    producto_remision.codigoproducto, 
+    SUM(producto_remision.cantidad) AS cantidad 
+  FROM 
+    producto_remision, 
+    remision 
+  WHERE 
+    remision.numero = producto_remision.numero_remision AND 
+    remision.fecha BETWEEN $1 AND $2 
+  GROUP BY 
+    producto_remision.codigoproducto  
+LOOP
+  RETURN NEXT ventas;
+END LOOP;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE VIEW view_resumen_remision_compras AS 
+SELECT 
+  remision_proveedor.ingreso, 
+  producto_remision_proveedor.iva, 
+  SUM
+  (
+  mi_round_trunc
+  (
+    aproximacion_a_decena
+    (
+    CAST
+    ((
+    mi_round
+    (
+       (producto_remision_proveedor.valor - 
+          (producto_remision_proveedor.valor * producto_remision_proveedor.descuento / 100)) , 2
+    )
+    +
+    mi_round
+    (
+       mi_round
+       (
+          (producto_remision_proveedor.valor - 
+             (producto_remision_proveedor.valor * producto_remision_proveedor.descuento / 100)) , 2
+       )
+       * producto_remision_proveedor.iva / 100, 2
+    )
+    ) AS INTEGER) 
+    ) * producto_remision_proveedor.cantidad, 0
+  )
+  ) AS total 
+FROM  
+  remision_proveedor, 
+  producto_remision_proveedor 
+WHERE 
+  remision_proveedor.id = producto_remision_proveedor.idremision AND
+  remision_proveedor.estado = true AND 
+  remision_proveedor.facturada = false
+GROUP BY 
+  remision_proveedor.ingreso, 
+  producto_remision_proveedor.iva;
+ 
+CREATE OR REPLACE FUNCTION resumen_remision_compras(date, date)
+  RETURNS SETOF view_ventas_iva AS
+$BODY$
+  DECLARE ventas view_ventas_iva;
+BEGIN
+  FOR ventas IN 
+  SELECT 
+    iva,
+    mi_round((SUM(total) / (1 + (iva / 100))), 0) AS base, 
+    SUM(total) AS total, 
+    SUM(total) - mi_round((SUM(total) / (1 + (iva / 100))), 0) AS v_iva 
+  FROM 
+    view_resumen_remision_compras
+  WHERE 
+     ingreso BETWEEN $1 AND $2 
+  GROUP BY 
+    iva 
+  ORDER BY
+    iva ASC
+LOOP
+  RETURN NEXT ventas;
+END LOOP;
+END
+$BODY$
+LANGUAGE plpgsql;

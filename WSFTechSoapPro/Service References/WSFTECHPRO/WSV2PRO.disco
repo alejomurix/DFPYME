@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="https://webservice.facturatech.co/v2/BETA/WSV2PRO.asmx?wsdl" docRef="https://webservice.facturatech.co/v2/BETA/WSV2PRO.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="https://webservice.facturatech.co/v2/BETA/WSV2PRO.asmx" xmlns:q1="http://webservice.facturatech.co/" binding="q1:WSV2PROSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="https://webservice.facturatech.co/v2/BETA/WSV2PRO.asmx" xmlns:q2="http://webservice.facturatech.co/" binding="q2:WSV2PROSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>
