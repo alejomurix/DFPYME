@@ -89,7 +89,7 @@ namespace Aplicacion.Inventario.Consulta
             {
                 Precio2.Visible = false;
                 Inventario.Visible = false;
-                //Valor.Visible = true;  // costo
+                //Valor.Visible = true;  // costo 
             }
             Valor.Visible = true;  // costo
 
