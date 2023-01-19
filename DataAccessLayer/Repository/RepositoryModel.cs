@@ -55,6 +55,8 @@ namespace DataAccessLayer.Repository
 
         private DaoInventario daoInventario;
 
+        private DaoKardex daoKardex;
+
         public RepositoryModel()
         {
             try
@@ -72,7 +74,8 @@ namespace DataAccessLayer.Repository
                 //this.adTributary = new details_tributary_clientTableAdapter();
                 //this.adRUT = new details_rut_clientTableAdapter();
 
-                this.daoInventario = new DaoInventario();
+                daoInventario = new DaoInventario();
+                daoKardex = new DaoKardex();
             }
             catch (Exception ex)
             {
@@ -2070,6 +2073,8 @@ namespace DataAccessLayer.Repository
                 this.EditElectronicDocumentAll(document);
 
                 this.UpdateStock(document.Items);
+                // update kardex
+                this.UpdateKardex(document);
 
                 return document.Numero;
             }
@@ -2374,6 +2379,31 @@ namespace DataAccessLayer.Repository
             catch (Exception ex)
             {
                 throw new Exception("Ocurrió un error al actualizar el inventario.\n" + ex.Message);
+            }
+        }
+
+        public void UpdateKardex(ElectronicDocument document)
+        {
+            try
+            {
+                foreach(Item item in document.Items)
+                {
+                    daoKardex.Insertar(new DTO.Clases.Kardex
+                    {
+                        Codigo = item.Code,
+                        IdUsuario = 6,
+                        IdConcepto = 30,
+                        NoDocumento = document.Numero,
+                        Fecha = document.Fecha,
+                        Cantidad = item.Quantity,
+                        Valor = Math.Round(item.Neto, 0),
+                        Total = Math.Round(item.Total, 0)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al actualizar el kardex.\n" + ex.Message);
             }
         }
 
