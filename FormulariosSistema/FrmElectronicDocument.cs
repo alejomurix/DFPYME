@@ -1323,7 +1323,7 @@ namespace FormulariosSistema
         {
             try
             {
-                if (this.cbRetencion.SelectedValue.ToString().Equals(this.CodeReteICA))
+                /*if (this.cbRetencion.SelectedValue.ToString().Equals(this.CodeReteICA))
                 {
                     this.cbTarifas.Visible = false;
                     this.txtTarifa.Visible = true;
@@ -1335,7 +1335,9 @@ namespace FormulariosSistema
 
                     this.cbTarifas.DataSource = this.repositoryData.TarifasTax(
                         this.cbRetencion.SelectedValue.ToString());
-                }
+                }*/
+                this.cbTarifas.DataSource = this.repositoryData.TarifasTax(
+                        this.cbRetencion.SelectedValue.ToString());
             }
             catch (Exception ex)
             {
@@ -1353,6 +1355,8 @@ namespace FormulariosSistema
 
                     if (this.Document.Retentions.Where(r => r.ID.Equals(this.cbRetencion.SelectedValue.ToString())).Count().Equals(0))
                     {
+                        AddTaxRetention();
+                        /*
                         if (this.cbRetencion.SelectedValue.ToString().Equals(this.CodeReteICA))
                         {
                             if (!String.IsNullOrEmpty(this.txtTarifa.Text))
@@ -1377,6 +1381,7 @@ namespace FormulariosSistema
                         {
                             AddTaxRetention();
                         }
+                        */
                     }
                     else
                     {
@@ -1400,6 +1405,10 @@ namespace FormulariosSistema
             tax.State = true;
             tax.ID = this.cbRetencion.SelectedValue.ToString();
             tax.Description = ((IdentifyTax)this.cbRetencion.SelectedItem).Descripcion;
+
+            tax.Tarifa = Convert.ToDouble(this.cbTarifas.SelectedValue);  // update
+
+            /*
             if (tax.ID.Equals(this.CodeReteICA))
             {
                 tax.Tarifa = Convert.ToDouble(this.txtTarifa.Text.Replace('.', ','));
@@ -1408,6 +1417,8 @@ namespace FormulariosSistema
             {
                 tax.Tarifa = Convert.ToDouble(this.cbTarifas.SelectedValue);
             }
+            */
+
             if (tax.ID.Equals(this.CodeReteIVA))
             {
                 tax.Base = Math.Round(this.Document.Items.Sum(s => ((s.UnitPrice * s.Quantity) * s.IVA / 100)), 2);
