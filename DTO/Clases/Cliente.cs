@@ -21,6 +21,8 @@ namespace DTO.Clases
             this.EstadoCliente = true;
             this.IdTipoCliente = 1;
             this.IdClasificacion = 0;
+
+            Sales = new List<FacturaVenta>();
         }
 
         public string NitCliente { get; set; }
@@ -37,6 +39,8 @@ namespace DTO.Clases
         public string DescripcionTipo { set; get; }
         public int IdClasificacion { set; get; }
         public string DescripcionClasifica { set; get; }
+
+        public ICollection<FacturaVenta> Sales { set; get; }
 
 
         #region Propiedades de Navegacion

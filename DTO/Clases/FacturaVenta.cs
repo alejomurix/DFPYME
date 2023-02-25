@@ -52,6 +52,10 @@ namespace DTO.Clases
 
         public string NameStation { set; get; }
 
+        public string NoDocument { set; get; }
+
+        public string Name { set; get; }
+
         /// <summary>
         /// Inicializa una nueva instancia de la clase FacturaProveedor.
         /// </summary>
@@ -68,6 +72,8 @@ namespace DTO.Clases
             this.Pendiente = false;
             this.IdResolucionDian = 0;
             this.NameStation = "";
+
+            NoDocument = "";
         }
     }
 }

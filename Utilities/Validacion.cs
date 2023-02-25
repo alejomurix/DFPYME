@@ -270,6 +270,19 @@ namespace Utilities
             }
         }
 
+        public static bool ValidNumber(string number)
+        {
+            try
+            {
+                Convert.ToDouble(number);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Valida si el texto corresponde a un Numero Intero sin espacios ni otros caracteres a exepción del punto.
         /// </summary>

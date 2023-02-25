@@ -214,6 +214,12 @@ namespace BussinesLayer.Clases
             //return tabla;
         }
 
+        // update cartera: 17-02-2023
+        public List<FacturaVenta> Cartera(FacturaVenta remision)
+        {
+            return miDaoRemision.Cartera(remision);
+        }
+
         public long SaldoDeCliente(string cliente)
         {
             var miBussinesPago = new BussinesFormaPago();
@@ -285,6 +291,38 @@ namespace BussinesLayer.Clases
             return this.miDaoRemision.TotalCostoVenta(fecha, fecha2);
         }
 
+        // update data of new columns in remision
+        public void UpdateTotalCancel(DateTime fecha, DateTime fecha1)
+        {
+            var miBussinesPago = new BussinesFormaPago();
+            var miDaoDevolucion = new DaoDevolucion();
+
+            FacturaVenta remision;
+            foreach (DataRow row in miDaoRemision.consultaEstado(true, fecha, fecha1, 0, 10000000).Rows)
+            {
+                remision = new FacturaVenta { Numero = row["numero"].ToString() };
+
+                remision.Total = ProductoRemision(Convert.ToInt32(row["numero"]), Convert.ToBoolean(row["aplica_descuento"]))
+                    .AsEnumerable().Sum(s => s.Field<int>("Valor"));
+                remision.Pagos = miBussinesPago.GetTotalPagoRemision(Convert.ToInt32(row["numero"]));
+                remision.Saldo = miDaoDevolucion.SaldoRemision(Convert.ToInt32(row["numero"]));
+                remision.Saldo = Convert.ToInt32(remision.Total) - (remision.Pagos + remision.Saldo);
+                
+                if (remision.Saldo == 0)
+                {
+                    remision.Cancel = true;
+                }
+                miDaoRemision.UpdateTotalCancel(remision);
+            }
+
+            /*valorFactura = ProductoRemision(Convert.ToInt32(fRow["numero"]), Convert.ToBoolean(fRow["aplica_descuento"])).
+                                            AsEnumerable().Sum(s => s.Field<int>("Valor"));
+                    pagosFactura = miBussinesPago.GetTotalPagoRemision(Convert.ToInt32(fRow["numero"]));
+                    var saldoDevRemision = miDaoDevolucion.SaldoRemision(Convert.ToInt32(fRow["numero"]));
+                    saldoFactura = valorFactura - (pagosFactura + saldoDevRemision);*/
+            //public DataTable consultaEstado
+            //(bool remision, DateTime fecha, DateTime fecha1, int rowBase, int rowMax)
+        }
 
         //PRODUCTO REMISION
 

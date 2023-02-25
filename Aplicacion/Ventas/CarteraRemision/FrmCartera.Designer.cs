@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmCartera));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tsMenu = new System.Windows.Forms.ToolStrip();
             this.tsBtnImprimir = new System.Windows.Forms.ToolStripButton();
             this.tsBtnImprimirResumen = new System.Windows.Forms.ToolStripButton();
@@ -46,6 +46,11 @@
             this.lblTotal = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
             this.dgvCartera = new System.Windows.Forms.DataGridView();
+            this.gbCriterio = new System.Windows.Forms.GroupBox();
+            this.btnBuscarCliente = new System.Windows.Forms.Button();
+            this.cbContado = new System.Windows.Forms.ComboBox();
+            this.txtConsulta = new System.Windows.Forms.TextBox();
+            this.btnBuscar = new System.Windows.Forms.Button();
             this.Cedula = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Factura = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,11 +59,6 @@
             this.Valor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Abono = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Saldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gbCriterio = new System.Windows.Forms.GroupBox();
-            this.cbContado = new System.Windows.Forms.ComboBox();
-            this.txtConsulta = new System.Windows.Forms.TextBox();
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.btnBuscarCliente = new System.Windows.Forms.Button();
             this.tsMenu.SuspendLayout();
             this.gbCartera.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCartera)).BeginInit();
@@ -86,6 +86,7 @@
             this.tsBtnImprimir.Name = "tsBtnImprimir";
             this.tsBtnImprimir.Size = new System.Drawing.Size(77, 22);
             this.tsBtnImprimir.Text = "Imprimir";
+            this.tsBtnImprimir.Visible = false;
             this.tsBtnImprimir.Click += new System.EventHandler(this.tsBtnImprimir_Click);
             // 
             // tsBtnImprimirResumen
@@ -96,6 +97,7 @@
             this.tsBtnImprimirResumen.Name = "tsBtnImprimirResumen";
             this.tsBtnImprimirResumen.Size = new System.Drawing.Size(176, 22);
             this.tsBtnImprimirResumen.Text = "Imprimir resumen cartera";
+            this.tsBtnImprimirResumen.Visible = false;
             this.tsBtnImprimirResumen.Click += new System.EventHandler(this.tsBtnImprimirResumen_Click);
             // 
             // btnPrintPos
@@ -209,75 +211,6 @@
             this.dgvCartera.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvCartera_ColumnHeaderMouseClick);
             this.dgvCartera.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvCartera_KeyUp);
             // 
-            // Cedula
-            // 
-            this.Cedula.DataPropertyName = "Cedula";
-            this.Cedula.HeaderText = "Cedula";
-            this.Cedula.Name = "Cedula";
-            this.Cedula.Width = 150;
-            // 
-            // Nombre
-            // 
-            this.Nombre.DataPropertyName = "Nombre";
-            this.Nombre.HeaderText = "Nombres";
-            this.Nombre.Name = "Nombre";
-            this.Nombre.Width = 280;
-            // 
-            // Factura
-            // 
-            this.Factura.DataPropertyName = "Factura";
-            this.Factura.HeaderText = "No Remisión";
-            this.Factura.Name = "Factura";
-            this.Factura.Width = 110;
-            // 
-            // Fecha
-            // 
-            this.Fecha.DataPropertyName = "Fecha";
-            dataGridViewCellStyle31.Format = "d";
-            dataGridViewCellStyle31.NullValue = null;
-            this.Fecha.DefaultCellStyle = dataGridViewCellStyle31;
-            this.Fecha.HeaderText = "Fecha";
-            this.Fecha.Name = "Fecha";
-            // 
-            // Limite
-            // 
-            this.Limite.DataPropertyName = "Limite";
-            dataGridViewCellStyle32.Format = "d";
-            dataGridViewCellStyle32.NullValue = null;
-            this.Limite.DefaultCellStyle = dataGridViewCellStyle32;
-            this.Limite.HeaderText = "Limite";
-            this.Limite.Name = "Limite";
-            // 
-            // Valor
-            // 
-            this.Valor.DataPropertyName = "Valor";
-            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle33.Format = "N0";
-            dataGridViewCellStyle33.NullValue = null;
-            this.Valor.DefaultCellStyle = dataGridViewCellStyle33;
-            this.Valor.HeaderText = "Valor";
-            this.Valor.Name = "Valor";
-            // 
-            // Abono
-            // 
-            this.Abono.DataPropertyName = "Abonos";
-            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle34.Format = "N0";
-            dataGridViewCellStyle34.NullValue = null;
-            this.Abono.DefaultCellStyle = dataGridViewCellStyle34;
-            this.Abono.HeaderText = "Abonos";
-            this.Abono.Name = "Abono";
-            // 
-            // Saldo
-            // 
-            this.Saldo.DataPropertyName = "Saldo";
-            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle35.Format = "N0";
-            dataGridViewCellStyle35.NullValue = null;
-            this.Saldo.DefaultCellStyle = dataGridViewCellStyle35;
-            this.Saldo.HeaderText = "Saldo";
-            this.Saldo.Name = "Saldo";
-            // 
             // gbCriterio
             // 
             this.gbCriterio.Controls.Add(this.btnBuscarCliente);
@@ -290,6 +223,16 @@
             this.gbCriterio.TabIndex = 0;
             this.gbCriterio.TabStop = false;
             this.gbCriterio.Text = "Criterios de consulta";
+            // 
+            // btnBuscarCliente
+            // 
+            this.btnBuscarCliente.Location = new System.Drawing.Point(504, 26);
+            this.btnBuscarCliente.Name = "btnBuscarCliente";
+            this.btnBuscarCliente.Size = new System.Drawing.Size(25, 23);
+            this.btnBuscarCliente.TabIndex = 26;
+            this.btnBuscarCliente.Text = "...";
+            this.btnBuscarCliente.UseVisualStyleBackColor = true;
+            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
             // 
             // cbContado
             // 
@@ -321,15 +264,74 @@
             this.btnBuscar.UseVisualStyleBackColor = true;
             this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
-            // btnBuscarCliente
+            // Cedula
             // 
-            this.btnBuscarCliente.Location = new System.Drawing.Point(504, 26);
-            this.btnBuscarCliente.Name = "btnBuscarCliente";
-            this.btnBuscarCliente.Size = new System.Drawing.Size(25, 23);
-            this.btnBuscarCliente.TabIndex = 26;
-            this.btnBuscarCliente.Text = "...";
-            this.btnBuscarCliente.UseVisualStyleBackColor = true;
-            this.btnBuscarCliente.Click += new System.EventHandler(this.btnBuscarCliente_Click);
+            this.Cedula.DataPropertyName = "NoDocument";
+            this.Cedula.HeaderText = "Cedula";
+            this.Cedula.Name = "Cedula";
+            this.Cedula.Width = 150;
+            // 
+            // Nombre
+            // 
+            this.Nombre.DataPropertyName = "Name";
+            this.Nombre.HeaderText = "Nombres";
+            this.Nombre.Name = "Nombre";
+            this.Nombre.Width = 280;
+            // 
+            // Factura
+            // 
+            this.Factura.DataPropertyName = "Numero";
+            this.Factura.HeaderText = "No Remisión";
+            this.Factura.Name = "Factura";
+            this.Factura.Width = 110;
+            // 
+            // Fecha
+            // 
+            this.Fecha.DataPropertyName = "FechaFactura";
+            dataGridViewCellStyle1.Format = "d";
+            dataGridViewCellStyle1.NullValue = null;
+            this.Fecha.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Fecha.HeaderText = "Fecha";
+            this.Fecha.Name = "Fecha";
+            // 
+            // Limite
+            // 
+            this.Limite.DataPropertyName = "FechaLimite";
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.Limite.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Limite.HeaderText = "Limite";
+            this.Limite.Name = "Limite";
+            // 
+            // Valor
+            // 
+            this.Valor.DataPropertyName = "Total";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Valor.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Valor.HeaderText = "Valor";
+            this.Valor.Name = "Valor";
+            // 
+            // Abono
+            // 
+            this.Abono.DataPropertyName = "Pagos";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = null;
+            this.Abono.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Abono.HeaderText = "Abonos";
+            this.Abono.Name = "Abono";
+            // 
+            // Saldo
+            // 
+            this.Saldo.DataPropertyName = "Saldo";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
+            this.Saldo.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Saldo.HeaderText = "Saldo";
+            this.Saldo.Name = "Saldo";
             // 
             // FrmCartera
             // 
@@ -345,6 +347,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmCartera";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cartera de Remisiones";
             this.Load += new System.EventHandler(this.FrmCartera_Load);
@@ -378,6 +381,7 @@
         private System.Windows.Forms.TextBox txtSaldoCliente;
         private System.Windows.Forms.Label lblSaldoCliente;
         private System.Windows.Forms.ToolStripButton btnPrintPos;
+        private System.Windows.Forms.Button btnBuscarCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cedula;
         private System.Windows.Forms.DataGridViewTextBoxColumn Nombre;
         private System.Windows.Forms.DataGridViewTextBoxColumn Factura;
@@ -386,6 +390,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Valor;
         private System.Windows.Forms.DataGridViewTextBoxColumn Abono;
         private System.Windows.Forms.DataGridViewTextBoxColumn Saldo;
-        private System.Windows.Forms.Button btnBuscarCliente;
     }
 }

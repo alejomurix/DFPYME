@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BussinesLayer.Clases;
+using DTO.Clases;
 using CustomControl;
 using Utilities;
 using System.Threading;
@@ -33,6 +34,8 @@ namespace Aplicacion.Ventas.CarteraRemision
 
         private OptionPane miOption;
 
+        private List<FacturaVenta> remisiones;
+
         public FrmCartera()
         {
             InitializeComponent();
@@ -43,6 +46,8 @@ namespace Aplicacion.Ventas.CarteraRemision
             miBussinesCliente = new BussinesCliente();
             miBussinesFactura = new BussinesFacturaVenta();
             miBussinesRemision = new BussinesRemision();
+
+            remisiones = new List<FacturaVenta>();
         }
 
         private void FrmCartera_Load(object sender, EventArgs e)
@@ -290,11 +295,11 @@ namespace Aplicacion.Ventas.CarteraRemision
         private void CargarComponentes()
         {
             var lst = new List<Inventario.Producto.Criterio>();
-            lst.Add(new Inventario.Producto.Criterio
+            /*lst.Add(new Inventario.Producto.Criterio
             {
                 Id = 1,
                 Nombre = "Todos los Clientes"
-            });
+            });*/
             lst.Add(new Inventario.Producto.Criterio
             {
                 Id = 2,
@@ -368,12 +373,14 @@ namespace Aplicacion.Ventas.CarteraRemision
                     case 2:
                         {
                             this.ClientePrint = "";
-                            Tabla = miBussinesRemision.CarteraClientes(true, false, null);
+                            //Tabla = miBussinesRemision.CarteraClientes(true, false, null);
+                            remisiones = miBussinesRemision.Cartera(new FacturaVenta());
                             break;
                         }
                     case 3:
                         {
-                            Tabla = miBussinesRemision.CarteraClientes(false, true, this.ClientePrint);
+                            //Tabla = miBussinesRemision.CarteraClientes(false, true, this.ClientePrint);
+                            remisiones = miBussinesRemision.Cartera(new FacturaVenta { NoDocument = ClientePrint });
                             break;
                         }
                 }
@@ -392,9 +399,13 @@ namespace Aplicacion.Ventas.CarteraRemision
         {
             try
             {
-                dgvCartera.DataSource = Tabla;
-                txtTotal.Text = UseObject.InsertSeparatorMil(Tabla.AsEnumerable().Sum(s => s.Field<int>("Saldo")).ToString());
-                if (dgvCartera.Rows.Count > 15 && NombreWith.Equals(Nombre.Width))
+                dgvCartera.DataSource = remisiones;
+                txtTotal.Text = UseObject.InsertSeparatorMil(remisiones.Sum(s => s.Saldo).ToString());
+
+
+                //dgvCartera.DataSource = Tabla;
+                //txtTotal.Text = UseObject.InsertSeparatorMil(Tabla.AsEnumerable().Sum(s => s.Field<int>("Saldo")).ToString());
+                /*if (dgvCartera.Rows.Count > 15 && NombreWith.Equals(Nombre.Width))
                 {
                     dgvCartera.Columns["Nombre"].Width = Nombre.Width - 5;
                 }
@@ -403,7 +414,7 @@ namespace Aplicacion.Ventas.CarteraRemision
                     SaldoDeCliente();
                 }
                 ColorGrid();
-                ColorSaldoLimite();
+                ColorSaldoLimite();*/
 
                 miOption.FrmProgressBar.barraProgreso.Style = ProgressBarStyle.Blocks;
                 miOption.FrmProgressBar.Closed_ = false;

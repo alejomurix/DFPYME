@@ -133,7 +133,6 @@
     <Compile Include="Clases\DaoUnidadMedida.cs" />
     <Compile Include="DataSets\DataBaseDS.cs">
       <DependentUpon>DataBaseDS.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSets\DataBaseDS.Designer.cs">
       <DependentUpon>DataBaseDS.xsd</DependentUpon>

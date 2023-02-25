@@ -3406,6 +3406,9 @@ namespace Aplicacion.Ventas.Remisiones
                     UseObject.RemoveCharacter(row["Iva"].ToString(), '%');
                 productos.Add(producto);
             }
+            miFactura.Total = productos.Sum(s => s.Total);
+            if (miFormasPago.Sum(p => p.Valor) >= miFactura.Total)
+                miFactura.Cancel = true;
             miFactura.Productos = productos;
             try
             {
@@ -3504,6 +3507,9 @@ namespace Aplicacion.Ventas.Remisiones
                 producto.Costo = Convert.ToInt32(row["Costo"]);
                 productos.Add(producto);
             }
+            miFactura.Total = productos.Sum(s => s.Total);
+            if (miFormasPago.Sum(p => p.Valor) >= miFactura.Total)
+                miFactura.Cancel = true;
             miFactura.Productos = productos;
             try
             {
@@ -3669,6 +3675,8 @@ namespace Aplicacion.Ventas.Remisiones
             lblDesctoProducto.Text = "Descto%";
             miTabla.Clear();
             txtCodigoArticulo.Focus();
+            miFactura = new FacturaVenta();
+            miFactura.Usuario = Administracion.Usuario.FrmIniciarSesion.CargarDatosUsuario(this);
         }
 
         private void CargarFacturaEdicion()

@@ -185,6 +185,8 @@ namespace DataAccessLayer.Clases
                 miComando.Parameters.AddWithValue("estado", remision.Estado);
                 miComando.Parameters.AddWithValue("idestado", remision.EstadoFactura.Id);
                 miComando.Parameters.AddWithValue("anulada", false);
+                miComando.Parameters.AddWithValue("total", remision.Total);
+                miComando.Parameters.AddWithValue("cancel", remision.Cancel);
                 miConexion.MiConexion.Open();
                 miComando.ExecuteNonQuery();
                 miConexion.MiConexion.Close();
@@ -1724,11 +1726,91 @@ namespace DataAccessLayer.Clases
 
         // End Remision Proveedor
 
+        // Cartera de remisiones date: 16-02-2023
 
+        public List<FacturaVenta> Cartera(FacturaVenta remision)
+        {
+            List<FacturaVenta> remisiones = new List<FacturaVenta>();
+            try
+            {
+                CargarComando("concatent"); //  remisiones_venta_cartera
+                miComando.Parameters.AddWithValue("", remision.Cancel);
+                miComando.Parameters.AddWithValue("", remision.NoDocument);
+                miComando.Parameters.AddWithValue("", remision.FechaFactura);
+                miComando.Parameters.AddWithValue("", remision.FechaLimite);
+                miConexion.MiConexion.Open();
+                NpgsqlDataReader reader = miComando.ExecuteReader();
+                while(reader.Read())
+                {
+                    remisiones.Add(new FacturaVenta
+                    {
+                        NoDocument = reader.GetString(0),
+                        Name = reader.GetString(1),
+                        Numero = reader.GetInt32(2).ToString(),
+                        FechaFactura = reader.GetDateTime(3),
+                        FechaLimite = reader.GetDateTime(4),
+                        Total = reader.GetDouble(5),
+                        Pagos = reader.GetInt32(6),
+                        Saldo = Convert.ToInt32(reader.GetDouble(7))
+                    });
+                }
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error al consultar la cartera de remisiones.\n" + ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+            return remisiones;
+        }
+
+        public void UpdateCancel(FacturaVenta remision)
+        {
+            try
+            {
+                string query = "update remision set cancel = @cancel where numero = @num;";
+                CargarComandoText(query);
+                miComando.Parameters.AddWithValue("num", Convert.ToInt32(remision.Numero));
+                miComando.Parameters.AddWithValue("cancel", remision.Cancel);
+                miConexion.MiConexion.Open();
+                miComando.ExecuteNonQuery();
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ErrorIngresar + ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
+        // method for ajust
+        public void UpdateTotalCancel(FacturaVenta remision)
+        {
+            try
+            {
+                string query = "update remision set cancel = @cancel, total = @total where numero = @num;";
+                CargarComandoText(query);
+                miComando.Parameters.AddWithValue("num", Convert.ToInt32(remision.Numero));
+                miComando.Parameters.AddWithValue("total", remision.Total);
+                miComando.Parameters.AddWithValue("cancel", remision.Cancel);
+                miConexion.MiConexion.Open();
+                miComando.ExecuteNonQuery();
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ErrorIngresar + ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
+
+
+        //  Region de funciones adicionales o auxiliares.
         //  Funciones para el ajuste de valores de IVA
-
-
-
 
         public void AjusteIvaVenta(DateTime fechaStop, DateTime fechaMonto, int monto)
         {

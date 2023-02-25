@@ -727,10 +727,14 @@ namespace Aplicacion.Ventas
                 //this.tClientes = this.miBussinesFactura.ProductosDeVentas(this.lstFacturas);
 
 
+                /*
                 DateTime fecha = new DateTime(dtpFecha.Value.Year, dtpFecha.Value.Month, dtpFecha.Value.Day, 12, 0, 0);
                 DateTime fecha2 = new DateTime(dtpFecha2.Value.Year, dtpFecha2.Value.Month, dtpFecha2.Value.Day, 12, 0, 0);
 
                 this.miBussRemision.FechasyTotalesVentas(fecha, fecha2);
+                */
+
+                miBussRemision.UpdateTotalCancel(dtpFecha.Value, dtpFecha2.Value);
 
                 if (this.InvokeRequired)
                 {

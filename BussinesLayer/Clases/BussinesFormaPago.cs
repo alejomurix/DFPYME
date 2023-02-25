@@ -153,6 +153,45 @@ namespace BussinesLayer.Clases
             return miDaoFromaPago.IngresarPagoRemision(fPago);
         }
 
+        public void IngresarPagoRemision(Cliente cliente, FormaPago pago)
+        {
+            var daoRemision = new DaoRemision();
+
+            int monto = Convert.ToInt32(pago.Valor);
+            foreach (var sale in cliente.Sales)
+            {
+                if (monto > 0)
+                {
+                    pago.IdFactura = sale.Id;
+                    pago.NumeroFactura = sale.Numero;
+                    if (monto > sale.Saldo)
+                    {
+                        pago.Valor = pago.Pago = sale.Saldo;
+                        sale.Pagos += sale.Saldo;
+
+                        monto -= sale.Saldo;
+                    }
+                    else
+                    {
+                        pago.Valor = pago.Pago = monto;
+                        sale.Pagos += monto;
+
+                        monto -= monto;
+                    }
+                    miDaoFromaPago.IngresarPagoRemision(pago);
+                    if (sale.Total.Equals(sale.Pagos))
+                    {
+                        sale.Cancel = true;
+                        daoRemision.UpdateCancel(sale);
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
         public int GetTotalPagoRemision(int numero)
         {
             var tabla = miDaoFromaPago.FormasDePagoRemision(numero);

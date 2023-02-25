@@ -80,9 +80,9 @@
             // 
             // btnCargar
             // 
-            this.btnCargar.Location = new System.Drawing.Point(379, 59);
+            this.btnCargar.Location = new System.Drawing.Point(385, 21);
             this.btnCargar.Name = "btnCargar";
-            this.btnCargar.Size = new System.Drawing.Size(60, 23);
+            this.btnCargar.Size = new System.Drawing.Size(68, 23);
             this.btnCargar.TabIndex = 3;
             this.btnCargar.Text = "Cargar aj";
             this.btnCargar.UseVisualStyleBackColor = true;
@@ -150,13 +150,12 @@
             // 
             // btnCargarFechasTotales
             // 
-            this.btnCargarFechasTotales.Location = new System.Drawing.Point(379, 15);
+            this.btnCargarFechasTotales.Location = new System.Drawing.Point(385, 50);
             this.btnCargarFechasTotales.Name = "btnCargarFechasTotales";
-            this.btnCargarFechasTotales.Size = new System.Drawing.Size(57, 23);
+            this.btnCargarFechasTotales.Size = new System.Drawing.Size(68, 23);
             this.btnCargarFechasTotales.TabIndex = 3;
-            this.btnCargarFechasTotales.Text = "Cargar t";
+            this.btnCargarFechasTotales.Text = "AJ. Rems";
             this.btnCargarFechasTotales.UseVisualStyleBackColor = true;
-            this.btnCargarFechasTotales.Visible = false;
             this.btnCargarFechasTotales.Click += new System.EventHandler(this.btnCargarFechasTotales_Click);
             // 
             // btnConsultaIva
@@ -185,7 +184,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(228, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(12, 16);
+            this.label1.Size = new System.Drawing.Size(11, 16);
             this.label1.TabIndex = 5;
             this.label1.Text = "l";
             // 
@@ -215,7 +214,7 @@
             this.groupBox1.Controls.Add(this.dtpFechaAjuste2);
             this.groupBox1.Controls.Add(this.dtpFechaStop);
             this.groupBox1.Enabled = false;
-            this.groupBox1.Location = new System.Drawing.Point(6, 2);
+            this.groupBox1.Location = new System.Drawing.Point(9, 58);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(367, 44);
             this.groupBox1.TabIndex = 7;
@@ -232,7 +231,7 @@
             this.groupBox2.Controls.Add(this.btnLoadSaldosCarteraF4);
             this.groupBox2.Controls.Add(this.dataGrid_2);
             this.groupBox2.Controls.Add(this.dataGrid_1);
-            this.groupBox2.Location = new System.Drawing.Point(6, 47);
+            this.groupBox2.Location = new System.Drawing.Point(9, 9);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(367, 43);
             this.groupBox2.TabIndex = 8;
@@ -243,7 +242,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(460, 108);
+            this.ClientSize = new System.Drawing.Size(467, 115);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCargarFechasTotales);

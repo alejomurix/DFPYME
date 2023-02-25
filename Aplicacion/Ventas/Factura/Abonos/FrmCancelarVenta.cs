@@ -104,7 +104,7 @@ namespace Aplicacion.Ventas.Factura.Abonos
                                                  }
                                                  else
                                                  {
-                                                     miBussinesPago.IngresarPagoRemision(pago);
+                                                     miBussinesPago.IngresarPagoRemision(pago); // agregar valor de remision, para validar cancel.
                                                  }
 
                                                  /*var ingreso = new Ingreso();
@@ -175,7 +175,7 @@ namespace Aplicacion.Ventas.Factura.Abonos
                                          }
                                          else
                                          {
-                                             miBussinesIngreso.IngresoDeRemision(ingreso);
+                                             miBussinesIngreso.IngresoDeRemision(ingreso); // agregar valor de remision, para validar cancel.
                                          }
 
 

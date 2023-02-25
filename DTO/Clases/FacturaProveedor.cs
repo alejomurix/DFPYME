@@ -139,5 +139,7 @@ namespace DTO.Clases
         public int ValorReal { set; get; }
 
         public string Nota { set; get; }
+
+        public bool Cancel { set; get; }
     }
 }

@@ -33,6 +33,8 @@ namespace Aplicacion.Ventas.Remisiones
 
         private BussinesUsuario miBussinesUsuario;
 
+        private BussinesApertura bussinesApertura;
+
         private bool Tranfer { set; get; }
 
         #region Paginación
@@ -114,6 +116,8 @@ namespace Aplicacion.Ventas.Remisiones
             miBussinesCliente = new BussinesCliente();
             miBussinesConsecutivo = new BussinesConsecutivo();
             miBussinesUsuario = new BussinesUsuario();
+            bussinesApertura = new BussinesApertura();
+
             this.GraneroJhonRiosucio = Convert.ToBoolean(AppConfiguracion.ValorSeccion("graneroJhonRiosucio"));
             RowMaxFactura = 5;
         }
@@ -430,6 +434,50 @@ namespace Aplicacion.Ventas.Remisiones
             else
             {
                 OptionPane.MessageInformation("No hay registros de remisión para saldar.");
+            }
+        }
+
+        private void tsBtnAbonoCliente_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(dgvFactura.RowCount > 0)
+                {
+                    if (bussinesApertura.RegistrosApertura(Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"))).Rows.Count.Equals(0)) //if (String.IsNullOrEmpty(AppConfiguracion.ValorSeccion("id_apertura")))
+                    {
+                        OptionPane.MessageError("Se requiere apertura de caja para esta función.");
+                    }
+                    else
+                    {
+                        var cartera = miBussinesRemision.Cartera(
+                            new FacturaVenta { Cancel = false, NoDocument = dgvFactura.CurrentRow.Cells["Nit"].Value.ToString() });
+                        if(cartera.Count > 0)
+                        {
+                            FrmAbonoGeneral frmAbono = new FrmAbonoGeneral
+                            {
+                                Cliente = new DTO.Clases.Cliente
+                                {
+                                    NitCliente = dgvFactura.CurrentRow.Cells["Nit"].Value.ToString(),
+                                    NombresCliente = dgvFactura.CurrentRow.Cells["Proveedor"].Value.ToString(),
+                                    Sales = cartera
+                                }
+                            };
+                            frmAbono.ShowDialog();
+                        }
+                        else
+                        {
+                            OptionPane.MessageInformation("El cliente se encuentra a paz y salvo.");
+                        }
+                    }
+                }
+                else
+                {
+                    OptionPane.MessageInformation("Debe seleccionar un cliente.");
+                }
+            }
+            catch (Exception ex)
+            {
+                OptionPane.MessageError(ex.Message);
             }
         }
 
@@ -2942,8 +2990,6 @@ namespace Aplicacion.Ventas.Remisiones
                 OptionPane.MessageError(ex.Message);
             }
         }
-
-        
 
         
     }

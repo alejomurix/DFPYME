@@ -896,6 +896,9 @@
     <EmbeddedResource Include="Ventas\Ingresos\FrmReplicas.resx">
       <DependentUpon>FrmReplicas.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ventas\Remisiones\FrmAbonoGeneral.resx">
+      <DependentUpon>FrmAbonoGeneral.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ventas\Remisiones\FrmConsulta.resx">
       <DependentUpon>FrmConsulta.cs</DependentUpon>
     </EmbeddedResource>
@@ -1821,7 +1824,6 @@
     </Compile>
     <Compile Include="DataSets\DsBono.cs">
       <DependentUpon>DsBono.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSets\DsBono.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1878,7 +1880,6 @@
     </Compile>
     <Compile Include="DataSets\DsDetalle.cs">
       <DependentUpon>DsDetalle.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSets\DsDetalle.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1892,7 +1893,6 @@
     </Compile>
     <Compile Include="DataSets\DsDian.cs">
       <DependentUpon>DsDian.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSets\DsDian.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1956,7 +1956,6 @@
     </Compile>
     <Compile Include="DataSets\DsIvaVentaAnulada.cs">
       <DependentUpon>DsIvaVentaAnulada.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSets\DsIvaVentaAnulada.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -2690,6 +2689,12 @@
     </Compile>
     <Compile Include="Ventas\Ingresos\FrmReplicas.Designer.cs">
       <DependentUpon>FrmReplicas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas\Remisiones\FrmAbonoGeneral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ventas\Remisiones\FrmAbonoGeneral.Designer.cs">
+      <DependentUpon>FrmAbonoGeneral.cs</DependentUpon>
     </Compile>
     <Compile Include="Ventas\Remisiones\FrmConsulta.cs">
       <SubType>Form</SubType>
