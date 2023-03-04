@@ -49,6 +49,7 @@
             this.tsMenu = new System.Windows.Forms.ToolStrip();
             this.tsBtnEditar = new System.Windows.Forms.ToolStripButton();
             this.tsBtnSaldarRemision = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnAbonoCliente = new System.Windows.Forms.ToolStripButton();
             this.tsBtnCopia = new System.Windows.Forms.ToolStripButton();
             this.tsBtnVerPagos = new System.Windows.Forms.ToolStripButton();
             this.tsBtnConsultaIngresos = new System.Windows.Forms.ToolStripButton();
@@ -120,7 +121,10 @@
             this.lblTotal = new System.Windows.Forms.Label();
             this.lblPesosTotal = new System.Windows.Forms.Label();
             this.txtTotal = new System.Windows.Forms.TextBox();
-            this.tsBtnAbonoCliente = new System.Windows.Forms.ToolStripButton();
+            this.txtTotalRemisiones = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnTotalRemisiones = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.gbCritero.SuspendLayout();
             this.tsMenu.SuspendLayout();
             this.gbFactura.SuspendLayout();
@@ -131,11 +135,11 @@
             this.gbListadoArticulos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaArticulos)).BeginInit();
             this.gbResumen.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbCritero
             // 
-            this.gbCritero.Controls.Add(this.cbCriterio1);
             this.gbCritero.Controls.Add(this.cbCriterio);
             this.gbCritero.Controls.Add(this.txtCodigo);
             this.gbCritero.Controls.Add(this.btnBuscarCodigo);
@@ -145,10 +149,9 @@
             this.gbCritero.Controls.Add(this.btnBuscar1);
             this.gbCritero.Location = new System.Drawing.Point(8, 28);
             this.gbCritero.Name = "gbCritero";
-            this.gbCritero.Size = new System.Drawing.Size(953, 66);
+            this.gbCritero.Size = new System.Drawing.Size(701, 54);
             this.gbCritero.TabIndex = 2;
             this.gbCritero.TabStop = false;
-            this.gbCritero.Text = "Criterio Consulta";
             // 
             // cbCriterio1
             // 
@@ -156,11 +159,12 @@
             this.cbCriterio1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCriterio1.Enabled = false;
             this.cbCriterio1.FormattingEnabled = true;
-            this.cbCriterio1.Location = new System.Drawing.Point(150, 24);
+            this.cbCriterio1.Location = new System.Drawing.Point(1047, 109);
             this.cbCriterio1.Name = "cbCriterio1";
-            this.cbCriterio1.Size = new System.Drawing.Size(100, 24);
+            this.cbCriterio1.Size = new System.Drawing.Size(16, 24);
             this.cbCriterio1.TabIndex = 4;
             this.cbCriterio1.ValueMember = "Id";
+            this.cbCriterio1.Visible = false;
             this.cbCriterio1.SelectionChangeCommitted += new System.EventHandler(this.cbCriterio1_SelectionChangeCommitted);
             // 
             // cbCriterio
@@ -168,7 +172,7 @@
             this.cbCriterio.DisplayMember = "Nombre";
             this.cbCriterio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCriterio.FormattingEnabled = true;
-            this.cbCriterio.Location = new System.Drawing.Point(30, 24);
+            this.cbCriterio.Location = new System.Drawing.Point(11, 17);
             this.cbCriterio.Name = "cbCriterio";
             this.cbCriterio.Size = new System.Drawing.Size(100, 24);
             this.cbCriterio.TabIndex = 0;
@@ -177,7 +181,7 @@
             // 
             // txtCodigo
             // 
-            this.txtCodigo.Location = new System.Drawing.Point(281, 25);
+            this.txtCodigo.Location = new System.Drawing.Point(121, 19);
             this.txtCodigo.MaxLength = 15;
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(183, 22);
@@ -187,7 +191,7 @@
             // btnBuscarCodigo
             // 
             this.btnBuscarCodigo.Enabled = false;
-            this.btnBuscarCodigo.Location = new System.Drawing.Point(474, 24);
+            this.btnBuscarCodigo.Location = new System.Drawing.Point(307, 18);
             this.btnBuscarCodigo.Name = "btnBuscarCodigo";
             this.btnBuscarCodigo.Size = new System.Drawing.Size(25, 23);
             this.btnBuscarCodigo.TabIndex = 2;
@@ -200,7 +204,7 @@
             this.cbCriterio2.DisplayMember = "Nombre";
             this.cbCriterio2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCriterio2.FormattingEnabled = true;
-            this.cbCriterio2.Location = new System.Drawing.Point(541, 23);
+            this.cbCriterio2.Location = new System.Drawing.Point(358, 17);
             this.cbCriterio2.Name = "cbCriterio2";
             this.cbCriterio2.Size = new System.Drawing.Size(112, 24);
             this.cbCriterio2.TabIndex = 5;
@@ -212,7 +216,7 @@
             this.dtpFecha1.CustomFormat = "dd/MM/yyyy";
             this.dtpFecha1.Enabled = false;
             this.dtpFecha1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFecha1.Location = new System.Drawing.Point(677, 24);
+            this.dtpFecha1.Location = new System.Drawing.Point(476, 18);
             this.dtpFecha1.Name = "dtpFecha1";
             this.dtpFecha1.Size = new System.Drawing.Size(84, 22);
             this.dtpFecha1.TabIndex = 7;
@@ -222,7 +226,7 @@
             this.dtpFecha2.CustomFormat = "dd/MM/yyyy";
             this.dtpFecha2.Enabled = false;
             this.dtpFecha2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFecha2.Location = new System.Drawing.Point(783, 24);
+            this.dtpFecha2.Location = new System.Drawing.Point(566, 18);
             this.dtpFecha2.Name = "dtpFecha2";
             this.dtpFecha2.Size = new System.Drawing.Size(84, 22);
             this.dtpFecha2.TabIndex = 8;
@@ -230,7 +234,7 @@
             // btnBuscar1
             // 
             this.btnBuscar1.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscar1.Image")));
-            this.btnBuscar1.Location = new System.Drawing.Point(889, 23);
+            this.btnBuscar1.Location = new System.Drawing.Point(656, 17);
             this.btnBuscar1.Name = "btnBuscar1";
             this.btnBuscar1.Size = new System.Drawing.Size(25, 23);
             this.btnBuscar1.TabIndex = 9;
@@ -272,6 +276,16 @@
             this.tsBtnSaldarRemision.Size = new System.Drawing.Size(67, 22);
             this.tsBtnSaldarRemision.Text = "Abono";
             this.tsBtnSaldarRemision.Click += new System.EventHandler(this.tsBtnSaldarRemision_Click);
+            // 
+            // tsBtnAbonoCliente
+            // 
+            this.tsBtnAbonoCliente.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.tsBtnAbonoCliente.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnAbonoCliente.Image")));
+            this.tsBtnAbonoCliente.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnAbonoCliente.Name = "tsBtnAbonoCliente";
+            this.tsBtnAbonoCliente.Size = new System.Drawing.Size(110, 22);
+            this.tsBtnAbonoCliente.Text = "Abono Cliente";
+            this.tsBtnAbonoCliente.Click += new System.EventHandler(this.tsBtnAbonoCliente_Click);
             // 
             // tsBtnCopia
             // 
@@ -319,18 +333,17 @@
             this.gbFactura.Controls.Add(this.panelMenuFactura);
             this.gbFactura.Controls.Add(this.dgvFactura);
             this.gbFactura.Controls.Add(this.StatusFactura);
-            this.gbFactura.Location = new System.Drawing.Point(8, 99);
+            this.gbFactura.Location = new System.Drawing.Point(8, 81);
             this.gbFactura.Name = "gbFactura";
-            this.gbFactura.Size = new System.Drawing.Size(1033, 199);
+            this.gbFactura.Size = new System.Drawing.Size(1035, 221);
             this.gbFactura.TabIndex = 4;
             this.gbFactura.TabStop = false;
-            this.gbFactura.Text = "Listado de Facturas";
             // 
             // panelMenuFactura
             // 
             this.panelMenuFactura.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMenuFactura.Controls.Add(this.tsMenuFactura);
-            this.panelMenuFactura.Location = new System.Drawing.Point(992, 19);
+            this.panelMenuFactura.Location = new System.Drawing.Point(992, 13);
             this.panelMenuFactura.Name = "panelMenuFactura";
             this.panelMenuFactura.Size = new System.Drawing.Size(38, 155);
             this.panelMenuFactura.TabIndex = 2;
@@ -377,9 +390,9 @@
             this.EstadoP,
             this.EstadoFactura});
             this.dgvFactura.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvFactura.Location = new System.Drawing.Point(7, 19);
+            this.dgvFactura.Location = new System.Drawing.Point(7, 13);
             this.dgvFactura.Name = "dgvFactura";
-            this.dgvFactura.Size = new System.Drawing.Size(985, 155);
+            this.dgvFactura.Size = new System.Drawing.Size(985, 181);
             this.dgvFactura.TabIndex = 0;
             this.dgvFactura.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFactura_CellClick);
             // 
@@ -465,9 +478,9 @@
             this.lblStatusFactura,
             this.btnSiguiente,
             this.btnFin});
-            this.StatusFactura.Location = new System.Drawing.Point(3, 174);
+            this.StatusFactura.Location = new System.Drawing.Point(3, 196);
             this.StatusFactura.Name = "StatusFactura";
-            this.StatusFactura.Size = new System.Drawing.Size(1027, 22);
+            this.StatusFactura.Size = new System.Drawing.Size(1029, 22);
             this.StatusFactura.TabIndex = 1;
             this.StatusFactura.Text = "Status de Factura";
             // 
@@ -1024,15 +1037,48 @@
             this.txtTotal.Text = "0";
             this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // tsBtnAbonoCliente
+            // txtTotalRemisiones
             // 
-            this.tsBtnAbonoCliente.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.tsBtnAbonoCliente.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnAbonoCliente.Image")));
-            this.tsBtnAbonoCliente.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnAbonoCliente.Name = "tsBtnAbonoCliente";
-            this.tsBtnAbonoCliente.Size = new System.Drawing.Size(110, 22);
-            this.tsBtnAbonoCliente.Text = "Abono Cliente";
-            this.tsBtnAbonoCliente.Click += new System.EventHandler(this.tsBtnAbonoCliente_Click);
+            this.txtTotalRemisiones.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.txtTotalRemisiones.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTotalRemisiones.Location = new System.Drawing.Point(141, 19);
+            this.txtTotalRemisiones.Name = "txtTotalRemisiones";
+            this.txtTotalRemisiones.ReadOnly = true;
+            this.txtTotalRemisiones.Size = new System.Drawing.Size(136, 22);
+            this.txtTotalRemisiones.TabIndex = 20;
+            this.txtTotalRemisiones.Text = "0";
+            this.txtTotalRemisiones.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txtTotalRemisiones);
+            this.groupBox1.Controls.Add(this.btnTotalRemisiones);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Location = new System.Drawing.Point(716, 28);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(328, 54);
+            this.groupBox1.TabIndex = 21;
+            this.groupBox1.TabStop = false;
+            // 
+            // btnTotalRemisiones
+            // 
+            this.btnTotalRemisiones.Image = ((System.Drawing.Image)(resources.GetObject("btnTotalRemisiones.Image")));
+            this.btnTotalRemisiones.Location = new System.Drawing.Point(288, 19);
+            this.btnTotalRemisiones.Name = "btnTotalRemisiones";
+            this.btnTotalRemisiones.Size = new System.Drawing.Size(25, 23);
+            this.btnTotalRemisiones.TabIndex = 9;
+            this.btnTotalRemisiones.UseVisualStyleBackColor = true;
+            this.btnTotalRemisiones.Click += new System.EventHandler(this.btnTotalRemisiones_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(38, 22);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(93, 16);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "TOTAL REM";
             // 
             // FrmConsulta
             // 
@@ -1040,6 +1086,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1073, 612);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.cbCriterio1);
             this.Controls.Add(this.gbResumen);
             this.Controls.Add(this.gbListadoArticulos);
             this.Controls.Add(this.gbFactura);
@@ -1073,6 +1121,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvListaArticulos)).EndInit();
             this.gbResumen.ResumeLayout(false);
             this.gbResumen.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1164,5 +1214,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ValorIva;
         private System.Windows.Forms.DataGridViewTextBoxColumn Ico;
         private System.Windows.Forms.ToolStripButton tsBtnAbonoCliente;
+        private System.Windows.Forms.TextBox txtTotalRemisiones;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnTotalRemisiones;
+        private System.Windows.Forms.Label label9;
     }
 }

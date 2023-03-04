@@ -374,13 +374,13 @@ namespace Aplicacion.Ventas.CarteraRemision
                         {
                             this.ClientePrint = "";
                             //Tabla = miBussinesRemision.CarteraClientes(true, false, null);
-                            remisiones = miBussinesRemision.Cartera(new FacturaVenta());
+                            remisiones = miBussinesRemision.Consultas(new FacturaVenta());
                             break;
                         }
                     case 3:
                         {
                             //Tabla = miBussinesRemision.CarteraClientes(false, true, this.ClientePrint);
-                            remisiones = miBussinesRemision.Cartera(new FacturaVenta { NoDocument = ClientePrint });
+                            remisiones = miBussinesRemision.Consultas(new FacturaVenta { NoDocument = ClientePrint });
                             break;
                         }
                 }

@@ -1728,16 +1728,16 @@ namespace DataAccessLayer.Clases
 
         // Cartera de remisiones date: 16-02-2023
 
-        public List<FacturaVenta> Cartera(FacturaVenta remision)
+        public List<FacturaVenta> Consultas(FacturaVenta remision)
         {
             List<FacturaVenta> remisiones = new List<FacturaVenta>();
             try
             {
-                CargarComando("concatent"); //  remisiones_venta_cartera
+                CargarComando("remision_queries"); //  remisiones_venta_cartera
                 miComando.Parameters.AddWithValue("", remision.Cancel);
                 miComando.Parameters.AddWithValue("", remision.NoDocument);
-                miComando.Parameters.AddWithValue("", remision.FechaFactura);
-                miComando.Parameters.AddWithValue("", remision.FechaLimite);
+                miComando.Parameters.AddWithValue("", remision.FechaFactura.ToShortDateString());
+                miComando.Parameters.AddWithValue("", remision.FechaLimite.ToShortDateString());
                 miConexion.MiConexion.Open();
                 NpgsqlDataReader reader = miComando.ExecuteReader();
                 while(reader.Read())

@@ -215,9 +215,9 @@ namespace BussinesLayer.Clases
         }
 
         // update cartera: 17-02-2023
-        public List<FacturaVenta> Cartera(FacturaVenta remision)
+        public List<FacturaVenta> Consultas(FacturaVenta remision)
         {
-            return miDaoRemision.Cartera(remision);
+            return miDaoRemision.Consultas(remision);
         }
 
         public long SaldoDeCliente(string cliente)

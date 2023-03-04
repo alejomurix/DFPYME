@@ -312,7 +312,10 @@ namespace DataAccessLayer.Models
                 }
                 else
                 {
-                    if(!tax.Base.Equals(this.Items.Sum(s => s.SubTotal)))
+                    //var subtotal = this.Items.Sum(s => s.SubTotal);
+                    //var subtotalRound = Math.Round(this.Items.Sum(s => s.SubTotal), 2);
+                    //if (!tax.Base.Equals(this.Items.Sum(s => s.SubTotal)))
+                    if (!tax.Base.Equals(Math.Round(this.Items.Sum(s => s.SubTotal), 2)))
                     {
                         valide = false;
                         break;

@@ -449,7 +449,7 @@ namespace Aplicacion.Ventas.Remisiones
                     }
                     else
                     {
-                        var cartera = miBussinesRemision.Cartera(
+                        var cartera = miBussinesRemision.Consultas(
                             new FacturaVenta { Cancel = false, NoDocument = dgvFactura.CurrentRow.Cells["Nit"].Value.ToString() });
                         if(cartera.Count > 0)
                         {
@@ -741,6 +741,24 @@ namespace Aplicacion.Ventas.Remisiones
             else
             {
 
+            }
+        }
+
+        private void btnTotalRemisiones_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtTotalRemisiones.Text = UseObject.InsertSeparatorMil(
+                    miBussinesRemision.Consultas(new FacturaVenta
+                    {
+                        Cancel = true,
+                        FechaFactura = dtpFecha1.Value,
+                        FechaLimite = dtpFecha2.Value
+                    }).Sum(s => s.Total).ToString());
+            }
+            catch(Exception ex)
+            {
+                OptionPane.MessageError(ex.Message);
             }
         }
 
