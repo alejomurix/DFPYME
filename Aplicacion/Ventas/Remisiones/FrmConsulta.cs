@@ -132,7 +132,7 @@ namespace Aplicacion.Ventas.Remisiones
             //CargarCriterioGeneral();
             //CargarPrimerCriterio();
             //CargarSegundoCriterio();
-           // CargarTercerCriterio();
+            // CargarTercerCriterio();
 
             this.PermisoFacturarRemision = false;
             this.PermisoAnularRemision = false;
@@ -292,19 +292,19 @@ namespace Aplicacion.Ventas.Remisiones
                             ExtendForms = true;
                             //frmCancelarVenta.MdiParent = this.MdiParent;
                             frmCancelarVenta.Show();*/
-                        /*}
-                    }
-                    else
-                    {
-                        OptionPane.MessageInformation("Esta factura no se puede abonar porque esta anulada.");
-                    }
-                }
-                else
-                {
-                    OptionPane.MessageInformation("Esta factura no tiene saldo pendiente.");
-                }
-            }
-        }*/
+        /*}
+    }
+    else
+    {
+        OptionPane.MessageInformation("Esta factura no se puede abonar porque esta anulada.");
+    }
+}
+else
+{
+    OptionPane.MessageInformation("Esta factura no tiene saldo pendiente.");
+}
+}
+}*/
 
         private void tsBtnCopia_Click(object sender, EventArgs e)
         {
@@ -352,10 +352,10 @@ namespace Aplicacion.Ventas.Remisiones
                         }
                     }
 
-                        /*Print(registro.Cells["Numero"].Value.ToString(),
-                               Convert.ToBoolean(registro.Cells["DesctoFactura"].Value),
-                               registro.Cells["Nit"].Value.ToString(),
-                               contado, true);*/
+                    /*Print(registro.Cells["Numero"].Value.ToString(),
+                           Convert.ToBoolean(registro.Cells["DesctoFactura"].Value),
+                           registro.Cells["Nit"].Value.ToString(),
+                           contado, true);*/
                 }
             }
             else
@@ -392,48 +392,64 @@ namespace Aplicacion.Ventas.Remisiones
 
         private void tsBtnSaldarRemision_Click(object sender, EventArgs e)
         {
-            if (dgvFactura.RowCount != 0)
+            try
             {
-                var idEstado = Convert.ToInt32(dgvFactura.CurrentRow.Cells["IdEstado"].Value);
-                var facturada = dgvFactura.CurrentRow.Cells["EstadoFactura"].Value.ToString();
-                if (!facturada.Equals("Facturada"))
+                if (dgvFactura.RowCount != 0)
                 {
-                    if (idEstado.Equals(2))
+                    if (bussinesApertura.RegistrosApertura(Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"))).Rows.Count.Equals(0)) //if (String.IsNullOrEmpty(AppConfiguracion.ValorSeccion("id_apertura")))
                     {
-                        if (UseObject.RemoveSeparatorMil(txtResta.Text) > 0)
+                        OptionPane.MessageError("Se requiere apertura de caja para esta función.");
+                    }
+                    else
+                    {
+                        var idEstado = Convert.ToInt32(dgvFactura.CurrentRow.Cells["IdEstado"].Value);
+                        var facturada = dgvFactura.CurrentRow.Cells["EstadoFactura"].Value.ToString();
+                        //Anulada
+                        bool anulada = Convert.ToBoolean(dgvFactura.CurrentRow.Cells["Anulada"].Value);
+                        if (!facturada.Equals("Facturada"))
                         {
-                            if (!ExtendForms)
+                            if (idEstado.Equals(2) && !anulada)
                             {
-                                var frmCancelarVenta = new Factura.Abonos.FrmCancelarVenta();
-                                ///frmCancelarVenta.MdiParent = this.MdiParent;
-                                frmCancelarVenta.NumeroFactura = dgvFactura.CurrentRow.Cells["Numero"].Value.ToString();
-                                frmCancelarVenta.NitCliente = this.dgvFactura.CurrentRow.Cells["Nit"].Value.ToString();
-                                frmCancelarVenta.Abono = true;
-                                frmCancelarVenta.EsVenta = false;
-                                frmCancelarVenta.txtTotal.Text = txtResta.Text;
-                                ExtendForms = true;
-                                frmCancelarVenta.ShowDialog();
+                                if (UseObject.RemoveSeparatorMil(txtResta.Text) > 0)
+                                {
+                                    if (!ExtendForms)
+                                    {
+                                        var frmCancelarVenta = new Factura.Abonos.FrmCancelarVenta();
+                                        ///frmCancelarVenta.MdiParent = this.MdiParent;
+                                        frmCancelarVenta.NumeroFactura = dgvFactura.CurrentRow.Cells["Numero"].Value.ToString();
+                                        frmCancelarVenta.NitCliente = this.dgvFactura.CurrentRow.Cells["Nit"].Value.ToString();
+                                        frmCancelarVenta.Abono = true;
+                                        frmCancelarVenta.EsVenta = false;
+                                        frmCancelarVenta.txtTotal.Text = txtResta.Text;
+                                        ExtendForms = true;
+                                        frmCancelarVenta.ShowDialog();
+                                    }
+                                }
+                                else
+                                {
+                                    OptionPane.MessageInformation("La Remisión se encuentra saldada.");
+                                }
+                            }
+                            else
+                            {
+                                OptionPane.MessageInformation("Esta remisión no se puede saldar.");
                             }
                         }
                         else
                         {
-                            OptionPane.MessageInformation("La Remisión se encuentra saldada.");
+                            OptionPane.MessageInformation("Esta remisión no se puede saldar, se encuentra facturada.");
                         }
                     }
-                    else
-                    {
-                        OptionPane.MessageInformation("Esta remisión no se puede saldar.");
-                    }
+                    //Facturada
                 }
                 else
                 {
-                    OptionPane.MessageInformation("Esta remisión no se puede saldar, se encuentra facturada.");
+                    OptionPane.MessageInformation("No hay registros de remisión para saldar.");
                 }
-                //Facturada
             }
-            else
+            catch(Exception ex)
             {
-                OptionPane.MessageInformation("No hay registros de remisión para saldar.");
+                OptionPane.MessageError(ex.Message);
             }
         }
 
@@ -441,7 +457,7 @@ namespace Aplicacion.Ventas.Remisiones
         {
             try
             {
-                if(dgvFactura.RowCount > 0)
+                if (dgvFactura.RowCount > 0)
                 {
                     if (bussinesApertura.RegistrosApertura(Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"))).Rows.Count.Equals(0)) //if (String.IsNullOrEmpty(AppConfiguracion.ValorSeccion("id_apertura")))
                     {
@@ -451,7 +467,7 @@ namespace Aplicacion.Ventas.Remisiones
                     {
                         var cartera = miBussinesRemision.Consultas(
                             new FacturaVenta { Cancel = false, NoDocument = dgvFactura.CurrentRow.Cells["Nit"].Value.ToString() });
-                        if(cartera.Count > 0)
+                        if (cartera.Count > 0)
                         {
                             FrmAbonoGeneral frmAbono = new FrmAbonoGeneral
                             {
@@ -748,15 +764,35 @@ namespace Aplicacion.Ventas.Remisiones
         {
             try
             {
-                txtTotalRemisiones.Text = UseObject.InsertSeparatorMil(
+                /**if (Convert.ToInt32(cbCriterio2.SelectedValue).Equals(2)) // consulta por fecha
+                {
+                    //dtpFecha2.Value = dtpFecha1.Value;
+                    /*txtTotalRemisiones.Text = UseObject.InsertSeparatorMil(
                     miBussinesRemision.Consultas(new FacturaVenta
                     {
                         Cancel = true,
                         FechaFactura = dtpFecha1.Value,
-                        FechaLimite = dtpFecha2.Value
+                        FechaLimite = dtpFecha1.Value
                     }).Sum(s => s.Total).ToString());
+                }
+                else if (Convert.ToInt32(cbCriterio2.SelectedValue).Equals(3)) // consulta por periodo
+                {
+
+                }*/
+
+                if (!Convert.ToInt32(cbCriterio2.SelectedValue).Equals(3))
+                {
+                    dtpFecha2.Value = dtpFecha1.Value;
+                }
+                txtTotalRemisiones.Text = UseObject.InsertSeparatorMil(
+                miBussinesRemision.Consultas(new FacturaVenta
+                {
+                    Cancel = true,
+                    FechaFactura = dtpFecha1.Value,
+                    FechaLimite = dtpFecha2.Value
+                }).Sum(s => s.Total).ToString());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 OptionPane.MessageError(ex.Message);
             }
@@ -914,82 +950,82 @@ namespace Aplicacion.Ventas.Remisiones
                 btnBuscar1_Click(this.btnBuscar1, new EventArgs());
             }
         }
-/*
-        private void tsBtnAnular_Click(object sender, EventArgs e)
-        {
-            if (dgvFactura.RowCount != 0)
-            {
-                if (Convert.ToBoolean(dgvFactura.CurrentRow.Cells["Activa"].Value))
+        /*
+                private void tsBtnAnular_Click(object sender, EventArgs e)
                 {
-                    DialogResult rta = MessageBox.Show("¿Está seguro(a) de querer anular esta Factura de Venta?", "Factura Venta",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (rta.Equals(DialogResult.Yes))
+                    if (dgvFactura.RowCount != 0)
                     {
-                        try
+                        if (Convert.ToBoolean(dgvFactura.CurrentRow.Cells["Activa"].Value))
                         {
-                            miBussinesFactura.AnularFactura
-                                (Convert.ToString(dgvFactura.CurrentRow.Cells["Numero"].Value));
-                            OptionPane.MessageInformation("La Factura ha sido anulada.");
+                            DialogResult rta = MessageBox.Show("¿Está seguro(a) de querer anular esta Factura de Venta?", "Factura Venta",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            if (rta.Equals(DialogResult.Yes))
+                            {
+                                try
+                                {
+                                    miBussinesFactura.AnularFactura
+                                        (Convert.ToString(dgvFactura.CurrentRow.Cells["Numero"].Value));
+                                    OptionPane.MessageInformation("La Factura ha sido anulada.");
+                                }
+                                catch (Exception ex)
+                                {
+                                    OptionPane.MessageError(ex.Message);
+                                }
+                            }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            OptionPane.MessageError(ex.Message);
+                            OptionPane.MessageInformation("Esta factura ya esta anulada.");
                         }
                     }
                 }
-                else
-                {
-                    OptionPane.MessageInformation("Esta factura ya esta anulada.");
-                }
-            }
-        }
 
-        private void tsSaldoCliente_Click(object sender, EventArgs e)
-        {
-            if (dgvFactura.RowCount != 0)
-            {
-                if (Convert.ToInt32(dgvFactura.CurrentRow.Cells["IdEstado"].Value) == 2)
+                private void tsSaldoCliente_Click(object sender, EventArgs e)
                 {
-                    try
+                    if (dgvFactura.RowCount != 0)
                     {
-                        var total = miBussinesFactura.SaldoPorCliente
-                            (2, dgvFactura.CurrentRow.Cells["Nit"].Value.ToString());
-                        /*var frmSaldoC = new Saldos.FrmSaldoCliente();
-                        frmSaldoC.MdiParent = this.MdiParent;
-                        frmSaldoC.txtCliente.Text = dgvFactura.CurrentRow.Cells["Proveedor"].Value.ToString();
-                        frmSaldoC.txtNit.Text = dgvFactura.CurrentRow.Cells["Nit"].Value.ToString();
-                        frmSaldoC.txtSaldo.Text = UseObject.InsertSeparatorMil(total.ToString());
-                        frmSaldoC.Show();*/
-                  /*  }
-                    catch (Exception ex)
-                    {
-                        OptionPane.MessageError(ex.Message);
-                    }
-                }
-            }
-        }
+                        if (Convert.ToInt32(dgvFactura.CurrentRow.Cells["IdEstado"].Value) == 2)
+                        {
+                            try
+                            {
+                                var total = miBussinesFactura.SaldoPorCliente
+                                    (2, dgvFactura.CurrentRow.Cells["Nit"].Value.ToString());
+                                /*var frmSaldoC = new Saldos.FrmSaldoCliente();
+                                frmSaldoC.MdiParent = this.MdiParent;
+                                frmSaldoC.txtCliente.Text = dgvFactura.CurrentRow.Cells["Proveedor"].Value.ToString();
+                                frmSaldoC.txtNit.Text = dgvFactura.CurrentRow.Cells["Nit"].Value.ToString();
+                                frmSaldoC.txtSaldo.Text = UseObject.InsertSeparatorMil(total.ToString());
+                                frmSaldoC.Show();*/
+        /*  }
+          catch (Exception ex)
+          {
+              OptionPane.MessageError(ex.Message);
+          }
+      }
+  }
+}
 
-        /*private void tsBtnSaltoTotalCredito_Click(object sender, EventArgs e)
+/*private void tsBtnSaltoTotalCredito_Click(object sender, EventArgs e)
+{
+  /*if (dgvFactura.RowCount != 0)
+  {
+      if (Convert.ToInt32(dgvFactura.CurrentRow.Cells["IdEstado"].Value) == 2)
+      {*/
+        /* try
+         {
+             /*var total = miBussinesFactura.SaldoTotalCredito(2);
+             var frmSaldo = new Saldos.FrmSaldosTotal();
+             frmSaldo.MdiParent = this.MdiParent;
+             frmSaldo.txtSaldo.Text = UseObject.InsertSeparatorMil(total.ToString());
+             frmSaldo.Show();*/
+        /*}
+        catch (Exception ex)
         {
-            /*if (dgvFactura.RowCount != 0)
-            {
-                if (Convert.ToInt32(dgvFactura.CurrentRow.Cells["IdEstado"].Value) == 2)
-                {*/
-                   /* try
-                    {
-                        /*var total = miBussinesFactura.SaldoTotalCredito(2);
-                        var frmSaldo = new Saldos.FrmSaldosTotal();
-                        frmSaldo.MdiParent = this.MdiParent;
-                        frmSaldo.txtSaldo.Text = UseObject.InsertSeparatorMil(total.ToString());
-                        frmSaldo.Show();*/
-                    /*}
-                    catch (Exception ex)
-                    {
-                        OptionPane.MessageError(ex.Message);
-                    }
-                //}
-            //}
+            OptionPane.MessageError(ex.Message);
         }
+    //}
+//}
+}
 */
         private void btnInicio_Click(object sender, EventArgs e)
         {
@@ -1400,7 +1436,7 @@ namespace Aplicacion.Ventas.Remisiones
             lst.Add(new Inventario.Producto.Criterio
             {
                 Id = 3,
-                Nombre = "Estado"
+                Nombre = "Todas" //Nombre = "Estado"
             });
             cbCriterio.DataSource = lst;
 
@@ -1448,17 +1484,17 @@ namespace Aplicacion.Ventas.Remisiones
         /// </summary>
         private void CargarCriterioGeneral()
         {
-            
+
         }
 
         private void CargarPrimerCriterio()
         {
-            
+
         }
 
         private void CargarPrimerCriterioOpcion()
         {
-           
+
         }
 
         private void CargarSegundoCriterio()
@@ -1538,7 +1574,7 @@ namespace Aplicacion.Ventas.Remisiones
             ClienteActual = nit;
             try
             {
-                dgvFactura.DataSource = 
+                dgvFactura.DataSource =
                     miBussinesRemision.ConsultaCliente(nit, remision, RowFactura, RowMaxFactura);
                 if (dgvFactura.RowCount == 0)
                 {
@@ -1583,7 +1619,7 @@ namespace Aplicacion.Ventas.Remisiones
         {
             try
             {
-                dgvFactura.DataSource = 
+                dgvFactura.DataSource =
                     miBussinesRemision.ConsultaCliente(nit, remision, fecha);
                 if (dgvFactura.RowCount == 0)
                 {
@@ -1599,7 +1635,7 @@ namespace Aplicacion.Ventas.Remisiones
                 lblStatusFactura.Text = "0 / 0";
                 OptionPane.MessageError(ex.Message);
             }
-            
+
         }
 
         public void ConsultaEstado(bool remision, DateTime fecha)
@@ -2199,29 +2235,29 @@ namespace Aplicacion.Ventas.Remisiones
         private void CalcularTotales(DataTable tabla, int numero)
         {
             txtSubTotal.Text = UseObject.InsertSeparatorMil
-                ( Convert.ToInt32(
-                  (tabla.AsEnumerable().Sum(s => (s.Field<double>("ValorUnitario") * 
-                                            s.Field<double>("Cantidad")))) ) .ToString()
+                (Convert.ToInt32(
+                  (tabla.AsEnumerable().Sum(s => (s.Field<double>("ValorUnitario") *
+                                            s.Field<double>("Cantidad"))))).ToString()
                 );
 
             txtDescuento.Text = UseObject.InsertSeparatorMil
-                ( Convert.ToInt32(
+                (Convert.ToInt32(
                   (tabla.AsEnumerable()
                    .Sum(d => ((d.Field<double>("ValorUnitario") *
-                               UseObject.RemoveCharacter(d["Descuento"].ToString(), '%') / 100) * 
-                               d.Field<double>("Cantidad")))) )
+                               UseObject.RemoveCharacter(d["Descuento"].ToString(), '%') / 100) *
+                               d.Field<double>("Cantidad")))))
                    .ToString()
                 );
 
             txtIva.Text = UseObject.InsertSeparatorMil
                 (Convert.ToInt32(
-                  (tabla.AsEnumerable().Sum(i => (i.Field<double>("ValorIva") * 
-                                            i.Field<double>("Cantidad")))) ) .ToString()
+                  (tabla.AsEnumerable().Sum(i => (i.Field<double>("ValorIva") *
+                                            i.Field<double>("Cantidad"))))).ToString()
                 );
 
             txtTotal.Text = UseObject.InsertSeparatorMil
                 (
-                  ( Convert.ToInt32( tabla.AsEnumerable().Sum(t => t.Field<int>("Valor")) ) ).ToString()
+                  (Convert.ToInt32(tabla.AsEnumerable().Sum(t => t.Field<int>("Valor")))).ToString()
                 );
 
             try
@@ -2391,7 +2427,7 @@ namespace Aplicacion.Ventas.Remisiones
                     row_["Retorno"] = false;
                     tabla.Rows.Add(row_);
                 }
-                
+
                 /*var row_ = tabla.NewRow();
                 row_["Save"] = false;
                 row_["Id"] = (int)row.Cells["IdProducto"].Value;
@@ -2699,114 +2735,114 @@ namespace Aplicacion.Ventas.Remisiones
                 var miBussinesEmpresa = new BussinesEmpresa();
                 //var miBussinesUsuario = new BussinesUsuario();
 
-                
-                    var empresaRow = miBussinesEmpresa.PrintEmpresa().
-                                     Tables[0].AsEnumerable().First();
-                    var remisionRow = miBussinesRemision.PrintRemision(numero).
-                                             Tables[0].AsEnumerable().First();
-                    var usuarioRow = miBussinesUsuario.PrintUsuarioRemision(Convert.ToInt32(numero)).
-                                                                    Tables[0].AsEnumerable().First();
-                    var clienteRow = miBussinesCliente.PrintCliente(cliente).
-                                                Tables[0].AsEnumerable().First();
-                    var tDetalle = miBussinesRemision.PrintProducto(Convert.ToInt32(numero), descto).Tables[0];
 
-                    Ticket ticket = new Ticket();
-                    ticket.UseItem = false;
+                var empresaRow = miBussinesEmpresa.PrintEmpresa().
+                                 Tables[0].AsEnumerable().First();
+                var remisionRow = miBussinesRemision.PrintRemision(numero).
+                                         Tables[0].AsEnumerable().First();
+                var usuarioRow = miBussinesUsuario.PrintUsuarioRemision(Convert.ToInt32(numero)).
+                                                                Tables[0].AsEnumerable().First();
+                var clienteRow = miBussinesCliente.PrintCliente(cliente).
+                                            Tables[0].AsEnumerable().First();
+                var tDetalle = miBussinesRemision.PrintProducto(Convert.ToInt32(numero), descto).Tables[0];
 
-                    ticket.AddHeaderLine(empresaRow["Nombre"].ToString().ToUpper());
-                    ticket.AddHeaderLine(empresaRow["Juridico"].ToString());
-                    ticket.AddHeaderLine("NIT " + UseObject.InsertSeparatorMilMasDigito(empresaRow["Nit"].ToString()));
-                    ticket.AddHeaderLine(empresaRow["Direccion"].ToString());
-                    ticket.AddHeaderLine("Tels. " + empresaRow["Telefono"].ToString());
-                    ticket.AddHeaderLine("REGIMEN " + UseObject.Split(empresaRow["Regimen"].ToString(), 5) +
-                                         "      REMISIÓN");
-                    ticket.AddHeaderLine("Fecha : " + Convert.ToDateTime(remisionRow["Fecha"]).ToShortDateString() +
-                                         " Nro " + numero);
-                    ticket.AddHeaderLine("Hora  : " + Convert.ToDateTime(remisionRow["Hora"]).ToShortTimeString() +
-                                         " Caja  : " + remisionRow["NoCaja"].ToString());
-                    if (!Convert.ToInt32(remisionRow["IdEstado"]).Equals(1))  // Estado : Crédito
-                    {
-                        ticket.AddHeaderLine(remisionRow["Estado"].ToString().ToUpper() + "  Fecha Limite : " +
-                                             Convert.ToDateTime(remisionRow["FechaLimite"]).ToShortDateString());
-                    }
-                    ticket.AddHeaderLine("Cajero(a)  :  " + usuarioRow["Nombre"].ToString());
-                    ticket.AddHeaderLine("===================================");
-                    ticket.AddHeaderLine("CLIENTE : " + clienteRow["Nombre"].ToString());
-                    ticket.AddHeaderLine("NIT     : " + UseObject.InsertSeparatorMilMasDigito(clienteRow["Nit"].ToString()));
-                    ticket.AddHeaderLine("===================================");
+                Ticket ticket = new Ticket();
+                ticket.UseItem = false;
+
+                ticket.AddHeaderLine(empresaRow["Nombre"].ToString().ToUpper());
+                ticket.AddHeaderLine(empresaRow["Juridico"].ToString());
+                ticket.AddHeaderLine("NIT " + UseObject.InsertSeparatorMilMasDigito(empresaRow["Nit"].ToString()));
+                ticket.AddHeaderLine(empresaRow["Direccion"].ToString());
+                ticket.AddHeaderLine("Tels. " + empresaRow["Telefono"].ToString());
+                ticket.AddHeaderLine("REGIMEN " + UseObject.Split(empresaRow["Regimen"].ToString(), 5) +
+                                     "      REMISIÓN");
+                ticket.AddHeaderLine("Fecha : " + Convert.ToDateTime(remisionRow["Fecha"]).ToShortDateString() +
+                                     " Nro " + numero);
+                ticket.AddHeaderLine("Hora  : " + Convert.ToDateTime(remisionRow["Hora"]).ToShortTimeString() +
+                                     " Caja  : " + remisionRow["NoCaja"].ToString());
+                if (!Convert.ToInt32(remisionRow["IdEstado"]).Equals(1))  // Estado : Crédito
+                {
+                    ticket.AddHeaderLine(remisionRow["Estado"].ToString().ToUpper() + "  Fecha Limite : " +
+                                         Convert.ToDateTime(remisionRow["FechaLimite"]).ToShortDateString());
+                }
+                ticket.AddHeaderLine("Cajero(a)  :  " + usuarioRow["Nombre"].ToString());
+                ticket.AddHeaderLine("===================================");
+                ticket.AddHeaderLine("CLIENTE : " + clienteRow["Nombre"].ToString());
+                ticket.AddHeaderLine("NIT     : " + UseObject.InsertSeparatorMilMasDigito(clienteRow["Nit"].ToString()));
+                ticket.AddHeaderLine("===================================");
+                ticket.AddHeaderLine("");
+
+                if (this.GraneroJhonRiosucio)
+                {
+                    this.PrintDetail(tDetalle, ticket);
+                }
+                else
+                {
+                    ticket.AddHeaderLine("COD.  DESCRIP.  CANT.  VENTA  TOTAL");
                     ticket.AddHeaderLine("");
-
-                    if (this.GraneroJhonRiosucio)
+                    foreach (DataRow dRow in tDetalle.Rows)
                     {
-                        this.PrintDetail(tDetalle, ticket);
-                    }
-                    else
-                    {
-                        ticket.AddHeaderLine("COD.  DESCRIP.  CANT.  VENTA  TOTAL");
-                        ticket.AddHeaderLine("");
-                        foreach (DataRow dRow in tDetalle.Rows)
+                        string product = dRow["Producto"].ToString();
+                        if (product.Length > 30)
                         {
-                            string product = dRow["Producto"].ToString();
-                            if (product.Length > 30)
-                            {
-                                product = product.Substring(0, 30);
-                            }
-                            ticket.AddHeaderLine(dRow["Codigo"].ToString() + " " + product);
-                            ticket.AddHeaderLine("              " + dRow["Cantidad"].ToString() + " x " + UseObject.InsertSeparatorMil(dRow["Valor_"].ToString()) +
-                                                 "  " + UseObject.InsertSeparatorMil(dRow["Total_"].ToString()));
+                            product = product.Substring(0, 30);
                         }
+                        ticket.AddHeaderLine(dRow["Codigo"].ToString() + " " + product);
+                        ticket.AddHeaderLine("              " + dRow["Cantidad"].ToString() + " x " + UseObject.InsertSeparatorMil(dRow["Valor_"].ToString()) +
+                                             "  " + UseObject.InsertSeparatorMil(dRow["Total_"].ToString()));
                     }
-                    ticket.AddHeaderLine("");
-                    ticket.AddHeaderLine("===================================");
-                    ticket.AddHeaderLine("");
+                }
+                ticket.AddHeaderLine("");
+                ticket.AddHeaderLine("===================================");
+                ticket.AddHeaderLine("");
 
-                    var total = tDetalle.AsEnumerable().Sum(d => d.Field<int>("Total_"));
-                    ticket.AddHeaderLine("TOTAL     : " + UseObject.InsertSeparatorMil(total.ToString()));
-                    if (Convert.ToInt32(remisionRow["IdEstado"]).Equals(1))
+                var total = tDetalle.AsEnumerable().Sum(d => d.Field<int>("Total_"));
+                ticket.AddHeaderLine("TOTAL     : " + UseObject.InsertSeparatorMil(total.ToString()));
+                if (Convert.ToInt32(remisionRow["IdEstado"]).Equals(1))
+                {
+                    ticket.AddHeaderLine("EFECTIVO  : " + UseObject.InsertSeparatorMil(pago.ToString()));
+                    ticket.AddHeaderLine("CAMBIO    : " + UseObject.InsertSeparatorMil((pago - total).ToString()));
+                }
+                else
+                {
+                    if (Convert.ToInt32(remisionRow["IdEstado"]).Equals(2))
                     {
-                        ticket.AddHeaderLine("EFECTIVO  : " + UseObject.InsertSeparatorMil(pago.ToString()));
-                        ticket.AddHeaderLine("CAMBIO    : " + UseObject.InsertSeparatorMil((pago - total).ToString()));
+                        ticket.AddHeaderLine("EFECTIVO  : " + "0");
+                        ticket.AddHeaderLine("CAMBIO    : " + "0");
                     }
-                    else
-                    {
-                        if (Convert.ToInt32(remisionRow["IdEstado"]).Equals(2))
-                        {
-                            ticket.AddHeaderLine("EFECTIVO  : " + "0");
-                            ticket.AddHeaderLine("CAMBIO    : " + "0");
-                        }
-                    }
-                    ticket.AddHeaderLine("-----------------------------------");
-                    ticket.AddHeaderLine("Software: DFPyme");
-                    ticket.AddHeaderLine("");
-                    ticket.AddHeaderLine("*GRACIAS POR SER NUESTROS CLIENTES*");
-                    ticket.AddHeaderLine("");
+                }
+                ticket.AddHeaderLine("-----------------------------------");
+                ticket.AddHeaderLine("Software: DFPyme");
+                ticket.AddHeaderLine("");
+                ticket.AddHeaderLine("*GRACIAS POR SER NUESTROS CLIENTES*");
+                ticket.AddHeaderLine("");
 
-                    //ticket.PrintTicket("IMPREPOS");
-                    ticket.PrintTicket("Microsoft XPS Document Writer");
+                //ticket.PrintTicket("IMPREPOS");
+                ticket.PrintTicket("Microsoft XPS Document Writer");
 
-                    /*ticket.AddTotal("TOTAL     : ", UseObject.InsertSeparatorMil(total.ToString()));
-                    if (Convert.ToInt32(remisionRow["IdEstado"]).Equals(1))
-                    {
-                        ticket.AddTotal("EFECTIVO  : ", UseObject.InsertSeparatorMil(pago.ToString()));
-                        ticket.AddTotal("CAMBIO    : ", UseObject.InsertSeparatorMil((pago - total).ToString()));
-                        var q = "CAMBIO    : " + UseObject.InsertSeparatorMil((pago - total).ToString());
-                    }
-                    else
-                    {
-                        ticket.AddTotal("EFECTIVO  : ", "0");
-                        ticket.AddTotal("CAMBIO    : ", "0");
-                    }
-                    ticket.AddHeaderLine("===================================");  // Revisar
-                    ticket.AddFooterLine(".");
-                    ticket.AddFooterLine(".");
-                    ticket.AddFooterLine("Software: DFPyme");
-                    ticket.AddFooterLine(".");
-                    ticket.AddFooterLine("*GRACIAS POR SER NUESTROS CLIENTES*");
-                    ticket.AddFooterLine(".");
-                    ticket.AddFooterLine(".");
+                /*ticket.AddTotal("TOTAL     : ", UseObject.InsertSeparatorMil(total.ToString()));
+                if (Convert.ToInt32(remisionRow["IdEstado"]).Equals(1))
+                {
+                    ticket.AddTotal("EFECTIVO  : ", UseObject.InsertSeparatorMil(pago.ToString()));
+                    ticket.AddTotal("CAMBIO    : ", UseObject.InsertSeparatorMil((pago - total).ToString()));
+                    var q = "CAMBIO    : " + UseObject.InsertSeparatorMil((pago - total).ToString());
+                }
+                else
+                {
+                    ticket.AddTotal("EFECTIVO  : ", "0");
+                    ticket.AddTotal("CAMBIO    : ", "0");
+                }
+                ticket.AddHeaderLine("===================================");  // Revisar
+                ticket.AddFooterLine(".");
+                ticket.AddFooterLine(".");
+                ticket.AddFooterLine("Software: DFPyme");
+                ticket.AddFooterLine(".");
+                ticket.AddFooterLine("*GRACIAS POR SER NUESTROS CLIENTES*");
+                ticket.AddFooterLine(".");
+                ticket.AddFooterLine(".");
 
-                    ticket.PrintTicket("IMPREPOS");*/
-                
+                ticket.PrintTicket("IMPREPOS");*/
+
             }
             catch (Exception ex)
             {
@@ -3009,6 +3045,6 @@ namespace Aplicacion.Ventas.Remisiones
             }
         }
 
-        
+
     }
 }

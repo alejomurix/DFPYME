@@ -3013,7 +3013,7 @@ namespace Aplicacion.Ventas.Remisiones
             {
                 if (String.IsNullOrEmpty(txtCliente.Text))
                 {
-                    OptionPane.MessageError("Por favor ingrese un cliente.");
+                    //OptionPane.MessageError("Por favor ingrese un cliente.");
                     miError.SetError(txtCliente, "Por favor ingrese un cliente.");
                     ClienteMatch = false;
                 }
@@ -3027,7 +3027,7 @@ namespace Aplicacion.Ventas.Remisiones
                 {
                     if (IdEstado.Equals(1))
                     {
-                        DialogResult rta_ = DialogResult.Yes;
+                        /**DialogResult rta_ = DialogResult.Yes;
                         if (this.miBono.Canje)
                         {
                             if (UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor) > 0)
@@ -3040,7 +3040,7 @@ namespace Aplicacion.Ventas.Remisiones
                             }
                         }
                         if (rta_.Equals(DialogResult.Yes))
-                        {
+                        {*/
                             ///if (!ExtendForms)
                             ///{
                                 var frmCancel = new Factura.FrmCancelarVenta();
@@ -3051,21 +3051,30 @@ namespace Aplicacion.Ventas.Remisiones
                                 frmCancel.ShowDialog();
                                 txtCodigoArticulo.Focus();
                            /// }
-                        }
+                        /**}
                         else
                         {
                             this.txtCliente.Focus();
                         }
+                        */
                     }
-                    else
+                    else // idestado = 2 (crédito)
                     {
-                        if (FacturaPos)
+                        if (this.txtCliente.Text == "1000")
                         {
-                            CargarYguardarFacturaPos();
+                            miError.SetError(txtCliente, "El cliente no admite créditos.");
                         }
                         else
                         {
-                            CargarYguardarFacturaDespues();
+                            miError.SetError(txtCliente, null);
+                            if (FacturaPos)
+                            {
+                                CargarYguardarFacturaPos();
+                            }
+                            else
+                            {
+                                CargarYguardarFacturaDespues();
+                            }
                         }
                     }
                 }

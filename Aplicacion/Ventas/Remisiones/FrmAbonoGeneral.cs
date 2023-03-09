@@ -66,7 +66,10 @@ namespace Aplicacion.Ventas.Remisiones
 
         private void FrmAbonoGeneral_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if(e.KeyData.Equals(Keys.Escape))
+            {
+                Close();
+            }
         }
 
 
@@ -85,15 +88,23 @@ namespace Aplicacion.Ventas.Remisiones
             {
                 if(Validacion.ValidNumber(txtAbono.Text))
                 {
+                    // dif de cero
                     pago.Valor = UseObject.RemoveSeparatorMil(txtAbono.Text);
-                    if (pago.Valor <= Cliente.Sales.Sum(s => s.Saldo))
+                    if (pago.Valor > 0)
                     {
-                        error.SetError(txtAbono, null);
-                        AbonoMatch = true;
+                        if (pago.Valor <= Cliente.Sales.Sum(s => s.Saldo))
+                        {
+                            error.SetError(txtAbono, null);
+                            AbonoMatch = true;
+                        }
+                        else
+                        {
+                            error.SetError(txtAbono, "El valor del abono no puede ser mayor al saldo.");
+                        }
                     }
                     else
                     {
-                        error.SetError(txtAbono, "El valor del abono no puede ser mayor al saldo.");
+                        error.SetError(txtAbono, "El valor debe ser superior a cero.");
                     }
                 }
                 else
@@ -173,11 +184,19 @@ namespace Aplicacion.Ventas.Remisiones
             {
                 if (Validacion.ValidNumber(txtEfectivo.Text))
                 {
+                    // dif de cero
                     pago.Pago = Convert.ToInt64(UseObject.RemoveSeparatorMil(txtEfectivo.Text));
-                    pago.IdFormaPago = 1;
+                    if (pago.Pago > 0)
+                    {
+                        pago.IdFormaPago = 1;
 
-                    error.SetError(txtEfectivo, null);
-                    EfectivoMatch = true;
+                        error.SetError(txtEfectivo, null);
+                        EfectivoMatch = true;
+                    }
+                    else
+                    {
+                        error.SetError(txtEfectivo, "El valor debe ser superior a cero.");
+                    }
                 }
                 else
                 {

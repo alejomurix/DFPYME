@@ -1765,6 +1765,73 @@ namespace DataAccessLayer.Clases
             return remisiones;
         }
 
+
+        public DataTable Remisiones(int idEstado, DateTime fecha, DateTime fecha2)
+        {
+            var tabla = new DataTable();
+            try
+            {
+                string query = "";
+                if (idEstado.Equals(1)) // contado
+                {
+                    query = @"SELECT * FROM view_remision_basico 
+                                 WHERE  idestado = 1  
+                                 AND fecha BETWEEN @fecha AND @fecha2;";
+                }
+                else  // crédito
+                {
+                    query = @"SELECT * FROM view_remision_basico 
+                                 WHERE estado <> 'Facturada' 
+                                 AND idestado = 2;";
+                }
+                miAdapter = new NpgsqlDataAdapter(query, miConexion.MiConexion);
+                miAdapter.SelectCommand.CommandType = CommandType.Text;
+                if(idEstado.Equals(2))
+                {
+                    miAdapter.SelectCommand.Parameters.AddWithValue("@fecha", fecha);
+                    miAdapter.SelectCommand.Parameters.AddWithValue("@fecha2", fecha2);
+                }
+                miAdapter.Fill(tabla);
+                return tabla;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ErrorConsulta + ex.Message);
+            }
+        }
+
+        public DataTable RemisionesCredito ()
+        {
+            var tabla = new DataTable();
+            try
+            {
+                string query = @"SELECT * FROM view_remision_basico 
+                                 WHERE estado <> 'Facturada' 
+                                 AND idestado = 2;";
+                miAdapter = new NpgsqlDataAdapter(query, miConexion.MiConexion);
+                miAdapter.SelectCommand.CommandType = CommandType.Text;
+                miAdapter.Fill(tabla);
+                /*
+                if (remision)
+                {
+                    CargarAdapter(ConsultaEstadoR);
+                }
+                else
+                {
+                    CargarAdapter(ConsultaEstadoF);
+                }
+                miAdapter.SelectCommand.Parameters.AddWithValue("fecha", fecha);
+                miAdapter.SelectCommand.Parameters.AddWithValue("fecha1", fecha1);
+                miAdapter.Fill(rowBase, rowMax, tabla);
+                */
+                return tabla;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ErrorConsulta + ex.Message);
+            }
+        }
+
         public void UpdateCancel(FacturaVenta remision)
         {
             try

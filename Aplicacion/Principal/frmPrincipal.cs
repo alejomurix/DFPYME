@@ -914,7 +914,7 @@ namespace Aplicacion.Principal
                 try
                 {
                     miBussinesDian = new BussinesLayer.Clases.BussinesDian();
-                    miBussinesApertura = new BussinesLayer.Clases.BussinesApertura();
+                    //miBussinesApertura = new BussinesLayer.Clases.BussinesApertura();
                     var execute = false;
                     if (miBussinesDian.ConsultaDian().Rows.Count != 0)
                     {
@@ -2159,10 +2159,82 @@ namespace Aplicacion.Principal
 
         private void remisiónPOSToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            bool execute = false;
+            try
+            {
+                if (!String.IsNullOrEmpty(AppConfiguracion.ValorSeccion("id_caja")))
+                {
+                    if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("reqApertura")))
+                    {
+                        if (!miBussinesApertura.RegistrosApertura(Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"))).Rows.Count.Equals(0))  //if (!String.IsNullOrEmpty(AppConfiguracion.ValorSeccion("id_apertura")))
+                        {
+                            execute = true;
+                        }
+                        else
+                        {
+                            OptionPane.MessageError("Debe realizar una apertura de caja.");
+                        }
+                    }
+                    else
+                    {
+                        execute = true;
+                    }
+                }
+                else
+                {
+                    OptionPane.MessageError("La estación no tiene configuración de caja.");
+                }
+
+                if(execute)
+                {
+                    if (remPos)
+                        remisionPos = null;
+                    try
+                    {
+                        Ventas.Remisiones.FrmRemision ad =
+                            (Ventas.Remisiones.FrmRemision)this.ActiveMdiChild;
+                        if (ad == null)
+                        {
+                            remisionPos = new Ventas.Remisiones.FrmRemision();
+                            remisionPos.FacturaPos = true;
+                            remisionPos.Usuario_ = this.Usuario_;
+                            remisionPos.CargaCliente = CargaCliente;
+                            remisionPos.MdiParent = this;
+                            remisionPos.Show();
+                            remisionPos.txtCodigoArticulo.Focus();
+                            remPos = true;
+                        }
+                        else
+                            remPos = false;
+                    }
+                    catch
+                    {
+                        if (remisionPos == null)
+                        {
+                            remisionPos = new Ventas.Remisiones.FrmRemision();
+                            remisionPos.FacturaPos = true;
+                            remisionPos.Usuario_ = this.Usuario_;
+                            remisionPos.MdiParent = this;
+                            remisionPos.CargaCliente = CargaCliente;
+                            remisionPos.Show();
+                            remisionPos.txtCodigoArticulo.Focus();
+                            remPos = true;
+                        }
+                        else
+                            remPos = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                OptionPane.MessageError(ex.Message);
+            }
+
+
             /*if (this.miBussinesDian.FacturacionActiva("IdRegistroDian", "Factura") && 
                 Convert.ToBoolean(AppConfiguracion.ValorSeccion("bloquear_facturacion")))
             {*/
-                remisionPos = new Ventas.Remisiones.FrmRemision();
+            /**remisionPos = new Ventas.Remisiones.FrmRemision();
                 remisionPos.Usuario_ = this.Usuario_;
                 remisionPos.FacturaPos = true;
                 remisionPos.CargaCliente = CargaCliente;
@@ -2175,7 +2247,7 @@ namespace Aplicacion.Principal
                 else
                 {
                     remisionPos.txtCliente.Focus();
-                }
+                }*/
             /*}
             else
             {

@@ -298,7 +298,8 @@ namespace BussinesLayer.Clases
             var miDaoDevolucion = new DaoDevolucion();
 
             FacturaVenta remision;
-            foreach (DataRow row in miDaoRemision.consultaEstado(true, fecha, fecha1, 0, 10000000).Rows)
+            //foreach (DataRow row in miDaoRemision.consultaEstado(true, fecha, fecha1, 0, 10000000).Rows)
+            foreach (DataRow row in miDaoRemision.RemisionesCredito().Rows)
             {
                 remision = new FacturaVenta { Numero = row["numero"].ToString() };
 
@@ -308,6 +309,23 @@ namespace BussinesLayer.Clases
                 remision.Saldo = miDaoDevolucion.SaldoRemision(Convert.ToInt32(row["numero"]));
                 remision.Saldo = Convert.ToInt32(remision.Total) - (remision.Pagos + remision.Saldo);
                 
+                if (remision.Saldo == 0)
+                {
+                    remision.Cancel = true;
+                }
+                miDaoRemision.UpdateTotalCancel(remision);
+            }
+
+            foreach (DataRow row in miDaoRemision.Remisiones(1, fecha, fecha1).Rows)
+            {
+                remision = new FacturaVenta { Numero = row["numero"].ToString() };
+
+                remision.Total = ProductoRemision(Convert.ToInt32(row["numero"]), Convert.ToBoolean(row["aplica_descuento"]))
+                    .AsEnumerable().Sum(s => s.Field<int>("Valor"));
+                remision.Pagos = miBussinesPago.GetTotalPagoRemision(Convert.ToInt32(row["numero"]));
+                remision.Saldo = miDaoDevolucion.SaldoRemision(Convert.ToInt32(row["numero"]));
+                remision.Saldo = Convert.ToInt32(remision.Total) - (remision.Pagos + remision.Saldo);
+
                 if (remision.Saldo == 0)
                 {
                     remision.Cancel = true;

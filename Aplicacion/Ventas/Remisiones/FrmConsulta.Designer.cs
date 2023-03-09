@@ -29,16 +29,15 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmConsulta));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gbCritero = new System.Windows.Forms.GroupBox();
-            this.cbCriterio1 = new System.Windows.Forms.ComboBox();
             this.cbCriterio = new System.Windows.Forms.ComboBox();
             this.txtCodigo = new System.Windows.Forms.TextBox();
             this.btnBuscarCodigo = new System.Windows.Forms.Button();
@@ -46,6 +45,7 @@
             this.dtpFecha1 = new System.Windows.Forms.DateTimePicker();
             this.dtpFecha2 = new System.Windows.Forms.DateTimePicker();
             this.btnBuscar1 = new System.Windows.Forms.Button();
+            this.cbCriterio1 = new System.Windows.Forms.ComboBox();
             this.tsMenu = new System.Windows.Forms.ToolStrip();
             this.tsBtnEditar = new System.Windows.Forms.ToolStripButton();
             this.tsBtnSaldarRemision = new System.Windows.Forms.ToolStripButton();
@@ -59,16 +59,6 @@
             this.tsMenuFactura = new System.Windows.Forms.ToolStrip();
             this.btnAnular = new System.Windows.Forms.ToolStripButton();
             this.dgvFactura = new System.Windows.Forms.DataGridView();
-            this.Nit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Proveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Numero = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaLimite = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DesctoFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Descuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IdEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EstadoP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EstadoFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StatusFactura = new System.Windows.Forms.StatusStrip();
             this.btnInicio = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnAnterior = new System.Windows.Forms.ToolStripDropDownButton();
@@ -125,6 +115,17 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnTotalRemisiones = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.Nit = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Proveedor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Numero = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FechaIngreso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FechaLimite = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DesctoFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Descuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IdEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EstadoP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EstadoFactura = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Anulada = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbCritero.SuspendLayout();
             this.tsMenu.SuspendLayout();
             this.gbFactura.SuspendLayout();
@@ -152,20 +153,6 @@
             this.gbCritero.Size = new System.Drawing.Size(701, 54);
             this.gbCritero.TabIndex = 2;
             this.gbCritero.TabStop = false;
-            // 
-            // cbCriterio1
-            // 
-            this.cbCriterio1.DisplayMember = "Nombre";
-            this.cbCriterio1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCriterio1.Enabled = false;
-            this.cbCriterio1.FormattingEnabled = true;
-            this.cbCriterio1.Location = new System.Drawing.Point(1047, 109);
-            this.cbCriterio1.Name = "cbCriterio1";
-            this.cbCriterio1.Size = new System.Drawing.Size(16, 24);
-            this.cbCriterio1.TabIndex = 4;
-            this.cbCriterio1.ValueMember = "Id";
-            this.cbCriterio1.Visible = false;
-            this.cbCriterio1.SelectionChangeCommitted += new System.EventHandler(this.cbCriterio1_SelectionChangeCommitted);
             // 
             // cbCriterio
             // 
@@ -240,6 +227,20 @@
             this.btnBuscar1.TabIndex = 9;
             this.btnBuscar1.UseVisualStyleBackColor = true;
             this.btnBuscar1.Click += new System.EventHandler(this.btnBuscar1_Click);
+            // 
+            // cbCriterio1
+            // 
+            this.cbCriterio1.DisplayMember = "Nombre";
+            this.cbCriterio1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCriterio1.Enabled = false;
+            this.cbCriterio1.FormattingEnabled = true;
+            this.cbCriterio1.Location = new System.Drawing.Point(1047, 109);
+            this.cbCriterio1.Name = "cbCriterio1";
+            this.cbCriterio1.Size = new System.Drawing.Size(16, 24);
+            this.cbCriterio1.TabIndex = 4;
+            this.cbCriterio1.ValueMember = "Id";
+            this.cbCriterio1.Visible = false;
+            this.cbCriterio1.SelectionChangeCommitted += new System.EventHandler(this.cbCriterio1_SelectionChangeCommitted);
             // 
             // tsMenu
             // 
@@ -388,86 +389,14 @@
             this.Descuento,
             this.IdEstado,
             this.EstadoP,
-            this.EstadoFactura});
+            this.EstadoFactura,
+            this.Anulada});
             this.dgvFactura.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgvFactura.Location = new System.Drawing.Point(7, 13);
             this.dgvFactura.Name = "dgvFactura";
             this.dgvFactura.Size = new System.Drawing.Size(985, 181);
             this.dgvFactura.TabIndex = 0;
             this.dgvFactura.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFactura_CellClick);
-            // 
-            // Nit
-            // 
-            this.Nit.DataPropertyName = "nitcliente";
-            this.Nit.HeaderText = "Nit";
-            this.Nit.Name = "Nit";
-            this.Nit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Nit.Width = 150;
-            // 
-            // Proveedor
-            // 
-            this.Proveedor.DataPropertyName = "cliente";
-            this.Proveedor.HeaderText = "Cliente";
-            this.Proveedor.Name = "Proveedor";
-            this.Proveedor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Proveedor.Width = 270;
-            // 
-            // Numero
-            // 
-            this.Numero.DataPropertyName = "numero";
-            this.Numero.HeaderText = "Número";
-            this.Numero.Name = "Numero";
-            this.Numero.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Numero.Width = 190;
-            // 
-            // FechaIngreso
-            // 
-            this.FechaIngreso.DataPropertyName = "fecha";
-            this.FechaIngreso.HeaderText = "Fecha de Ingreso";
-            this.FechaIngreso.Name = "FechaIngreso";
-            this.FechaIngreso.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FechaIngreso.Width = 130;
-            // 
-            // FechaLimite
-            // 
-            this.FechaLimite.DataPropertyName = "fechalimite";
-            this.FechaLimite.HeaderText = "FechaLimite";
-            this.FechaLimite.Name = "FechaLimite";
-            this.FechaLimite.Visible = false;
-            // 
-            // DesctoFactura
-            // 
-            this.DesctoFactura.DataPropertyName = "aplica_descuento";
-            this.DesctoFactura.HeaderText = "Descuento";
-            this.DesctoFactura.Name = "DesctoFactura";
-            this.DesctoFactura.Visible = false;
-            // 
-            // Descuento
-            // 
-            this.Descuento.DataPropertyName = "descuento";
-            this.Descuento.HeaderText = "Descto";
-            this.Descuento.Name = "Descuento";
-            this.Descuento.Visible = false;
-            // 
-            // IdEstado
-            // 
-            this.IdEstado.DataPropertyName = "idestado";
-            this.IdEstado.HeaderText = "IdEstado";
-            this.IdEstado.Name = "IdEstado";
-            this.IdEstado.Visible = false;
-            // 
-            // EstadoP
-            // 
-            this.EstadoP.DataPropertyName = "descripcionestado";
-            this.EstadoP.HeaderText = "Pago";
-            this.EstadoP.Name = "EstadoP";
-            // 
-            // EstadoFactura
-            // 
-            this.EstadoFactura.DataPropertyName = "estado";
-            this.EstadoFactura.HeaderText = "Estado";
-            this.EstadoFactura.Name = "EstadoFactura";
-            this.EstadoFactura.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // StatusFactura
             // 
@@ -647,10 +576,10 @@
             // Cantidad
             // 
             this.Cantidad.DataPropertyName = "Cantidad";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "N1";
-            dataGridViewCellStyle9.NullValue = null;
-            this.Cantidad.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N1";
+            dataGridViewCellStyle1.NullValue = null;
+            this.Cantidad.DefaultCellStyle = dataGridViewCellStyle1;
             this.Cantidad.HeaderText = "Cantidad";
             this.Cantidad.Name = "Cantidad";
             this.Cantidad.ReadOnly = true;
@@ -659,8 +588,8 @@
             // 
             // Devolucion
             // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.Devolucion.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.Devolucion.DefaultCellStyle = dataGridViewCellStyle2;
             this.Devolucion.HeaderText = "Devolución";
             this.Devolucion.Name = "Devolucion";
             this.Devolucion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -669,10 +598,10 @@
             // Valor
             // 
             this.Valor.DataPropertyName = "ValorUnitario";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.Format = "N0";
-            dataGridViewCellStyle11.NullValue = null;
-            this.Valor.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N0";
+            dataGridViewCellStyle3.NullValue = null;
+            this.Valor.DefaultCellStyle = dataGridViewCellStyle3;
             this.Valor.HeaderText = "Valor Unitario";
             this.Valor.Name = "Valor";
             this.Valor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -681,9 +610,9 @@
             // Descto
             // 
             this.Descto.DataPropertyName = "Descuento";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.NullValue = null;
-            this.Descto.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.NullValue = null;
+            this.Descto.DefaultCellStyle = dataGridViewCellStyle4;
             this.Descto.HeaderText = "Descto";
             this.Descto.Name = "Descto";
             this.Descto.ReadOnly = true;
@@ -693,10 +622,10 @@
             // ValorMenosDescto
             // 
             this.ValorMenosDescto.DataPropertyName = "ValorMenosDescto";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.Format = "N2";
-            dataGridViewCellStyle13.NullValue = null;
-            this.ValorMenosDescto.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = null;
+            this.ValorMenosDescto.DefaultCellStyle = dataGridViewCellStyle5;
             this.ValorMenosDescto.HeaderText = "Valor - Descto";
             this.ValorMenosDescto.Name = "ValorMenosDescto";
             this.ValorMenosDescto.ReadOnly = true;
@@ -706,8 +635,8 @@
             // Iva
             // 
             this.Iva.DataPropertyName = "Iva";
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Iva.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Iva.DefaultCellStyle = dataGridViewCellStyle6;
             this.Iva.HeaderText = "Iva";
             this.Iva.Name = "Iva";
             this.Iva.ReadOnly = true;
@@ -717,10 +646,10 @@
             // TotalMasIva
             // 
             this.TotalMasIva.DataPropertyName = "TotalMasIva";
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle15.Format = "N2";
-            dataGridViewCellStyle15.NullValue = null;
-            this.TotalMasIva.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "N2";
+            dataGridViewCellStyle7.NullValue = null;
+            this.TotalMasIva.DefaultCellStyle = dataGridViewCellStyle7;
             this.TotalMasIva.HeaderText = "Valor + Iva";
             this.TotalMasIva.Name = "TotalMasIva";
             this.TotalMasIva.ReadOnly = true;
@@ -730,10 +659,10 @@
             // Total
             // 
             this.Total.DataPropertyName = "Valor";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle16.Format = "N2";
-            dataGridViewCellStyle16.NullValue = null;
-            this.Total.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N2";
+            dataGridViewCellStyle8.NullValue = null;
+            this.Total.DefaultCellStyle = dataGridViewCellStyle8;
             this.Total.HeaderText = "Valor Total";
             this.Total.Name = "Total";
             this.Total.ReadOnly = true;
@@ -1080,6 +1009,86 @@
             this.label9.TabIndex = 24;
             this.label9.Text = "TOTAL REM";
             // 
+            // Nit
+            // 
+            this.Nit.DataPropertyName = "nitcliente";
+            this.Nit.HeaderText = "Nit";
+            this.Nit.Name = "Nit";
+            this.Nit.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Nit.Width = 150;
+            // 
+            // Proveedor
+            // 
+            this.Proveedor.DataPropertyName = "cliente";
+            this.Proveedor.HeaderText = "Cliente";
+            this.Proveedor.Name = "Proveedor";
+            this.Proveedor.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Proveedor.Width = 270;
+            // 
+            // Numero
+            // 
+            this.Numero.DataPropertyName = "numero";
+            this.Numero.HeaderText = "Número";
+            this.Numero.Name = "Numero";
+            this.Numero.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Numero.Width = 190;
+            // 
+            // FechaIngreso
+            // 
+            this.FechaIngreso.DataPropertyName = "fecha";
+            this.FechaIngreso.HeaderText = "Fecha de Ingreso";
+            this.FechaIngreso.Name = "FechaIngreso";
+            this.FechaIngreso.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FechaIngreso.Width = 130;
+            // 
+            // FechaLimite
+            // 
+            this.FechaLimite.DataPropertyName = "fechalimite";
+            this.FechaLimite.HeaderText = "FechaLimite";
+            this.FechaLimite.Name = "FechaLimite";
+            this.FechaLimite.Visible = false;
+            // 
+            // DesctoFactura
+            // 
+            this.DesctoFactura.DataPropertyName = "aplica_descuento";
+            this.DesctoFactura.HeaderText = "Descuento";
+            this.DesctoFactura.Name = "DesctoFactura";
+            this.DesctoFactura.Visible = false;
+            // 
+            // Descuento
+            // 
+            this.Descuento.DataPropertyName = "descuento";
+            this.Descuento.HeaderText = "Descto";
+            this.Descuento.Name = "Descuento";
+            this.Descuento.Visible = false;
+            // 
+            // IdEstado
+            // 
+            this.IdEstado.DataPropertyName = "idestado";
+            this.IdEstado.HeaderText = "IdEstado";
+            this.IdEstado.Name = "IdEstado";
+            this.IdEstado.Visible = false;
+            // 
+            // EstadoP
+            // 
+            this.EstadoP.DataPropertyName = "descripcionestado";
+            this.EstadoP.HeaderText = "Pago";
+            this.EstadoP.Name = "EstadoP";
+            // 
+            // EstadoFactura
+            // 
+            this.EstadoFactura.DataPropertyName = "estado";
+            this.EstadoFactura.HeaderText = "Estado";
+            this.EstadoFactura.Name = "EstadoFactura";
+            this.EstadoFactura.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Anulada
+            // 
+            this.Anulada.DataPropertyName = "anulada";
+            this.Anulada.HeaderText = "Anulada";
+            this.Anulada.Name = "Anulada";
+            this.Anulada.Visible = false;
+            // 
             // FrmConsulta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1182,16 +1191,6 @@
         private System.Windows.Forms.TextBox txtResta;
         private System.Windows.Forms.ToolStripButton tsBtnCopia;
         private System.Windows.Forms.ToolStripButton btnAnular;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Proveedor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Numero;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FechaIngreso;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FechaLimite;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DesctoFactura;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Descuento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdEstado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoP;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoFactura;
         private System.Windows.Forms.ToolStripButton tsBtnConsultaIngresos;
         private System.Windows.Forms.ToolStripButton tsBtnVerPagos;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdProducto;
@@ -1218,5 +1217,16 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnTotalRemisiones;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Proveedor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Numero;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FechaIngreso;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FechaLimite;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DesctoFactura;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Descuento;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdEstado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoFactura;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Anulada;
     }
 }

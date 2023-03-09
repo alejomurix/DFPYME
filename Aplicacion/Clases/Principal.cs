@@ -64,7 +64,7 @@ namespace Aplicacion.Clases
             // Application.Run(new Aplicacion.Ventas.Cliente.frmCliente());
             // Application.Run(new Aplicacion.Administracion.CajaDiario.FrmConsultaCajaFecha());
 
-            Application.Run(new Aplicacion.Ventas.Form3());
+           // Application.Run(new Aplicacion.Ventas.Form3());
 
             ///  Application.Run(new Aplicacion.Ventas.Form5());
             //Application.Run(new Aplicacion.Administracion.CajaDiario.FrmConsultaCajaFecha());
