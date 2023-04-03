@@ -1,10 +1,14 @@
-﻿namespace DTO.Clases
+﻿using System;
+
+namespace DTO.Clases
 {
     /// <summary>
     /// Representa una clase para los datos de los Productos en la Factura de Proveedor.
     /// </summary>
-    public class ProductoFacturaProveedor
+    public class ProductoFacturaProveedor : ICloneable
     {
+        public virtual object Clone() { return this.MemberwiseClone(); }
+
         /// <summary>
         /// Obtiene o establece el valor del Id unico de la relacion.
         /// </summary>
@@ -56,6 +60,10 @@
         public int Costo { set; get; }
 
         public double ValorReal { set; get; }
+
+        public double Price { set; get; }
+
+        public double TotalPrice { set; get; }
 
         public double ImpoConsumo { set; get; }
 

@@ -61,14 +61,17 @@ namespace DTO.Clases
         /// </summary>
         public FacturaVenta() :base()
         {
+            this.FechaIngreso = System.DateTime.Now;
             this.IcoBolsaPlastica = new ImpuestoBolsa();
             this.FormasDePago = new List<FormaPago>();
             this.Caja = new Caja();
             this.EstadoFactura = new Estado();
             this.AplicaDescuento = true;
+            this.Descuento = 0;
             this.Recargo = 0.0;
             this.Remision_ = false;
             this.Valor = 0;
+            this.Total = 0;
             this.Pendiente = false;
             this.IdResolucionDian = 0;
             this.NameStation = "";

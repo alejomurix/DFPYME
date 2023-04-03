@@ -302,7 +302,7 @@ namespace Aplicacion.Ventas.Factura
                         txtCambio.Text = UseObject.InsertSeparatorMil
                                 (
                                     ((UseObject.RemoveSeparatorMil(txtEfectivo.Text) +
-                                        UseObject.RemoveSeparatorMil(txtCheque.Text) +
+                                       // UseObject.RemoveSeparatorMil(txtCheque.Text) +
                                         UseObject.RemoveSeparatorMil(txtTarjeta.Text)) -
                                         UseObject.RemoveSeparatorMil(txtTotal.Text))
                                         .ToString()

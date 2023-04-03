@@ -64,7 +64,7 @@ namespace Aplicacion.Clases
             // Application.Run(new Aplicacion.Ventas.Cliente.frmCliente());
             // Application.Run(new Aplicacion.Administracion.CajaDiario.FrmConsultaCajaFecha());
 
-           // Application.Run(new Aplicacion.Ventas.Form3());
+            // Application.Run(new Aplicacion.Ventas.Form3());
 
             ///  Application.Run(new Aplicacion.Ventas.Form5());
             //Application.Run(new Aplicacion.Administracion.CajaDiario.FrmConsultaCajaFecha());
@@ -105,6 +105,19 @@ namespace Aplicacion.Clases
             ///Application.Run(new FormulariosSistema.FrmElectronicDocument());
             ///Application.Run(new FormulariosSistema.FrmListDE());
             ///Application.Run(new FormulariosSistema.FrmProductList());
+            ///
+
+            /*
+            Ventas.Factura.FrmFacturaPos ventaPOS = new Ventas.Factura.FrmFacturaPos();
+            ventaPOS.Usuario_ = new DTO.Clases.Usuario { Id = 6};
+            ventaPOS.FacturaPos = true;
+            ventaPOS.CargaCliente = true;
+            ventaPOS.Show();
+            */
+
+            //Ventas.Factura.Form1 frm = new Ventas.Factura.Form1();
+            //frm.Show();
+            ///Application.Run(new Ventas.Factura.Form1());
         }
     }
 }

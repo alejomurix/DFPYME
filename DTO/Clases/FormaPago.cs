@@ -5,7 +5,7 @@ namespace DTO.Clases
     /// <summary>
     /// Representa una clase para los datos de Forma de Pago.
     /// </summary>
-    public class FormaPago
+    public class FormaPago : ICloneable
     {
         public int Id { set; get; }
 
@@ -118,5 +118,8 @@ namespace DTO.Clases
                 }
             }
         }
+
+
+        public virtual object Clone() { return this.MemberwiseClone(); }
     }
 }

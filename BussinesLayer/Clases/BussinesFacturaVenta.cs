@@ -69,6 +69,7 @@ namespace BussinesLayer.Clases
         /// <param name="edicion">Indica si la factura proviene de una edición de la misma.</param>
         public int IngresarFactura(FacturaVenta factura, bool edicion, bool anutigua, bool consecutivoCaja)
         {
+            factura.Total = factura.Productos.Sum(s => s.Total);
             return this.miDaoFacturaVenta.IngresarFactura(factura, edicion, anutigua, consecutivoCaja);
         }
 
@@ -1544,6 +1545,79 @@ namespace BussinesLayer.Clases
         {
             miDaoFacturaVenta.AnularFactura(factura, carga);
         }
+
+        // seccion actualizacion segmemto POS 17-03-2023
+
+        public DataTable LoadProducts(int idFactura)
+        {
+            var miTabla = new DataTable();
+            miTabla.Columns.Add(new DataColumn("Id", typeof(int)));
+            miTabla.Columns.Add(new DataColumn("Codigo", typeof(string)));      //  *
+            miTabla.Columns.Add(new DataColumn("Articulo", typeof(string)));    //  *
+            miTabla.Columns.Add(new DataColumn("Cantidad", typeof(string)));    //  *
+            miTabla.Columns.Add(new DataColumn("ValorUnitario", typeof(double)));       // precio venta sin impuestos
+            miTabla.Columns.Add(new DataColumn("Descuento", typeof(string)));
+            miTabla.Columns.Add(new DataColumn("ValorMenosDescto", typeof(double)));    //valmenosdesc sin impuestos
+            miTabla.Columns.Add(new DataColumn("Iva", typeof(string)));                 //  % iva
+            miTabla.Columns.Add(new DataColumn("TotalMasIva", typeof(double)));         // valor mas impuestos (precio unit) *
+            miTabla.Columns.Add(new DataColumn("Valor", typeof(double)));               // valor total = precio * cant       *
+            miTabla.Columns.Add(new DataColumn("Unidad", typeof(string)));
+            miTabla.Columns.Add(new DataColumn("IdMedida", typeof(int)));
+            miTabla.Columns.Add(new DataColumn("Medida", typeof(string)));
+            miTabla.Columns.Add(new DataColumn("IdColor", typeof(int)));
+            miTabla.Columns.Add(new DataColumn("IdMarca", typeof(int)));
+            miTabla.Columns.Add(new DataColumn("Color", typeof(System.Drawing.Image)));
+            miTabla.Columns.Add(new DataColumn("Save", typeof(bool)));
+
+            miTabla.Columns.Add(new DataColumn("Retorno", typeof(bool)));        //  *
+            miTabla.Columns.Add(new DataColumn("Valor_", typeof(double)));              // igual a ValorMenosDescto
+            miTabla.Columns.Add(new DataColumn("Ico", typeof(double)));
+
+            miTabla.Columns.Add(new DataColumn("ValorIva", typeof(double)));            // valor del iva
+
+            miTabla.Columns.Add(new DataColumn("IdTipoInventario", typeof(int)));
+            miTabla.Columns.Add(new DataColumn("IdIva", typeof(int)));
+
+            foreach (DataRow row in miDaoProducto.ProductoFacturaVenta(idFactura).Rows)
+            {
+                var rw = miTabla.NewRow();
+                rw["Codigo"] = row["Codigo"];
+                rw["Articulo"] = row["Producto"];
+                rw["Cantidad"] = row["Cantidad"];
+                rw["Ico"] = Convert.ToInt32(row["impoconsumo"]);
+                rw["ValorMenosDescto"] = Math.Round(
+                         (Convert.ToDouble(row["Valor"]) -
+                         (Convert.ToDouble(row["Valor"]) * Convert.ToDouble(row["Descuento"]) / 100)), 1);
+                
+                double vIva = Math.Round(
+                    (Convert.ToDouble(rw["ValorMenosDescto"]) * Convert.ToDouble(row["Iva"]) / 100), 1);
+                rw["TotalMasIva"] = Math.Round((Convert.ToDouble(rw["ValorMenosDescto"]) + vIva + Convert.ToInt32(row["impoconsumo"])), 0);
+                if (this.RedondearPrecio2)
+                {
+                    rw["TotalMasIva"] = UseObject.Aproximar(Convert.ToInt32(rw["TotalMasIva"]),
+                                            Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio")));
+                }
+                rw["Valor"] = Convert.ToInt32(
+                              Convert.ToDouble(rw["TotalMasIva"]) * Convert.ToDouble(rw["Cantidad"]));
+
+                rw["Retorno"] = row["retorno"];
+
+
+                rw["ValorUnitario"] = row["Valor"];
+                rw["Descuento"] = row["Descuento"];
+                rw["Iva"] = row["Iva"];
+
+                rw["IdMedida"] = row["IdMedida"];
+                rw["IdColor"] = row["IdColor"];
+                rw["IdMarca"] = row["idmarca"];
+
+                miTabla.Rows.Add(rw);
+            }
+
+            return miTabla;
+        }
+
+        // fin seccion actualizacion segmemto POS
 
         /// <summary>
         /// Obtiene el resultado de la consulta de los productos de una Factura de Venta.

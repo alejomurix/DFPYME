@@ -302,8 +302,9 @@ namespace FormulariosSistema
                             //this.Document.IdResolucion = this.Document.Resolution.id;
                             this.Document.NoItems = this.Document.Items.Count;
                             this.Document.Total = this.Document.Items.Sum(s => s.Total);
+                            this.Document.Neto = this.Document.Total - Math.Round(this.Document.Retentions.Sum(s => s.Value), 2);
+                            //this.TotalInvoice.Retention = Math.Round(this.Document.Retentions.Sum(s => s.Value), 2);
 
-                            
 
                             //this.repositoryModel.UpdateConsecutiveResolution();
                             //this.repositoryModel.EditElectronicDocumentAll(Document);

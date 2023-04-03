@@ -440,6 +440,13 @@ namespace Aplicacion.Ventas.Factura
                 {
                     this.DescuentoMarca = true;
                 }
+
+                maxSales = Convert.ToInt32(miBussinesConsecutivo.Consecutivo("maxVenta"));
+
+                factura = new FacturaVenta();
+                facturas = new List<FacturaVenta>();
+                products = new List<ProductoFacturaProveedor>();
+
             }
             catch (Exception ex)
             {
@@ -475,7 +482,7 @@ namespace Aplicacion.Ventas.Factura
 
                 this.Valor.Visible = false;
                 */
-                
+
 
                 miFactura.Usuario = Administracion.Usuario.FrmIniciarSesion.CargarDatosUsuario(this);
 
@@ -537,7 +544,11 @@ namespace Aplicacion.Ventas.Factura
                     this.txtCliente.Text = "1000";
                     this.txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
                 }
-               
+
+
+                //maxSales = 100000;
+                ///LoadProducts();
+                //SegmentaProducts(100000);
             }
             catch (Exception ex)
             {
@@ -650,7 +661,7 @@ namespace Aplicacion.Ventas.Factura
                                             }
                                         }
 
-                                        
+
                                         /* if (this.FuncionExpulsaCajon)
                                          {
                                              this.ExpulsarCajonMonedero();
@@ -1181,7 +1192,7 @@ namespace Aplicacion.Ventas.Factura
                 frmCliente.FacturaVenta = true;
                 ClienteMatch = true;
                 ExtendForms = true;
-                
+
                 frmCliente.ShowDialog();
                 frmCliente.txtNit.Focus();
                 this.txtCodigoArticulo.Focus();
@@ -1508,7 +1519,7 @@ namespace Aplicacion.Ventas.Factura
                             }
                         }
 
-                        
+
                         /*if (MiProducto != null)
                         {
                             CargarColorOconsulta();
@@ -1747,6 +1758,8 @@ namespace Aplicacion.Ventas.Factura
 
         private void btnTallaYcolor_Click(object sender, EventArgs e)
         {
+
+            /**
             if (MiProducto != null)
             {
                 if (MiProducto.AplicaTalla || MiProducto.AplicaColor)
@@ -1778,7 +1791,7 @@ namespace Aplicacion.Ventas.Factura
             else
             {
                 OptionPane.MessageInformation("Debe seleccionar un Articulo primero.");
-            }
+            }*/
         }
 
         private void chkFacturaPos_Click(object sender, EventArgs e)
@@ -2984,7 +2997,8 @@ namespace Aplicacion.Ventas.Factura
                     if (obj.Id.Equals(10095))
                     {
                         miFormasPago = (List<DTO.Clases.FormaPago>)obj.Objeto;
-                        CargarYguardarFacturaPos();
+                        LoadPayments();
+                        ///CargarYguardarFacturaPos();
                     }
                     //miFormasPago = (List<DTO.Clases.FormaPago>)args.MiObjeto;
 
@@ -3009,7 +3023,7 @@ namespace Aplicacion.Ventas.Factura
                 this.Transfer = (bool)args.MiObjeto;
                 if (ExtendForms)
                 {
-                    
+
                     txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
                 }
                 /*else
@@ -3020,7 +3034,7 @@ namespace Aplicacion.Ventas.Factura
                 }
                 ExtendForms = false;*/
             }
-            catch {   }
+            catch { }
 
             try
             {
@@ -3370,34 +3384,34 @@ namespace Aplicacion.Ventas.Factura
 
             var j_ = row["ValorMenosDescto"].ToString();
 
-           /* if (this.MiProducto.Impoconsumo > 0)
-            {
-                double ventaMasIco = valorUnitario + this.MiProducto.Impoconsumo;
-                double ventaMasIcoMenosDescto_ = Math.Round((ventaMasIco -
-                    (ventaMasIco * UseObject.RemoveCharacter(row["Descuento"].ToString(), '%') / 100)), 1);
-                ventaMasIcoMenosDescto_ -= this.MiProducto.Impoconsumo;
+            /* if (this.MiProducto.Impoconsumo > 0)
+             {
+                 double ventaMasIco = valorUnitario + this.MiProducto.Impoconsumo;
+                 double ventaMasIcoMenosDescto_ = Math.Round((ventaMasIco -
+                     (ventaMasIco * UseObject.RemoveCharacter(row["Descuento"].ToString(), '%') / 100)), 1);
+                 ventaMasIcoMenosDescto_ -= this.MiProducto.Impoconsumo;
 
-                if (miEmpresa.Regimen.IdRegimen == 1)  //Comun
-                {
-                    if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("precio_venta_iva"))) // Precios incluye IVA
-                    {
-                        row["ValorMenosDescto"] = Math.Round((ventaMasIcoMenosDescto_ / (1 + (MiProducto.ValorIva / 100))), 1);
-                    }
-                    else
-                    {
-                        row["ValorMenosDescto"] = ventaMasIcoMenosDescto_;
-                    }
-                }
-                else
-                {
-                    row["ValorMenosDescto"] = ventaMasIcoMenosDescto_;
-                }
-            }
-            else
-            {
-                row["ValorMenosDescto"] = Math.Round((Convert.ToDouble(row["ValorUnitario"]) -
-                    (Convert.ToDouble(row["ValorUnitario"]) * UseObject.RemoveCharacter(row["Descuento"].ToString(), '%') / 100)), 1);
-            }*/
+                 if (miEmpresa.Regimen.IdRegimen == 1)  //Comun
+                 {
+                     if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("precio_venta_iva"))) // Precios incluye IVA
+                     {
+                         row["ValorMenosDescto"] = Math.Round((ventaMasIcoMenosDescto_ / (1 + (MiProducto.ValorIva / 100))), 1);
+                     }
+                     else
+                     {
+                         row["ValorMenosDescto"] = ventaMasIcoMenosDescto_;
+                     }
+                 }
+                 else
+                 {
+                     row["ValorMenosDescto"] = ventaMasIcoMenosDescto_;
+                 }
+             }
+             else
+             {
+                 row["ValorMenosDescto"] = Math.Round((Convert.ToDouble(row["ValorUnitario"]) -
+                     (Convert.ToDouble(row["ValorUnitario"]) * UseObject.RemoveCharacter(row["Descuento"].ToString(), '%') / 100)), 1);
+             }*/
 
             // fin edicion por impoconsumo.
 
@@ -4071,7 +4085,13 @@ namespace Aplicacion.Ventas.Factura
                                         {
                                             Usuario_ = miBussinesUsuario.Usuario_(Convert.ToInt32(rtaUser));
 
-                                            VentaContadoCredito();
+                                            ///VentaContadoCredito();
+
+                                            //      test segmentacion
+
+                                            VentaContadoCreditoUpdate();
+
+                                            //      end test
 
                                             /// Codigo para recargar permisos de usuario
                                             AppConfiguracion.SaveConfiguration("id_user", Usuario_.Id.ToString());
@@ -4117,7 +4137,13 @@ namespace Aplicacion.Ventas.Factura
                         }
                         else
                         {
-                            VentaContadoCredito();
+                            ///VentaContadoCredito();
+
+                            //      test segmentacion
+
+                            VentaContadoCreditoUpdate();
+
+                            //      end test
                         }
                         /*string rtaUser = "";
                         usuarioIdentificado = false;
@@ -4135,123 +4161,123 @@ namespace Aplicacion.Ventas.Factura
                                 {
                                     Usuario_ = miBussinesUsuario.Usuario_(Convert.ToInt32(rtaUser));*/
 
-                                    /**
-                                    if (IdEstado == 1)
+                        /**
+                        if (IdEstado == 1)
+                        {
+                            DialogResult rta_ = DialogResult.Yes;
+                            if (this.miBono.Canje)
+                            {
+                                //int v = UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor);
+                                if (UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor) > 0)
+                                {
+                                    if (this.txtCliente.Text == "1000" || this.txtCliente.Text == "10")
                                     {
-                                        DialogResult rta_ = DialogResult.Yes;
-                                        if (this.miBono.Canje)
-                                        {
-                                            //int v = UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor);
-                                            if (UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor) > 0)
-                                            {
-                                                if (this.txtCliente.Text == "1000" || this.txtCliente.Text == "10")
-                                                {
-                                                    rta_ = MessageBox.Show("¿Desea generar la factura sin cliente?", "Factura venta",
-                                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                                }
-                                            }
-                                        }
+                                        rta_ = MessageBox.Show("¿Desea generar la factura sin cliente?", "Factura venta",
+                                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                    }
+                                }
+                            }
 
-                                        if (rta_.Equals(DialogResult.Yes))
-                                        {
-                                            if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("btq")))
-                                            {
-                                                var frmCancelarVenta = new FrmCancelarVenta2();
-                                                frmCancelarVenta.FacturaPos = true;
-                                                frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
-                                                frmCancelarVenta.EsVenta = true;
-                                                Venta = true;
-                                                frmCancelarVenta.ShowDialog();
-                                            }
-                                            else
-                                            {
-                                                var frmCancelarVenta = new FrmCancelarVenta();
-                                                frmCancelarVenta.FacturaPos = true;
+                            if (rta_.Equals(DialogResult.Yes))
+                            {
+                                if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("btq")))
+                                {
+                                    var frmCancelarVenta = new FrmCancelarVenta2();
+                                    frmCancelarVenta.FacturaPos = true;
+                                    frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                                    frmCancelarVenta.EsVenta = true;
+                                    Venta = true;
+                                    frmCancelarVenta.ShowDialog();
+                                }
+                                else
+                                {
+                                    var frmCancelarVenta = new FrmCancelarVenta();
+                                    frmCancelarVenta.FacturaPos = true;
 
-                                                frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
-                                                    Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+                                    frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                        Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
 
 
-                                                frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
-                                                    UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
+                                    frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                        UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
 
-                                                frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
-                                                frmCancelarVenta.EsVenta = true;
-                                                Venta = true;
-                                                frmCancelarVenta.ShowDialog();
-                                            }
-                                            this.Transfer = true;
-                                        }
-                                        else
-                                        {
-                                            this.txtCliente.Focus();
-                                        }
+                                    frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                                    frmCancelarVenta.EsVenta = true;
+                                    Venta = true;
+                                    frmCancelarVenta.ShowDialog();
+                                }
+                                this.Transfer = true;
+                            }
+                            else
+                            {
+                                this.txtCliente.Focus();
+                            }
+                        }
+                        else
+                        {
+                            txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
+                            if (ClienteMatch)
+                            {
+                                var msn = "";
+                                if (IdEstado != 4)
+                                {
+                                    msn = "¿Esta seguro de querer hacer la venta?";
+                                }
+                                else
+                                {
+                                    msn = "¿Esta seguro de querer hacer la cotización?";
+                                }
+                                DialogResult rta = MessageBox.Show(msn, "Factura Venta",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (rta.Equals(DialogResult.Yes))
+                                {
+                                    if (FacturaPos)
+                                    {
+                                        CargarYguardarFacturaPos();
                                     }
                                     else
                                     {
-                                        txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
-                                        if (ClienteMatch)
-                                        {
-                                            var msn = "";
-                                            if (IdEstado != 4)
-                                            {
-                                                msn = "¿Esta seguro de querer hacer la venta?";
-                                            }
-                                            else
-                                            {
-                                                msn = "¿Esta seguro de querer hacer la cotización?";
-                                            }
-                                            DialogResult rta = MessageBox.Show(msn, "Factura Venta",
-                                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                            if (rta.Equals(DialogResult.Yes))
-                                            {
-                                                if (FacturaPos)
-                                                {
-                                                    CargarYguardarFacturaPos();
-                                                }
-                                                else
-                                                {
-                                                    CargarYguardarFactura_();
-                                                }
-                                            }
-                                        }
-                                    }*/
-
-                                    /// Codigo para recargar permisos de usuario
-                                    /*AppConfiguracion.SaveConfiguration("id_user", Usuario_.Id.ToString()); 
-                                    var frmPrincipal_ = (Principal.frmPrincipal)this.MdiParent;
-                                    frmPrincipal_.InhabilitarMenu();
-                                    frmPrincipal_.HabilitarMenu(Usuario_);
-                                    foreach (var ps in Usuario_.Permisos)
-                                    {
-                                        switch (ps.IdPermiso)
-                                        {
-                                            case IdEditarPrecio:
-                                                {
-                                                    this.EditarPrecioPermiso = true;
-                                                    break;
-                                                }
-                                            case IdResetVenta:
-                                                {
-                                                    this.ResetVentaPermiso = true;
-                                                    break;
-                                                }
-                                            case IdSeleccionPendiente:
-                                                {
-                                                    this.SeleccionPendiente = true;
-                                                    break;
-                                                }
-                                            case IdSeleccionCotizacion:
-                                                {
-                                                    this.SeleccionCotizacion = true;
-                                                    break;
-                                                }
-                                        }
+                                        CargarYguardarFactura_();
                                     }
-
                                 }
                             }
                         }*/
+
+                        /// Codigo para recargar permisos de usuario
+                        /*AppConfiguracion.SaveConfiguration("id_user", Usuario_.Id.ToString()); 
+                        var frmPrincipal_ = (Principal.frmPrincipal)this.MdiParent;
+                        frmPrincipal_.InhabilitarMenu();
+                        frmPrincipal_.HabilitarMenu(Usuario_);
+                        foreach (var ps in Usuario_.Permisos)
+                        {
+                            switch (ps.IdPermiso)
+                            {
+                                case IdEditarPrecio:
+                                    {
+                                        this.EditarPrecioPermiso = true;
+                                        break;
+                                    }
+                                case IdResetVenta:
+                                    {
+                                        this.ResetVentaPermiso = true;
+                                        break;
+                                    }
+                                case IdSeleccionPendiente:
+                                    {
+                                        this.SeleccionPendiente = true;
+                                        break;
+                                    }
+                                case IdSeleccionCotizacion:
+                                    {
+                                        this.SeleccionCotizacion = true;
+                                        break;
+                                    }
+                            }
+                        }
+
+                    }
+                }
+            }*/
 
                         /**
                         if (IdEstado == 1)
@@ -4450,6 +4476,397 @@ namespace Aplicacion.Ventas.Factura
             }
         }
 
+        private void VentaContadoCreditoUpdate()
+        {
+            txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
+            if (ClienteMatch)
+            {
+                bool segment = false;
+
+                if (IdEstado.Equals(1) || IdEstado.Equals(2))   //  contado o crédito
+                {
+                    var ts = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
+                                             t.Field<double>("ValorMenosDescto") > maxSales);
+                    var can = ts.Count();
+
+                    var pdtsNoret = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno"));
+
+                    var pdts = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno")).
+                                  Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))));
+
+                    //if (maxSales > 0 && maxSales < miTabla.AsEnumerable().
+                    //Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))))) // segmentacion activa
+                    if (maxSales > 0 && maxSales < miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno")).
+                            Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad")))))
+                    {
+                        //var rows = miTabla.AsEnumerable().Where(t => t.Field<double>("ValorMenosDescto") > maxSales).Count();
+
+                        // ningun articulo por unidad supera el tope -> se puede segmentar (true)
+                        //
+                        if (miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
+                                            t.Field<double>("ValorMenosDescto") > maxSales).Count().Equals(0))
+                        {
+                            segment = true;
+                        }
+                        // si segment = false, desactiva segmentar pos
+                        // msn.option, con mensaje de no puede segmentar y msn de elegir una opcion
+                        //   retornar la seleccion del usuario: 1 segmentar; 2 fact electronic
+
+                        string option = OptionPane.OptionBox(segment);
+
+                        if (option.Equals("1"))
+                        {
+                            //SegmentaProducts(segment);
+
+                            //var fs = facturas;
+
+                            /*DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if (rta.Equals(DialogResult.Yes))
+                            {*/
+                                SegmentaProducts(segment);
+
+                                if (IdEstado == 1)   // factura de contado
+                                {
+
+                                    var frmCancelarVenta = new FrmCancelarVenta();
+                                    frmCancelarVenta.FacturaPos = true;
+
+                                    frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                        Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+
+
+                                    frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                        UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
+
+                                    frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                                    frmCancelarVenta.EsVenta = true;
+                                    Venta = true;
+                                    frmCancelarVenta.ShowDialog();
+
+
+                                    // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
+                                }
+                                else   //  factura crédito
+                                {
+                                    DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                    if (rta.Equals(DialogResult.Yes))
+                                    {
+                                        // guarda factura
+                                        LoadPayments();
+                                    }
+                                }
+                            //}
+
+                        }
+
+                        //                  TEST
+
+                        /*List<ProductoFacturaProveedor> products_ = new List<ProductoFacturaProveedor>();
+                        int num = 0;
+
+                        foreach (var fact in facturas)
+                        {
+                            num++;
+                            foreach (var prod in fact.Productos)
+                            {
+                                prod.NumeroFactura = num.ToString();
+                                products_.Add(prod);
+                            }
+                        }
+                        Form1 f = new Form1();
+                        f.products = products_;
+                        f.Show();*/
+
+                        //                  END TEST
+
+
+                        // if (option = 1)  // segmenta
+                        //SegmentaProducts(true); // crea el conjunto de facturas con total products que no superan el tope
+                        // else     // option = 2 electronic
+                        //genElectronic();
+
+                       
+                    }
+                    else  //  no segmenta -> segment inactiva
+                    {
+                       /* DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (rta.Equals(DialogResult.Yes))
+                        {*/
+                            SegmentaProducts(segment);
+                            // guardaFactura();
+                            //LoadPayments();
+
+                            if (IdEstado == 1)   // factura de contado
+                            {
+
+                                var frmCancelarVenta = new FrmCancelarVenta();
+                                frmCancelarVenta.FacturaPos = true;
+
+                                frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                    Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+
+
+                                frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                    UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
+
+                                frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                                frmCancelarVenta.EsVenta = true;
+                                Venta = true;
+                                frmCancelarVenta.ShowDialog();
+
+
+                                // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
+                            }
+                            else   //  factura crédito
+                            {
+                                // guarda factura
+                                LoadPayments();
+                            }
+                        //}
+
+                    }
+                }
+                else    //  otros: cotiza, pendiente...
+                {
+                    SegmentaProducts(segment);
+                    // guardaFactura();
+                    LoadPayments();
+                }
+
+
+                //}
+            }
+        }
+
+        private void VentaContadoCreditoUpdate_old()
+        {
+            txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
+            if (ClienteMatch)
+            {
+                /*DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (rta.Equals(DialogResult.Yes))
+                {*/
+                    // LoadDataFactura();
+                    bool segment = false;
+
+                    if (IdEstado.Equals(1) || IdEstado.Equals(2))   //  contado o crédito
+                    {
+                        //double totalPrice_ = miTabla.AsEnumerable().
+                            //Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))));
+
+                        if (maxSales > 0 && maxSales < miTabla.AsEnumerable().
+                                Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))))) // segmentacion activa
+                        {
+                            //var rows = miTabla.AsEnumerable().Where(t => t.Field<double>("ValorMenosDescto") > maxSales).Count();
+
+                            // ningun articulo por unidad supera el tope -> se puede segmentar (true)
+                            //
+                            if (miTabla.AsEnumerable().Where(t => t.Field<double>("ValorMenosDescto") > maxSales).Count().Equals(0))  
+                            {
+                                segment = true;
+                            }
+                            // si segment = false, desactiva segmentar pos
+                            // msn.option, con mensaje de no puede segmentar y msn de elegir una opcion
+                            //   retornar la seleccion del usuario: 1 segmentar; 2 fact electronic
+
+                            string option = OptionPane.OptionBox(segment);
+
+                            if (option.Equals("1"))
+                            {
+                                SegmentaProducts(segment);
+
+                                //var fs = facturas;
+
+                                if (IdEstado == 1)   // factura de contado
+                                {
+
+                                    var frmCancelarVenta = new FrmCancelarVenta();
+                                    frmCancelarVenta.FacturaPos = true;
+
+                                    /**frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                        Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+
+
+                                    frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                        UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());*/
+
+                                    frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                                    frmCancelarVenta.EsVenta = true;
+                                    Venta = true;
+                                    frmCancelarVenta.ShowDialog();
+
+
+                                    // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
+                                }
+                                else   //  factura crédito
+                                {
+                                    // guarda factura
+                                    LoadPayments();
+                                }
+                            }
+
+                            //                  TEST
+
+                            /*List<ProductoFacturaProveedor> products_ = new List<ProductoFacturaProveedor>();
+                            int num = 0;
+
+                            foreach (var fact in facturas)
+                            {
+                                num++;
+                                foreach (var prod in fact.Productos)
+                                {
+                                    prod.NumeroFactura = num.ToString();
+                                    products_.Add(prod);
+                                }
+                            }
+                            Form1 f = new Form1();
+                            f.products = products_;
+                            f.Show();*/
+
+                            //                  END TEST
+
+
+                            // if (option = 1)  // segmenta
+                            //SegmentaProducts(true); // crea el conjunto de facturas con total products que no superan el tope
+                            // else     // option = 2 electronic
+                            //genElectronic();
+
+                            /**
+                            if (IdEstado == 1)   // factura de contado
+                            {
+                                
+                                var frmCancelarVenta = new FrmCancelarVenta();
+                                frmCancelarVenta.FacturaPos = true;
+
+                                frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                    Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+
+
+                                frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                    UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
+
+                                frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                                frmCancelarVenta.EsVenta = true;
+                                Venta = true;
+                                frmCancelarVenta.ShowDialog();
+                                
+
+                                // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
+                            }
+                            else   //  factura crédito
+                            {
+                                // guarda factura
+                            }
+                            */
+                        }
+                        else  //  no segmenta -> segment inactiva
+                        {
+                            SegmentaProducts(segment);
+                            // guardaFactura();
+                            LoadPayments();
+                        }
+                    }
+                    else    //  otros: cotiza, pendiente...
+                    {
+                        SegmentaProducts(segment);
+                        // guardaFactura();
+                        LoadPayments();
+                    }
+
+
+                //}
+            }
+
+
+
+            /**
+            if (IdEstado == 1)
+            {
+                DialogResult rta_ = DialogResult.Yes;
+                if (this.miBono.Canje)
+                {
+                    //int v = UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor);
+                    if (UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor) > 0)
+                    {
+                        if (this.txtCliente.Text == "1000" || this.txtCliente.Text == "10")
+                        {
+                            rta_ = MessageBox.Show("¿Desea generar la factura sin cliente?", "Factura venta",
+                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        }
+                    }
+                }
+
+                if (rta_.Equals(DialogResult.Yes))
+                {
+                    if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("btq")))
+                    {
+                        var frmCancelarVenta = new FrmCancelarVenta2();
+                        frmCancelarVenta.FacturaPos = true;
+                        frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                        frmCancelarVenta.EsVenta = true;
+                        Venta = true;
+                        frmCancelarVenta.ShowDialog();
+                    }
+                    else
+                    {
+                        var frmCancelarVenta = new FrmCancelarVenta();
+                        frmCancelarVenta.FacturaPos = true;
+
+                        frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                            Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+
+
+                        frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                            UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
+
+                        frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                        frmCancelarVenta.EsVenta = true;
+                        Venta = true;
+                        frmCancelarVenta.ShowDialog();
+                    }
+                    this.Transfer = true;
+                }
+                else
+                {
+                    this.txtCliente.Focus();
+                }
+            }
+            else
+            {
+                txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
+                if (ClienteMatch)
+                {
+                    var msn = "";
+                    if (IdEstado != 4)
+                    {
+                        msn = "¿Esta seguro de querer hacer la venta?";
+                    }
+                    else
+                    {
+                        msn = "¿Esta seguro de querer hacer la cotización?";
+                    }
+                    DialogResult rta = MessageBox.Show(msn, "Factura Venta",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (rta.Equals(DialogResult.Yes))
+                    {
+                        if (FacturaPos)
+                        {
+                            CargarYguardarFacturaPos();
+                        }
+                        else
+                        {
+                            CargarYguardarFactura_();
+                        }
+                    }
+                }
+            }
+            */
+        }
+
         private void RetiroDeProducto()
         {
             if (dgvListaArticulos.RowCount != 0)
@@ -4524,6 +4941,8 @@ namespace Aplicacion.Ventas.Factura
         private void ResetFactura()
         {
             miTabla.Rows.Clear();
+            facturas.Clear();
+
             while (dgvListaArticulos.RowCount != 0)
             {
                 dgvListaArticulos.Rows.RemoveAt(0);
@@ -5870,6 +6289,118 @@ namespace Aplicacion.Ventas.Factura
             }
         }
 
+        // Functional update
+        private void LoadPayments()
+        {
+            try
+            {
+                var pagoVar = miFormasPago.Sum(d => d.Pago);
+
+                if (facturas.Count > 1)
+                {
+                    foreach (var pago in miFormasPago)
+                    {
+                        pago.Valor = pago.Pago;
+                    }
+
+                    // asigno a cada factura, las formas de pago.
+                    //foreach(var pago in miFormasPago.OrderByDescending(p => p.IdFormaPago))
+                    foreach (var pago in miFormasPago.Where(p => p.Valor > 0).
+                                                    OrderByDescending(p => p.IdFormaPago))
+                    {
+                        foreach (var fact in facturas.Where(f => f.Total > 0))
+                        {
+                            if (fact.Total > 0)
+                            {
+                                var p = (DTO.Clases.FormaPago)pago.Clone();
+                                if (fact.Total >= pago.Valor)
+                                {
+                                    fact.FormasDePago.Add(p); //
+                                    fact.Total -= p.Valor;
+                                    pago.Valor -= p.Valor;
+
+                                    pago.Pago = Convert.ToInt32(pago.Valor);
+                                }
+                                else
+                                {
+                                    p.Valor = p.Pago = Convert.ToInt32(fact.Total);
+                                    fact.FormasDePago.Add(p); //
+                                    pago.Valor -= fact.Total;
+
+                                    pago.Pago = Convert.ToInt32(pago.Valor);
+                                    fact.Total -= p.Valor;
+                                }
+                                if (pago.Valor.Equals(0))
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    facturas.ForEach(f => f.FormasDePago = miFormasPago);
+                }
+
+                //var j = facturas;
+
+                facturas.ForEach(f => 
+                    f.Id = miBussinesFactura.IngresarFactura(f, Edicion, chkAntigua.Checked, ConsecutivoCaja));
+
+                DialogResult rta = DialogResult.Yes;
+                if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("preguntaPrintVenta")))
+                {
+                    rta = MessageBox.Show("¿Desea imprimir la factura?", "Factura venta",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                }
+
+                if (rta.Equals(DialogResult.Yes))
+                {
+                    facturas.ForEach(f =>
+                        PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
+                            Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0])) ;
+
+                    if (facturas.Count > 1) PrintFacts();
+                }
+                else
+                {
+                    ExpulsarCajonMonedero();
+                }
+
+                if (facturas.Where(f => f.FormasDePago.
+                                    Where(p => p.IdFormaPago.Equals(4)).Count() > 0
+                                   ).Count() > 0)
+                {
+                    foreach(var f in facturas.Where(f => f.FormasDePago.Where(p => p.IdFormaPago.Equals(4)).Count() > 0))
+                    {
+                        PrintVoucherTransaction(f);
+                    }
+                    //facturas.ForEach(f => PrintVoucherTransaction(f))
+                }
+
+                if (IdEstado.Equals(1))
+                {
+                    var frmCambio = new FrmCambio();
+                    frmCambio.txtTotal.Text = this.txtTotal.Text; //this.txtTotalMenosRete.Text;
+
+                    frmCambio.txtEfectivo.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(pagoVar).ToString());
+
+                    frmCambio.txtCambio.Text = UseObject.InsertSeparatorMil((
+                        UseObject.RemoveSeparatorMil(frmCambio.txtEfectivo.Text) - UseObject.RemoveSeparatorMil(frmCambio.txtTotal.Text)).ToString());
+                    frmCambio.ShowDialog();
+                }
+
+                LimpiarCamposNewFactura();
+
+                //miFactura.Id = miBussinesFactura.IngresarFactura(miFactura, Edicion, chkAntigua.Checked, ConsecutivoCaja);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         private double[] CargarPuntos(Punto punto, string nitCliente, int id, bool descto)
         {
             double[] data = new double[2];
@@ -5979,7 +6510,8 @@ namespace Aplicacion.Ventas.Factura
                 CargarRetencion();
                 ValidarRetencion();
                 RecargarRetencion();
-            } catch { }
+            }
+            catch { }
         }
 
         private void CargarFacturaEdicion()
@@ -6010,7 +6542,7 @@ namespace Aplicacion.Ventas.Factura
                    miTabla.AsEnumerable().Sum(s => s.Field<double>("Valor"))
                    ).ToString()
                 );
-            
+
             //Productos.Clear();
             //Productos = null;
         }
@@ -6870,7 +7402,7 @@ namespace Aplicacion.Ventas.Factura
             {
                 //var miBussinesIcoBolsas = new BussinesImpuestoBolsa();
 
-                DialogResult rta = DialogResult.Yes;
+                /*DialogResult rta = DialogResult.Yes;
                 if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("preguntaPrintVenta")))
                 {
                     rta = MessageBox.Show("¿Desea imprimir la factura?", "Factura venta",
@@ -6878,7 +7410,7 @@ namespace Aplicacion.Ventas.Factura
                 }
 
                 if (rta.Equals(DialogResult.Yes))
-                {
+                {*/
                     var facturaRow = miBussinesFactura.PrintFacturaVenta(id).Tables[0].AsEnumerable().First();
 
                     PrintTicket printTicket = new PrintTicket();
@@ -7183,11 +7715,11 @@ namespace Aplicacion.Ventas.Factura
                     ticket.PrintTicket("Microsoft XPS Document Writer");
                     //ticket.PrintTicket("IMPREPOS");
                     */
-                }
+               /* }
                 else
                 {
                     this.ExpulsarCajonMonedero();
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -7228,14 +7760,14 @@ namespace Aplicacion.Ventas.Factura
                     miTicket.AddHeaderLine(empresaRow["Juridico"].ToString().ToUpper());
                     miTicket.AddHeaderLine(empresaRow["Nit"].ToString().ToUpper());
                     miTicket.AddHeaderLine(empresaRow["direccion_"].ToString().ToUpper());
-                    miTicket.AddHeaderLine(empresaRow["ciudad"].ToString().ToUpper() + " " + 
+                    miTicket.AddHeaderLine(empresaRow["ciudad"].ToString().ToUpper() + " " +
                         empresaRow["departamento"].ToString().ToUpper());
                     miTicket.AddHeaderLine(empresaRow["celularempresa"].ToString().ToUpper());
-                    
+
                     miTicket.AddHeaderLine("---------------------------");
                     miTicket.AddHeaderLine("Ticket Venta No. " + facturaRow["Numero"].ToString());
-                    DateTime hora =  Convert.ToDateTime(facturaRow["Hora"]);
-                    miTicket.AddHeaderLine("Fecha: " + Convert.ToDateTime(facturaRow["Fecha"]).ToShortDateString() + " " + 
+                    DateTime hora = Convert.ToDateTime(facturaRow["Hora"]);
+                    miTicket.AddHeaderLine("Fecha: " + Convert.ToDateTime(facturaRow["Fecha"]).ToShortDateString() + " " +
                         hora.TimeOfDay.Hours + ":" + hora.TimeOfDay.Minutes.ToString());
                     if (idEstado.Equals(2))  // Credito
                     {
@@ -7262,9 +7794,9 @@ namespace Aplicacion.Ventas.Factura
                         total = UseObject.InsertSeparatorMil(pRow["Total_"].ToString());
 
                         miTicket.AddHeaderLine(UseObject.FuncionEspacio(7 - cant.Length) + cant +
-                            UseObject.FuncionEspacio(10 - venta.Length) + venta + 
+                            UseObject.FuncionEspacio(10 - venta.Length) + venta +
                             UseObject.FuncionEspacio(10 - total.Length) + total);
-                    }    
+                    }
                     miTicket.AddHeaderLine("");
                     miTicket.AddHeaderLine("");
                     miTicket.AddHeaderLine("---------------------------");
@@ -7291,6 +7823,36 @@ namespace Aplicacion.Ventas.Factura
             {
                 OptionPane.MessageError(ex.Message);
             }
+        }
+
+        // FUNCIONAL
+        private void PrintFacts()
+        {
+            Ticket miTicket = new Ticket();
+            miTicket.UseItem = false;
+
+            //facturas.ForEach(f => f.Total = f.Productos.Sum(s => s.Total));
+
+            miTicket.AddHeaderLine("Relación de facturas");
+            miTicket.AddHeaderLine("");
+            miTicket.AddHeaderLine("TOTAL: " + UseObject.InsertSeparatorMil(facturas.Sum(s => s.Total).ToString()));
+            miTicket.AddHeaderLine("");
+            miTicket.AddHeaderLine("Facturas:");
+            StringBuilder sb = new StringBuilder();
+            facturas.ForEach(f => sb.Append(f.Numero + ","));
+            miTicket.AddHeaderLine(sb.ToString());
+
+            miTicket.PrintTicket("");
+        }
+
+        // FUNCIONAL
+        private void PrintVoucherTransaction(FacturaVenta factura)
+        {
+            PrintTicket printTicket = new PrintTicket();
+            printTicket.UseItem = false;
+            printTicket.empresaRow = this.miBussinesEmpresa.PrintEmpresa().Tables[0].AsEnumerable().First();
+            //miFactura.Total = UseObject.RemoveSeparatorMil(this.txtTotal.Text);
+            printTicket.PrintPayments(factura);
         }
 
 
@@ -7833,6 +8395,307 @@ namespace Aplicacion.Ventas.Factura
         }
 
 
+        // seccion actualizacion segmemto POS 17-03-2023
+
+        public int idFactura { set; get; }
+
+        public void LoadProducts()
+        {
+            idFactura = 823359; // 823411; //790001;
+            IdEstado = 1;
+            this.miTabla = miBussinesFactura.LoadProducts(idFactura);
+            miBindingSource.DataSource = miTabla;
+            CalcularTotal();
+            //TransferTableObjetProducts();
+        }
+
+        int maxSales;
+
+        FacturaVenta factura;
+
+        public List<FacturaVenta> facturas;
+
+        List<ProductoFacturaProveedor> products;
+
+        private void TransferTableObjetProducts()
+        {
+            products.Clear();
+            foreach (DataRow row in miTabla.Rows)
+            {
+                var producto = new ProductoFacturaProveedor();
+                //producto.Save = Convert.ToBoolean(row["Save"]);
+                //producto.NumeroFactura = miFactura.Numero;
+                producto.Producto.CodigoInternoProducto = row["Codigo"].ToString();
+                producto.Cantidad = Convert.ToDouble(row["Cantidad"]);
+                producto.Producto.ValorVentaProducto = Convert.ToDouble(row["ValorUnitario"]);
+
+                //producto.ValorReal = Convert.ToDouble(row["ValorMenosDescto"]);  // valor base del producto
+
+                producto.Price = Convert.ToDouble(row["ValorMenosDescto"]);         // valor base del producto unit
+                producto.TotalPrice = Math.Round(producto.Price * producto.Cantidad, 1);
+
+                producto.ImpoConsumo = Convert.ToDouble(row["Ico"]);
+                producto.Inventario.CodigoProducto = row["Codigo"].ToString();
+                producto.Inventario.IdMedida = Convert.ToInt32(row["IdMedida"]);
+                producto.Inventario.IdColor = Convert.ToInt32(row["IdColor"]);
+                producto.Producto.IdMarca = Convert.ToInt32(row["IdMarca"]);
+                producto.Inventario.Cantidad = Convert.ToDouble(row["Cantidad"]);
+                producto.Retorno = Convert.ToBoolean(row["Retorno"]);
+                producto.ValorReal = Convert.ToDouble(row["Valor_"]);
+                producto.Producto.IdTipoInventario = 1; // Convert.ToInt32(row["IdTipoInventario"]);
+                producto.Producto.IdIva = Convert.ToInt32(row["IdIva"]);
+
+                if (producto.Retorno) producto.Producto.ValorVentaProducto = 0;
+
+                /**if (producto.Retorno)
+                {
+                    producto.Producto.ValorVentaProducto = 0;
+                    producto.Valor = Convert.ToDouble(row["Valor_"]);
+                }
+                if (miFactura.AplicaDescuento)
+                {
+                    producto.Producto.Descuento =
+                        UseObject.RemoveCharacter(row["Descuento"].ToString(), '%');
+                }
+                else
+                {
+                    producto.Producto.Recargo =
+                        UseObject.RemoveCharacter(row["Descuento"].ToString(), '%');
+                }
+                */
+
+                producto.Producto.Descuento = UseObject.RemoveCharacter(row["Descuento"].ToString(), '%');
+
+                producto.Producto.ValorIva = UseObject.RemoveCharacter(row["Iva"].ToString(), '%'); 
+
+                //double val_ = Convert.ToDouble(row["Valor_"]);          //
+                producto.Valor = Convert.ToDouble(row["TotalMasIva"]);
+
+                producto.Total = Convert.ToInt32(row["Valor"]);  // totalMasIva * cant
+                products.Add(producto);
+            }
+        }
+
+        public void SegmentaProducts(bool segment)
+        {
+            facturas.Clear();
+            TransferTableObjetProducts();
+            var fact = NewFacturaVenta();
+
+            if (segment) //if ((IdEstado.Equals(1) || IdEstado.Equals(2)) && maxSales > 0)  // mejorar la validacion
+            {
+                //var fact = (FacturaVenta)factura.Clone();
+                //var fact = new FacturaVenta();
+                foreach (var p in products)
+                {
+                    if (!p.Retorno)
+                    {
+                        if (!(p.Cantidad.ToString().IndexOf(',') > 0))  // cant no es decimal
+                        {
+                            var p2 = (ProductoFacturaProveedor)p.Clone();
+                            p2.Cantidad = 0;
+                            p2.TotalPrice = 0;
+                            for (int i = 1; i <= p.Cantidad; i++)
+                            {
+                                if ((fact.Productos.Sum(s => s.TotalPrice) + p2.TotalPrice + p2.Price) > maxSales) // supera el tope
+                                {
+                                    if (p2.TotalPrice > 0)
+                                    {
+                                        fact.Productos.Add(p2);
+                                    }
+                                    fact.Total = fact.Productos.Sum(pdt => pdt.Total);
+                                    facturas.Add(fact);
+
+                                    //fact = (FacturaVenta)factura.Clone();
+                                    fact = NewFacturaVenta();
+                                    fact.Productos = new List<ProductoFacturaProveedor>();
+
+                                    p2 = (ProductoFacturaProveedor)p.Clone(); // rev
+                                    p2.Cantidad = 1;
+                                    p2.TotalPrice = Math.Round(p2.Cantidad * p2.Price, 1);
+                                    p2.Total = Convert.ToInt32(p2.Cantidad * p2.Valor);
+                                }
+                                else     // no supera el tope
+                                {
+                                    p2.Cantidad++;
+                                    p2.TotalPrice = Math.Round(p2.Cantidad * p2.Price, 1);
+                                    p2.Total = Convert.ToInt32(p2.Cantidad * p2.Valor);
+                                }
+                            }
+                            if (p2.Cantidad > 0)
+                            {
+                                fact.Productos.Add(p2);
+                            }
+                        }
+                        else  //  cant decimal
+                        {
+                            if ((fact.Productos.Sum(s => s.TotalPrice) + p.TotalPrice) > maxSales)
+                            {
+                                fact.Total = fact.Productos.Sum(pdt => pdt.Total);
+                                facturas.Add(fact);
+                                //fact = (FacturaVenta)factura.Clone();
+                                fact = NewFacturaVenta();
+                                fact.Productos = new List<ProductoFacturaProveedor>{ p };
+                            }
+                            else
+                            {
+                                fact.Productos.Add(p);
+                            }
+                        }
+                    }
+
+                }
+                if (fact.Productos.Count > 0)
+                {
+                    fact.Total = fact.Productos.Sum(pdt => pdt.Total);
+                    facturas.Add(fact);
+                }
+            }
+            else
+            {
+                fact.Productos = products;
+                fact.Total = fact.Productos.Sum(pdt => pdt.Total);
+                facturas.Add(fact);
+            }
+        }
+
+        private FacturaVenta NewFacturaVenta()
+        {
+            var f = new FacturaVenta();
+            if (IdEstado.Equals(3))
+            {
+                f.Numero = miBussinesConsecutivo.Consecutivo("ConsFacturaPendiente") +
+                                   miBussinesConsecutivo.Consecutivo("FacturaPendiente");
+            }
+            else
+            {
+                if (IdEstado.Equals(4))
+                {
+                    f.Numero = miBussinesConsecutivo.Consecutivo("ConsCotizacion") +
+                                   miBussinesConsecutivo.Consecutivo("Cotizacion");
+                }
+            }
+            f.Usuario = Usuario_;
+            f.Proveedor.NitProveedor = NitCliente;
+            f.Caja.Id = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"));
+            f.NameStation = this.NameStation;
+            f.EstadoFactura.IdEdit = f.EstadoFactura.Id = IdEstado;
+            f.FechaLimite = dtpFechaLimite.Value;
+            return f;
+        }
+
+        public void SegmentaProducts(int maxSales)
+        {
+            //List<FacturaVenta> segFacturas = new List<FacturaVenta>();
+            //List<ProductoFacturaProveedor> products2 = new List<ProductoFacturaProveedor>();
+
+            if ((IdEstado.Equals(1) || IdEstado.Equals(2)) && maxSales > 0)  // mejorar la validacion
+            {
+                foreach (var p in products)
+                {
+                    if (!p.Retorno)
+                    {
+                        if (!(p.Cantidad.ToString().IndexOf(',') > 0))  // cant no es decimal
+                        {
+                            var p2 = (ProductoFacturaProveedor)p.Clone();
+                            p2.Cantidad = 0;
+                            p2.Total = 0;
+                            for (int i = 1; i <= p.Cantidad; i++)
+                            {
+                                if ((factura.Productos.Sum(s => s.Total) + p2.Total + p2.Valor) > maxSales) // supera el tope
+                                {
+                                    if (p2.Total > 0)
+                                    {
+                                        factura.Productos.Add(p2);
+                                    }
+                                    facturas.Add(factura);
+
+                                    factura = new FacturaVenta();
+                                    p2 = (ProductoFacturaProveedor)p.Clone();
+                                    p2.Cantidad = 1;
+                                    p2.Total = Convert.ToInt32(p2.Cantidad * p2.Valor);
+                                }
+                                else     // no supera el tope
+                                {
+                                    p2.Cantidad++;
+                                    p2.Total = Convert.ToInt32(p2.Cantidad * p2.Valor);
+                                }
+                            }
+                            if (p2.Cantidad > 0)
+                            {
+                                factura.Productos.Add(p2);
+                            }
+                        }
+                        else  //  cant decimal
+                        {
+                            if ((factura.Productos.Sum(s => s.Total) + p.Total) > maxSales)
+                            {
+                                facturas.Add(factura);
+                                factura = new FacturaVenta();
+                                factura.Productos.Add(p);
+                            }
+                            else
+                            {
+                                factura.Productos.Add(p);
+                            }
+                        }
+
+                    }
+
+                    /**
+                    if(p.Total > maxSales)
+                    {
+                        while(p.Total > maxSales)
+                        {
+                            ProductoFacturaProveedor p2 = (ProductoFacturaProveedor)p.Clone();
+                            //p2 = p;
+                            p2.Cantidad = 1;
+                            p2.Total = Convert.ToInt32(p2.Cantidad * p2.Valor);
+                            p.Cantidad--;
+                            p.Total -= Convert.ToInt32(p.Valor);
+                            facturas.Add(new FacturaVenta
+                            {
+                                Productos = new List<ProductoFacturaProveedor> { p2 }
+                            });
+                        }
+                        facturas.Add(new FacturaVenta
+                        {
+                            Productos = new List<ProductoFacturaProveedor> { p }
+                        });
+                    }
+                    else
+                    {
+                        if ((products2.Sum(s => s.Total) + p.Total) < maxSales)
+                        {
+                            products2.Add(p);
+                        }
+                        else
+                        {
+                            facturas.Add(new FacturaVenta
+                            {
+                                Productos = products2
+                            });
+                            products2 = new List<ProductoFacturaProveedor>();
+                        }
+                    }
+                    */
+                }
+                if (factura.Productos.Count > 0)
+                {
+                    facturas.Add(factura);
+                }
+            }
+            else
+            {
+                facturas.Add(new FacturaVenta
+                {
+                    Productos = products
+                });
+            }
+        }
+
+        // fin seccion actualizacion segmemto POS
+
 
         private void dtpFechaLimite_Validating(object sender, CancelEventArgs e)
         {
@@ -8005,7 +8868,7 @@ namespace Aplicacion.Ventas.Factura
               UseObject.RemoveSeparatorMil(this.txtIcoBolsaTotal.Text)) - UseObject.RemoveSeparatorMil(this.txtRetencion.Text)).ToString());*/
         }
 
-        
+
 
 
     }

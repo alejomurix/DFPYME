@@ -6,8 +6,10 @@ namespace DTO.Clases
     /// <summary>
     /// Representa una clase para los datos de Factura de Proveedor.
     /// </summary>
-    public class FacturaProveedor
+    public class FacturaProveedor : ICloneable
     {
+        public virtual object Clone() { return this.MemberwiseClone(); }
+
         /// <summary>
         /// Obtiene o establece el valor del Id unico de la factura.
         /// </summary>

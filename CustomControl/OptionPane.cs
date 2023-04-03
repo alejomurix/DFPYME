@@ -13,7 +13,10 @@ namespace CustomControl
         /// </summary>
         private static frmPassword FrmPassword = new frmPassword();
 
+        private static frmSegmentar FrmSegmentar = new frmSegmentar();
+
         private static FrmLoginUserPassword FrmLoginUserPassword_ = new FrmLoginUserPassword();
+
 
         /// <summary>
         /// Objeto que permite el acceso al formulario.
@@ -80,6 +83,18 @@ namespace CustomControl
                 result = "false";
             FrmPassword.password.Text = "";
             return result;
+        }
+
+        public static string OptionBox(bool segmenta)
+        {
+            char option = '1';
+            FrmSegmentar.Segment = segmenta;
+            DialogResult rta = FrmSegmentar.ShowDialog();
+            if (rta.Equals(DialogResult.Cancel))
+            {
+                option = '2';
+            }
+            return option.ToString();
         }
 
         public static string LoginUserPassword()

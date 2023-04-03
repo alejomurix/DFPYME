@@ -312,8 +312,8 @@ namespace DataAccessLayer.Models
                 }
                 else
                 {
-                    //var subtotal = this.Items.Sum(s => s.SubTotal);
-                    //var subtotalRound = Math.Round(this.Items.Sum(s => s.SubTotal), 2);
+                    var subtotal = this.Items.Sum(s => s.SubTotal);
+                    var subtotalRound = Math.Round(this.Items.Sum(s => s.SubTotal), 2);
                     //if (!tax.Base.Equals(this.Items.Sum(s => s.SubTotal)))
                     if (!tax.Base.Equals(Math.Round(this.Items.Sum(s => s.SubTotal), 2)))
                     {

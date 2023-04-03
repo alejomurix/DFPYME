@@ -227,6 +227,7 @@ namespace FormulariosSistema
                         this.txtNameCliente.Text = this.customerModel.Cliente.nombrescliente;
                         this.txtEmail.Text = this.customerModel.Cliente.emailcliente;
                         this.txtCliente.Text = "";
+                        SaveDocument();
                     }
                     
                 }
@@ -764,6 +765,7 @@ namespace FormulariosSistema
                         item.ID = this.repositoryModel.AddItem(item);
                         this.Document.Items.Add(item);
                     }
+                    SaveDocument();
                 }
 
                 LoadGridView();
@@ -1244,6 +1246,7 @@ namespace FormulariosSistema
             try
             {
                 this.repositoryModel.UpdateQuantityOrPrice(item);
+                SaveDocument();
             }
             catch (Exception ex)
             {
@@ -1356,6 +1359,7 @@ namespace FormulariosSistema
                     if (this.Document.Retentions.Where(r => r.ID.Equals(this.cbRetencion.SelectedValue.ToString())).Count().Equals(0))
                     {
                         AddTaxRetention();
+                        SaveDocument();
                         /*
                         if (this.cbRetencion.SelectedValue.ToString().Equals(this.CodeReteICA))
                         {
@@ -1425,7 +1429,7 @@ namespace FormulariosSistema
             }
             else
             {
-                tax.Base = this.Document.Items.Sum(s => s.SubTotal);
+                tax.Base = Math.Round(this.Document.Items.Sum(s => s.SubTotal) , 2);
             }
             tax.Value = Math.Round(tax.Base * tax.Tarifa / 100, 2);
 
