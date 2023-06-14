@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -353,6 +354,21 @@ namespace Aplicacion.Ventas.Factura
 
         private bool ConsecutivoCaja;
 
+        private bool Electronic;
+
+        // bascula reader
+        SerialPort serialPort;
+
+        string portCOM;
+
+        string commandCharacter;
+
+        int timerReader;
+
+        delegate void DelegadoAcceso(string data);
+
+       // private string PathAplication;
+
         public FrmFacturaPos()
         {
             InitializeComponent();
@@ -422,6 +438,8 @@ namespace Aplicacion.Ventas.Factura
                 NameStation = AppConfiguracion.ValorSeccion("station_name");
                 ConsecutivoCaja = Convert.ToBoolean(AppConfiguracion.ValorSeccion("consecutivo_caja"));
 
+                Electronic = SectionBoolValue("electronic_invoice");
+
                 miTallaYcolor = new TallaYcolor();
                 MiValidacion = new Validacion();
                 miError = new ErrorProvider();
@@ -447,6 +465,20 @@ namespace Aplicacion.Ventas.Factura
                 facturas = new List<FacturaVenta>();
                 products = new List<ProductoFacturaProveedor>();
 
+                // bascula reader commandCharacter
+                portCOM = AppConfiguracion.ValorSeccion("portBasculaCOM");
+                timerReader = Convert.ToInt32(AppConfiguracion.ValorSeccion("timeReader"));
+                commandCharacter = AppConfiguracion.ValorSeccion("commandCharacter");
+
+                serialPort = new SerialPort(portCOM, 9600, Parity.None, 8, StopBits.One)
+                {
+                    Handshake = Handshake.None,
+                    ReadTimeout = timerReader * 2,
+                    WriteTimeout = timerReader * 2
+                };
+                serialPort.DataReceived += new SerialDataReceivedEventHandler(spDataReceived);
+
+               // PathAplication = Application.StartupPath;
             }
             catch (Exception ex)
             {
@@ -541,13 +573,13 @@ namespace Aplicacion.Ventas.Factura
                 }
                 if (CargaCliente)
                 {
-                    this.txtCliente.Text = "1000";
+                    this.txtCliente.Text = "22222222";
                     this.txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
                 }
 
 
                 //maxSales = 100000;
-                ///LoadProducts();
+                //LoadProducts();
                 //SegmentaProducts(100000);
             }
             catch (Exception ex)
@@ -595,14 +627,16 @@ namespace Aplicacion.Ventas.Factura
 
                                 case Keys.F2:
                                     {
-                                        var frmPrecio = new EditarPrecio.FrmConsultaPrecio();
-                                        frmPrecio.ShowDialog();
+                                        ReadPortCOM();
+                                        ///var frmPrecio = new EditarPrecio.FrmConsultaPrecio();
+                                        ///frmPrecio.ShowDialog();
                                         //btnBuscarCliente_Click(this.btnBuscarCliente, new EventArgs());
                                         break;
                                     }
                                 case Keys.F3:
                                     {
-                                        ConsultaInventario();
+                                        FilesIO.SaveLog(Application.StartupPath, "esto es un error en el fichero log...");
+                                        //ConsultaInventario();
                                         break;
                                     }
                                 case Keys.F4:
@@ -1928,6 +1962,56 @@ namespace Aplicacion.Ventas.Factura
 
         //metodos...
 
+        void ReadPortCOM()
+        {
+            try
+            {
+                serialPort.Open();
+                serialPort.Write(commandCharacter);
+            } 
+            catch
+            {
+                txtCantidad.Text = "0";
+                txtCantidad.SelectAll();
+                //txtCantidad_KeyPress(txtCantidad, new KeyPressEventArgs((char)Keys.Enter));
+            }
+        }
+
+        void spDataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            if (this.Enabled)
+            {
+                System.Threading.Thread.Sleep(timerReader);
+                string data = serialPort.ReadExisting();
+                serialPort.Close();
+                this.BeginInvoke(new DelegadoAcceso(siDataReceived), new object[] { data });
+            }
+        }
+
+        void siDataReceived(string data)
+        {
+            if (!String.IsNullOrEmpty(data))
+            {
+                var subCadena = data.Split(new string[] { "+", "k" }, StringSplitOptions.None);
+                double weight = Convert.ToDouble(subCadena[1].Replace('.', ','));
+                txtCantidad.Text = weight.ToString();
+                txtCantidad_KeyPress(txtCantidad, new KeyPressEventArgs((char)Keys.Enter));
+                //textBox1.Text = weight.ToString();
+            }
+        }
+
+        private bool SectionBoolValue(string section)
+        {
+            try
+            {
+                return Convert.ToBoolean(AppConfiguracion.ValorSeccion(section));
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Carga los valores de las utilizados en el Formulario de Factura de Venta.
         /// </summary>
@@ -2296,6 +2380,12 @@ namespace Aplicacion.Ventas.Factura
 
             miTabla.Columns.Add(new DataColumn("IdTipoInventario", typeof(int)));
             miTabla.Columns.Add(new DataColumn("IdIva", typeof(int)));
+
+            miTabla.Columns.Add(new DataColumn("Costo", typeof(double)));
+
+            miTabla.Columns.Add(new DataColumn("CodeMedida", typeof(string)));
+            miTabla.Columns.Add(new DataColumn("CodeStandard", typeof(string)));
+
             //miTabla.Columns.Add(new DataColumn("ValorReal", typeof(double)));
         }
 
@@ -3300,6 +3390,13 @@ namespace Aplicacion.Ventas.Factura
             row["Articulo"] = MiProducto.NombreProducto;
             row["Cantidad"] = Convert.ToDouble(this.txtCantidad.Text.Replace('.', ',')).ToString().Replace('.', ',');
             //row["Cantidad"] = txtCantidad.Text.Replace('.', ',');
+
+            //Costo
+            row["Costo"] = MiProducto.ValorCosto;
+
+            //CodeMedida ; CodeStandard
+            row["CodeMedida"] = MiProducto.ValorUnidadMedida;
+            row["CodeStandard"] = MiProducto.CodeStandard;
 
             if (miEmpresa.Regimen.IdRegimen == 1)// this.IDIVAResponsability)  //Comun
             {
@@ -4402,7 +4499,10 @@ namespace Aplicacion.Ventas.Factura
                     //int v = UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor);
                     if (UseObject.RetiraDecima(UseObject.RemoveSeparatorMil(this.txtTotal.Text) / this.miBono.Valor) > 0)
                     {
-                        if (this.txtCliente.Text == "1000" || this.txtCliente.Text == "10")
+                        if (this.txtCliente.Text == "1000" || 
+                            this.txtCliente.Text == "10" || 
+                            this.txtCliente.Text == "22222222" ||
+                            this.txtCliente.Text == "222222222222")
                         {
                             rta_ = MessageBox.Show("¿Desea generar la factura sin cliente?", "Factura venta",
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -4476,8 +4576,13 @@ namespace Aplicacion.Ventas.Factura
             }
         }
 
+        string option = "0";
+
+        int salesValue = 0;
+
         private void VentaContadoCreditoUpdate()
         {
+            option = "0";
             txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
             if (ClienteMatch)
             {
@@ -4485,6 +4590,7 @@ namespace Aplicacion.Ventas.Factura
 
                 if (IdEstado.Equals(1) || IdEstado.Equals(2))   //  contado o crédito
                 {
+                    /**
                     var ts = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
                                              t.Field<double>("ValorMenosDescto") > maxSales);
                     var can = ts.Count();
@@ -4493,9 +4599,11 @@ namespace Aplicacion.Ventas.Factura
 
                     var pdts = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno")).
                                   Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))));
+                    */
 
                     //if (maxSales > 0 && maxSales < miTabla.AsEnumerable().
                     //Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))))) // segmentacion activa
+
                     if (maxSales > 0 && maxSales < miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno")).
                             Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad")))))
                     {
@@ -4503,27 +4611,35 @@ namespace Aplicacion.Ventas.Factura
 
                         // ningun articulo por unidad supera el tope -> se puede segmentar (true)
                         //
-                        if (miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
-                                            t.Field<double>("ValorMenosDescto") > maxSales).Count().Equals(0))
+                        ///if (miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
+                        ///t.Field<double>("ValorMenosDescto") > maxSales).Count().Equals(0))
+                        if (miTabla.AsEnumerable()
+                            .Where(t => !t.Field<bool>("Retorno") && 
+                             Convert.ToDouble(t.Field<string>("Cantidad")) <= 1 && 
+                             (t.Field<double>("ValorMenosDescto") * Convert.ToDouble(t.Field<string>("Cantidad"))) > maxSales)
+                            .Count().Equals(0))
                         {
                             segment = true;
                         }
                         // si segment = false, desactiva segmentar pos
                         // msn.option, con mensaje de no puede segmentar y msn de elegir una opcion
-                        //   retornar la seleccion del usuario: 1 segmentar; 2 fact electronic
 
-                        string option = OptionPane.OptionBox(segment);
-
-                        if (option.Equals("1"))
+                        if (segment || Electronic)
                         {
-                            //SegmentaProducts(segment);
 
-                            //var fs = facturas;
+                            //   retornar la seleccion del usuario: 1 segmentar; 2 fact electronic
+                            option = OptionPane.OptionBox(segment, Electronic);
 
-                            /*DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                            if (rta.Equals(DialogResult.Yes))
-                            {*/
+                            if (option.Equals("1") || option.Equals("2") || option.Equals("3"))
+                            {
+                                //SegmentaProducts(segment);
+
+                                //var fs = facturas;
+
+                                /*DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                                        MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (rta.Equals(DialogResult.Yes))
+                                {*/
                                 SegmentaProducts(segment);
 
                                 if (IdEstado == 1)   // factura de contado
@@ -4557,9 +4673,25 @@ namespace Aplicacion.Ventas.Factura
                                         LoadPayments();
                                     }
                                 }
-                            //}
+                                //}
+
+                            }
+                            else if (option.Equals("4"))  // option 4 = factura electronica
+                            {
+                                TransferTableObjetProducts();
+                                var fact = NewFacturaVenta();
+                                fact.Productos = products;
+                                miBussinesFactura.FromPOStoElectronic(fact);
+                                LimpiarCamposNewFactura();
+                                OptionPane.MessageSuccess("El documento electronico se generó con éxito.");
+                            }
 
                         }
+                        else
+                        {
+                            OptionPane.MessageError("Articulo mayor al tope.\nNo cuenta con el modulo de Facturación Electronica.");
+                        }
+
 
                         //                  TEST
 
@@ -4673,7 +4805,7 @@ namespace Aplicacion.Ventas.Factura
                             // msn.option, con mensaje de no puede segmentar y msn de elegir una opcion
                             //   retornar la seleccion del usuario: 1 segmentar; 2 fact electronic
 
-                            string option = OptionPane.OptionBox(segment);
+                            string option = OptionPane.OptionBox(segment, Electronic);
 
                             if (option.Equals("1"))
                             {
@@ -4950,7 +5082,7 @@ namespace Aplicacion.Ventas.Factura
             cbContado.SelectedIndex = 0;
             this.tsCbContado_SelectedIndexChanged(this.cbContado, new EventArgs());
             cbDesctoRecargo.SelectedIndex = 0;
-            txtCliente.Text = "1000";
+            txtCliente.Text = "22222222";
             txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
             dtpFechaLimite.Value = DateTime.Now;
             rbtnDesctoFactura.Checked = true;
@@ -5748,7 +5880,7 @@ namespace Aplicacion.Ventas.Factura
                 dtpFechaLimite_Validating(this.dtpFechaLimite, new CancelEventArgs(false));
                 if (IdEstado != 1)
                 {
-                    if (NitCliente.Equals("") || NitCliente.Equals("1000"))
+                    if (NitCliente.Equals("") || NitCliente.Equals("22222222"))
                     {
                         OptionPane.MessageError("Por favor ingrese un cliente.");
                         miError.SetError(txtCliente, "Por favor ingrese un cliente.");
@@ -5985,7 +6117,7 @@ namespace Aplicacion.Ventas.Factura
                 dtpFechaLimite_Validating(this.dtpFechaLimite, new CancelEventArgs(false));
                 if (IdEstado != 1)
                 {
-                    if (NitCliente.Equals("") || NitCliente.Equals("1000"))
+                    if (NitCliente.Equals("") || NitCliente.Equals("22222222"))
                     {
                         OptionPane.MessageError("Por favor ingrese un cliente.");
                         miError.SetError(txtCliente, "Por favor ingrese un cliente.");
@@ -6296,6 +6428,16 @@ namespace Aplicacion.Ventas.Factura
             {
                 var pagoVar = miFormasPago.Sum(d => d.Pago);
 
+                if (ImpstoBolsa != null)
+                {
+                    if (ImpstoBolsa.Cantidad > 0)
+                    {
+                        facturas.Last().IcoBolsaPlastica = ImpstoBolsa;
+                        facturas.Last().Total += (ImpstoBolsa.Cantidad * ImpstoBolsa.Valor);
+                    }
+
+                }
+
                 if (facturas.Count > 1)
                 {
                     foreach (var pago in miFormasPago)
@@ -6357,11 +6499,81 @@ namespace Aplicacion.Ventas.Factura
 
                 if (rta.Equals(DialogResult.Yes))
                 {
+                    StringBuilder sb = new StringBuilder();
+                    facturas.ForEach(f => sb.Append(f.Numero + ","));
+                    miFactura.Numero = sb.ToString();
+                    miFactura.Proveedor.NitProveedor = cliente.NitCliente;
+                    miFactura.Proveedor.NombreProveedor = cliente.NombresCliente;
+                    miFactura.Productos = products;
+                    if (ImpstoBolsa != null)
+                    {
+                        if (ImpstoBolsa.Cantidad > 0) miFactura.IcoBolsaPlastica = ImpstoBolsa;
+                    }
+
+                    var print = new PrintTicket();
+                    print.UseItem = false;
+
+                    if (option.Equals("0"))
+                    {
+                        facturas.ForEach(f => 
+                            PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
+                                Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                    }
+                    else
+                    {
+                        switch (option)
+                        {
+                            case "1":   // print relacion de facturas y segmentacion
+                                if (facturas.Count > 1) PrintFacts();
+                                facturas.ForEach(f =>
+                                    PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                                break;
+
+                            case "2":   // print solo orden de pedido (facturas)
+                                print.PrintOrder(miFactura);
+                                break;
+
+                            case "3":   // print orden de pedidio + facturas segementadas
+                                print.PrintOrder(miFactura);
+                                facturas.ForEach(f =>
+                                    PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                                break;
+                        }
+                    }
+
+                    /**
+                    if (option.Equals("2")) // imprime orden de pedido de las facturas segmentadas
+                    {
+                        //var fact = facturas.First();
+                        //fact.EstadoFactura.Id = 4;  // id = 4: estado cotizacion
+
+                        StringBuilder sb = new StringBuilder();
+                        facturas.ForEach(f => sb.Append(f.Numero + ","));
+                        miFactura.Numero = sb.ToString();
+                        miFactura.Proveedor.NitProveedor = cliente.NitCliente;
+                        miFactura.Proveedor.NombreProveedor = cliente.NombresCliente;
+                        //miFactura.Productos.Clear();
+                        miFactura.Productos = products;
+                        if (ImpstoBolsa != null)
+                        {
+                            if (ImpstoBolsa.Cantidad > 0) miFactura.IcoBolsaPlastica = ImpstoBolsa;
+                        }
+
+                        var print = new PrintTicket();
+                        print.UseItem = false;
+                        print.PrintOrder(miFactura);
+                    }
+                    else if (option.Equals("1"))
+                    {
+                        if (facturas.Count > 1) PrintFacts();
+                    }
+
                     facturas.ForEach(f =>
                         PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
                             Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0])) ;
-
-                    if (facturas.Count > 1) PrintFacts();
+                    */
                 }
                 else
                 {
@@ -6397,8 +6609,11 @@ namespace Aplicacion.Ventas.Factura
             }
             catch(Exception ex)
             {
-                throw new Exception(ex.Message);
+                /// cambiar throw por la generacion de un archivo log que me guarde los datos de errores.
+                //throw new Exception(ex.Message);
+                FilesIO.SaveLog(Application.StartupPath, ex.Message);
             }
+            finally { LimpiarCamposNewFactura(); }
         }
 
         private double[] CargarPuntos(Punto punto, string nitCliente, int id, bool descto)
@@ -6465,7 +6680,7 @@ namespace Aplicacion.Ventas.Factura
 
                 if (CargaCliente)
                 {
-                    txtCliente.Text = "1000";
+                    txtCliente.Text = "22222222";
                     txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
                     txtCodigoArticulo.Focus();
                 }
@@ -6504,8 +6719,11 @@ namespace Aplicacion.Ventas.Factura
                 this.txtIcoBolsaTotal.Text = "0";
                 this.txtIcoBolsaUnit.Text = "0";
                 miTabla.Clear();
+                products.Clear();
                 ImpstoBolsa = miBussinesImpstoBolsa.ImpuestoBolsa(1);
                 ImpstoBolsa.Cantidad = 0;
+                miFactura.Productos.Clear();
+                facturas.Clear();
                 this.miFactura.IcoBolsaPlastica = new ImpuestoBolsa();
                 CargarRetencion();
                 ValidarRetencion();
@@ -6546,6 +6764,7 @@ namespace Aplicacion.Ventas.Factura
             //Productos.Clear();
             //Productos = null;
         }
+
 
         /*
         private void Print(string numero, bool descto, string cliente, bool contado, int idEstado)
@@ -8021,7 +8240,9 @@ namespace Aplicacion.Ventas.Factura
                 printTicket.UseItem = false;
                 printTicket.empresaRow = this.miBussinesEmpresa.PrintEmpresa().Tables[0].AsEnumerable().First();
                 printTicket.Bono = bono;
-                if (cliente == "1000" || cliente == "10")
+                if (cliente == "1000" 
+                    || cliente == "10" 
+                    || cliente == "22222222")
                 {
                     printTicket.Cliente = new DTO.Clases.Cliente();
                 }
@@ -8426,8 +8647,11 @@ namespace Aplicacion.Ventas.Factura
                 //producto.Save = Convert.ToBoolean(row["Save"]);
                 //producto.NumeroFactura = miFactura.Numero;
                 producto.Producto.CodigoInternoProducto = row["Codigo"].ToString();
+                producto.Producto.NombreProducto = row["Articulo"].ToString();
                 producto.Cantidad = Convert.ToDouble(row["Cantidad"]);
                 producto.Producto.ValorVentaProducto = Convert.ToDouble(row["ValorUnitario"]);
+
+                producto.Producto.ValorCosto = Convert.ToDouble(row["Costo"]);
 
                 //producto.ValorReal = Convert.ToDouble(row["ValorMenosDescto"]);  // valor base del producto
 
@@ -8472,6 +8696,10 @@ namespace Aplicacion.Ventas.Factura
                 producto.Valor = Convert.ToDouble(row["TotalMasIva"]);
 
                 producto.Total = Convert.ToInt32(row["Valor"]);  // totalMasIva * cant
+
+                producto.CodeStandard = row["CodeStandard"].ToString();
+                producto.Producto.ValorUnidadMedida = row["CodeMedida"].ToString();
+
                 products.Add(producto);
             }
         }
@@ -8493,14 +8721,17 @@ namespace Aplicacion.Ventas.Factura
                         if (!(p.Cantidad.ToString().IndexOf(',') > 0))  // cant no es decimal
                         {
                             var p2 = (ProductoFacturaProveedor)p.Clone();
+                            p2.Inventario = (DTO.Clases.Inventario)p2.Inventario.Clone();
                             p2.Cantidad = 0;
                             p2.TotalPrice = 0;
+                            //p2.Inventario.Cantidad = 0;
                             for (int i = 1; i <= p.Cantidad; i++)
                             {
                                 if ((fact.Productos.Sum(s => s.TotalPrice) + p2.TotalPrice + p2.Price) > maxSales) // supera el tope
                                 {
                                     if (p2.TotalPrice > 0)
                                     {
+                                        p2.Inventario.Cantidad = p2.Cantidad;
                                         fact.Productos.Add(p2);
                                     }
                                     fact.Total = fact.Productos.Sum(pdt => pdt.Total);
@@ -8511,6 +8742,8 @@ namespace Aplicacion.Ventas.Factura
                                     fact.Productos = new List<ProductoFacturaProveedor>();
 
                                     p2 = (ProductoFacturaProveedor)p.Clone(); // rev
+                                    p2.Inventario = (DTO.Clases.Inventario)p2.Inventario.Clone();
+
                                     p2.Cantidad = 1;
                                     p2.TotalPrice = Math.Round(p2.Cantidad * p2.Price, 1);
                                     p2.Total = Convert.ToInt32(p2.Cantidad * p2.Valor);
@@ -8518,12 +8751,14 @@ namespace Aplicacion.Ventas.Factura
                                 else     // no supera el tope
                                 {
                                     p2.Cantidad++;
+                                    //p2.Inventario.Cantidad++;
                                     p2.TotalPrice = Math.Round(p2.Cantidad * p2.Price, 1);
                                     p2.Total = Convert.ToInt32(p2.Cantidad * p2.Valor);
                                 }
                             }
                             if (p2.Cantidad > 0)
                             {
+                                p2.Inventario.Cantidad = p2.Cantidad;
                                 fact.Productos.Add(p2);
                             }
                         }
@@ -8539,6 +8774,7 @@ namespace Aplicacion.Ventas.Factura
                             }
                             else
                             {
+                                //p2.Inventario.Cantidad = p2.Cantidad;
                                 fact.Productos.Add(p);
                             }
                         }
@@ -8577,12 +8813,15 @@ namespace Aplicacion.Ventas.Factura
             }
             f.Usuario = Usuario_;
             f.Proveedor.NitProveedor = NitCliente;
+            f.Proveedor.NombreProveedor = cliente.NombresCliente;
             f.Caja.Id = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"));
             f.NameStation = this.NameStation;
             f.EstadoFactura.IdEdit = f.EstadoFactura.Id = IdEstado;
-            f.FechaLimite = dtpFechaLimite.Value;
+            f.FechaLimite = dtpFechaLimite.Value.AddDays(1);
             return f;
         }
+
+        
 
         public void SegmentaProducts(int maxSales)
         {
@@ -8692,6 +8931,13 @@ namespace Aplicacion.Ventas.Factura
                     Productos = products
                 });
             }
+        }
+
+        private void FromPOStoElectronic()
+        {
+            TransferTableObjetProducts();
+            //facturas.Clear();
+
         }
 
         // fin seccion actualizacion segmemto POS

@@ -201,16 +201,18 @@ namespace Aplicacion.Ventas.Factura.Abonos
 
                                              if (ingreso.FormasPago.Where(p => p.IdFormaPago.Equals(4)).Count() > 0)
                                              {
-                                                 PrintTicket pt = new PrintTicket();
-                                                 pt.UseItem = false;
-                                                 pt.empresaRow = this.RowEmpresa;
-                                                 pt.PrintPayments(new FacturaVenta
-                                                 {
-                                                     FechaIngreso = ingreso.Fecha,
-                                                     Numero = this.NumeroFactura,
-                                                     Total = this.Total,
-                                                     FormasDePago = ingreso.FormasPago
-                                                 });
+                                                PrintTicket pt = new PrintTicket
+                                                {
+                                                    UseItem = false,
+                                                    empresaRow = this.RowEmpresa
+                                                };
+                                                pt.PrintPayments(new FacturaVenta
+                                                     {
+                                                         FechaIngreso = ingreso.Fecha,
+                                                         Numero = this.NumeroFactura,
+                                                         Total = this.Total,
+                                                         FormasDePago = ingreso.FormasPago
+                                                     });
                                              }
                                          }
                                          else

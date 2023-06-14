@@ -474,7 +474,8 @@ namespace Aplicacion.Ventas.Devolucion.Anterior
                             var totalFactura = Convert.ToInt32(productos.AsEnumerable().Sum(s => s.Field<double>("Valor")));
 
                             var bussinesPago = new BussinesFormaPago();
-                            var pagos = bussinesPago.GetTotalFormasDePagoDeFacturaVenta(Factura.Numero);
+                            //var pagos = bussinesPago.GetTotalFormasDePagoDeFacturaVenta(Factura.Numero);
+                            var pagos = bussinesPago.GetTotalPagoDeFacturaVentaId(Factura.Id);
 
                             var saldoDev = miBussinesDevolucion.SaldoDevolucionVenta(Factura.Numero);
 

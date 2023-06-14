@@ -83,6 +83,70 @@ namespace BussinesLayer.Clases
             return this.miDaoFacturaVenta.FacturaDeVenta(id);
         }
 
+
+        // Act segment POS
+        public void FromPOStoElectronic(FacturaVenta factura)
+        {
+            DataAccessLayer.Repository.RepositoryModel repositoryModel = new DataAccessLayer.Repository.RepositoryModel();
+            var de = new DataAccessLayer.Models.ElectronicDocument
+            {
+                NitCliente = factura.Proveedor.NitProveedor,
+                Tipo = "INVOIC",
+                TipoFactura = "01",  // 01 fact venta nacional
+                TipoOperacion = "10",  // 10 Estandar
+                Moneda = "COP",
+                MetodoPago = factura.EstadoFactura.Id,
+                MedioPago = "10",    // 10 Efectivo
+                TipoAmbiente = Convert.ToString(AppConfiguracion.ValorSeccion("type_enviroment")),
+                VUBL = "UBL 2.1",
+                VDIAN = "DIAN 2.1",
+                IdCaja = factura.Caja.Id,
+                FechaLimite = factura.FechaLimite,
+                FechaPago = factura.FechaLimite//,
+                //Neto = factura.Productos.Sum(p => p.Total)
+            };
+            de = repositoryModel.AddElectronicDocument(de);
+            int cont = 1;
+            foreach (var p in factura.Productos)
+            {
+                if (!p.Retorno)
+                {
+                    var item = new DataAccessLayer.Models.Item
+                    {
+                        IDDE = de.ID,
+                        Numero = cont,
+                        Code = p.Producto.CodigoInternoProducto,
+                        Description = p.Producto.NombreProducto,
+                        UnitMedida = p.Producto.ValorUnidadMedida,
+                        Quantity = p.Cantidad,
+                        Costo = p.Producto.ValorCosto,
+                        IVA = p.Producto.ValorIva,
+                        IC = p.ImpoConsumo,
+                        INC = 0,
+                        UnitPrice = p.Price,
+                        //Neto = p.Valor,
+
+                        TypeStandar = new DataAccessLayer.Models.TypeStandar
+                        {
+                            CodeItem = p.Producto.CodigoInternoProducto,
+                            CodeStandard = p.CodeStandard
+                        }
+                    };
+                    item.Neto = Math.Round((Convert.ToDouble(item.UnitPrice) * (1 + (item.IVA / 100))), 3)
+                            + item.IC;
+                    item.Total = Math.Round(item.Neto * item.Quantity, 3);
+                    repositoryModel.AddItem(item);
+                    de.Items.Add(item);
+                    cont++;
+                }
+            }
+            de.Total = de.Neto = Math.Round(de.Items.Sum(i => i.Total), 3);
+            repositoryModel.EditElectronicDocument(de);
+        }
+
+        // End Act segment POS
+
+
         /// <summary>
         /// Edita el cliente relacionado en la factura de venta.
         /// </summary>
@@ -2437,24 +2501,29 @@ namespace BussinesLayer.Clases
             this.miDaoFacturaVenta.IngresarPagoGeneral(nitCliente, pago, ingreso, cartera);
         }
 
-
-       /* public void AjusteIngresos()
+        public void IngresarPagoGeneral(string nitCliente, Ingreso ingreso, List<FacturaVenta> cartera)
         {
-            var daoPago = new DaoFormaPago();
-            var pagos = daoPago.FormasDePagoDeFacturaVenta();
-            foreach (DataRow pRow in pagos.Rows)
-            {
-                daoPago.EditarValorPagado(Convert.ToInt32(pRow["Id"]), Convert.ToInt32(pRow["Valor"]));
-            }
+            this.miDaoFacturaVenta.IngresarPagoGeneral(nitCliente, ingreso, cartera);
+        }
 
-            foreach (DataRow pRow in pagos.Rows)
-            {
-                var total = Convert.ToInt32(
-                    ProductoFacturaVenta(pRow["Factura"].ToString(), true).
-                    AsEnumerable().Sum(s => s.Field<double>("Valor")));
-                daoPago.EditarValorPago(Convert.ToInt32(pRow["Id"]), total);
-            }
-        }*/
+
+        /* public void AjusteIngresos()
+         {
+             var daoPago = new DaoFormaPago();
+             var pagos = daoPago.FormasDePagoDeFacturaVenta();
+             foreach (DataRow pRow in pagos.Rows)
+             {
+                 daoPago.EditarValorPagado(Convert.ToInt32(pRow["Id"]), Convert.ToInt32(pRow["Valor"]));
+             }
+
+             foreach (DataRow pRow in pagos.Rows)
+             {
+                 var total = Convert.ToInt32(
+                     ProductoFacturaVenta(pRow["Factura"].ToString(), true).
+                     AsEnumerable().Sum(s => s.Field<double>("Valor")));
+                 daoPago.EditarValorPago(Convert.ToInt32(pRow["Id"]), total);
+             }
+         }*/
 
         /// <summary>
         /// Crea las respectivas columnas del DataTable para ProductoFacturaVenta.

@@ -80,7 +80,7 @@ namespace Aplicacion.Clases
             // Application.Run(new Aplicacion.Ventas.Consultas.FrmConsultaVentaProductosUsuario());
 
             //  Application.Run(new Aplicacion.Configuracion.Formato.FrmFormatoPrint());
-            //Application.Run(new Aplicacion.Ventas.Consultas.FrmConsultaImpuestos());  
+            //Application.Run(new Aplicacion.Ventas.Consultas.FrmConsultaImpuestos());              
             ///Application.Run(new Aplicacion.Ventas.Consultas.FrmConsultaImpVenta());
 
             // Application.Run(new Aplicacion.Inventario.Traslado.FrmTraslado());
@@ -99,7 +99,7 @@ namespace Aplicacion.Clases
             ///Application.Run(new FormulariosSistema.FrmCustomer());
             ///Application.Run(new FormulariosSistema.FrmCompany());
 
-            ///Application.Run(new Aplicacion.Ventas.Form2());
+            ///Application.Run(new Aplicacion.Ventas.Form3());
             ///
 
             ///Application.Run(new FormulariosSistema.FrmElectronicDocument());

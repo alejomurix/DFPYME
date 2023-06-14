@@ -1771,7 +1771,7 @@ namespace DataAccessLayer.Clases
             var tabla = new DataTable();
             try
             {
-                string query = "";
+                /*string query = "";
                 if (idEstado.Equals(1)) // contado
                 {
                     query = @"SELECT * FROM view_remision_basico 
@@ -1791,6 +1791,14 @@ namespace DataAccessLayer.Clases
                     miAdapter.SelectCommand.Parameters.AddWithValue("@fecha", fecha);
                     miAdapter.SelectCommand.Parameters.AddWithValue("@fecha2", fecha2);
                 }
+                */
+                string query = @"SELECT * FROM view_remision_basico 
+                                 WHERE  idestado = 1  
+                                 AND fecha BETWEEN @fecha AND @fecha2;";
+                miAdapter = new NpgsqlDataAdapter(query, miConexion.MiConexion);
+                miAdapter.SelectCommand.CommandType = CommandType.Text;
+                miAdapter.SelectCommand.Parameters.AddWithValue("@fecha", fecha);
+                miAdapter.SelectCommand.Parameters.AddWithValue("@fecha2", fecha2);
                 miAdapter.Fill(tabla);
                 return tabla;
             }

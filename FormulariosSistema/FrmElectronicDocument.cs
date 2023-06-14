@@ -129,6 +129,9 @@ namespace FormulariosSistema
                 this.cbRetencion.DataSource = this.TaxRetencion();
                 this.cbRetencion_SelectionChangeCommitted(this.cbRetencion, new EventArgs());
 
+                ///txtCliente.Text = "222222222222";
+                ///txtCliente_KeyPress(txtCliente, new KeyPressEventArgs((char)Keys.Enter));
+
                 this.txtProductCode.Focus();
             }
             catch (Exception ex)

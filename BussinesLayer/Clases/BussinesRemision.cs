@@ -303,19 +303,34 @@ namespace BussinesLayer.Clases
             {
                 remision = new FacturaVenta { Numero = row["numero"].ToString() };
 
+                /**if (remision.Numero.Equals("26097") || 
+                    remision.Numero.Equals("37004") || 
+                    remision.Numero.Equals("48991")) 
+                {
+                    var n = remision.Numero;
+                }*/
+                /*
+                if (remision.Numero.Equals("55511") ||
+                    remision.Numero.Equals("56843") ||
+                    remision.Numero.Equals("66734"))
+                {
+                    var n = remision.Numero;
+                }
+                */
+
                 remision.Total = ProductoRemision(Convert.ToInt32(row["numero"]), Convert.ToBoolean(row["aplica_descuento"]))
                     .AsEnumerable().Sum(s => s.Field<int>("Valor"));
                 remision.Pagos = miBussinesPago.GetTotalPagoRemision(Convert.ToInt32(row["numero"]));
                 remision.Saldo = miDaoDevolucion.SaldoRemision(Convert.ToInt32(row["numero"]));
                 remision.Saldo = Convert.ToInt32(remision.Total) - (remision.Pagos + remision.Saldo);
                 
-                if (remision.Saldo == 0)
+                if (remision.Saldo <= 0)
                 {
                     remision.Cancel = true;
                 }
                 miDaoRemision.UpdateTotalCancel(remision);
             }
-
+            
             foreach (DataRow row in miDaoRemision.Remisiones(1, fecha, fecha1).Rows)
             {
                 remision = new FacturaVenta { Numero = row["numero"].ToString() };
@@ -326,12 +341,13 @@ namespace BussinesLayer.Clases
                 remision.Saldo = miDaoDevolucion.SaldoRemision(Convert.ToInt32(row["numero"]));
                 remision.Saldo = Convert.ToInt32(remision.Total) - (remision.Pagos + remision.Saldo);
 
-                if (remision.Saldo == 0)
+                if (remision.Saldo <= 0)
                 {
                     remision.Cancel = true;
                 }
                 miDaoRemision.UpdateTotalCancel(remision);
             }
+            
 
             /*valorFactura = ProductoRemision(Convert.ToInt32(fRow["numero"]), Convert.ToBoolean(fRow["aplica_descuento"])).
                                             AsEnumerable().Sum(s => s.Field<int>("Valor"));

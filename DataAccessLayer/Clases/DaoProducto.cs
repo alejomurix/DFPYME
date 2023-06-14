@@ -2182,6 +2182,9 @@ namespace DataAccessLayer.Clases
                     producto.UnidadVentaProducto = miReader.GetInt32(25);
                     producto.IdTipoInventario = miReader.GetInt32(26);
                     producto.IdIva = miReader.GetInt32(27);
+                    producto.ValorUnidadMedida = miReader.GetString(28);
+                    producto.CodeItem = miReader.GetString(30);     // 0
+                    producto.CodeStandard = miReader.GetString(31); // 999
                     lista.Add(producto);
                 }
                 conexion.MiConexion.Close();

@@ -1298,7 +1298,7 @@ namespace DataAccessLayer.Repository
                          FROM  
                            view_producto_completo_  
                          WHERE 
-                         estadoproducto = true AND ";
+                         estadoproducto = true AND (";
 
                 string strFiltro_Code = "(",
                        strFiltroName = "(";
@@ -1318,7 +1318,7 @@ namespace DataAccessLayer.Repository
                 strFiltroName += ")";
                 //strFiltroRef += ")";
                 sql += strFiltro_Code + " OR " + strFiltroName +
-                       " ORDER BY nombre ASC;";
+                       ") ORDER BY nombre ASC;";
                 var productos = new List<DTO.Clases.Producto>();
                 DTO.Clases.Producto p;
                 CargarComando(sql);

@@ -345,7 +345,12 @@ namespace Aplicacion.Ventas.CarteraRemision
                 var cedula = dgvCartera.CurrentRow.Cells["Cedula"].Value.ToString();
                 txtNombre.Text = dgvCartera.CurrentRow.Cells["Nombre"].Value.ToString();
                 txtSaldoCliente.Text = UseObject.InsertSeparatorMil(
+                    remisiones.Where(r => r.NoDocument.Equals(cedula)).Sum(s => s.Saldo).ToString());
+                /*
+                
+                txtSaldoCliente.Text = UseObject.InsertSeparatorMil(
                     Tabla.AsEnumerable().Where(d => d.Field<string>("Cedula").Equals(cedula)).Sum(s => s.Field<int>("Saldo")).ToString());
+                */
             }
         }
 

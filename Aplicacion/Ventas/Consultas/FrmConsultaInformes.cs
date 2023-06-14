@@ -166,8 +166,8 @@ namespace Aplicacion.Ventas.Consultas
         {
             try
             {
-                var sentenciasSQL = GetStrigRecurso();
-                miBussinesConsultaSQL.ExecuteNonQuery(sentenciasSQL);
+                //var sentenciasSQL = GetStrigRecurso();
+                //miBussinesConsultaSQL.ExecuteNonQuery(sentenciasSQL);
             }
             catch (Exception ex)
             {

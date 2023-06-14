@@ -85,15 +85,31 @@ namespace CustomControl
             return result;
         }
 
-        public static string OptionBox(bool segmenta)
+        public static string OptionBox(bool segmenta, bool electronic)
         {
-            char option = '1';
+            char option = '0';
             FrmSegmentar.Segment = segmenta;
+            FrmSegmentar.Electronic = electronic;
             DialogResult rta = FrmSegmentar.ShowDialog();
-            if (rta.Equals(DialogResult.Cancel))
+            switch (rta)
+            {
+                case DialogResult.OK:
+                    option = '1';
+                    break;
+                case DialogResult.Yes:
+                    option = '2';
+                    break;
+                case DialogResult.Retry:
+                    option = '3';
+                    break;
+                case DialogResult.No:
+                    option = '4';
+                    break;
+            }
+            /*if (rta.Equals(DialogResult.Cancel))
             {
                 option = '2';
-            }
+            }*/
             return option.ToString();
         }
 

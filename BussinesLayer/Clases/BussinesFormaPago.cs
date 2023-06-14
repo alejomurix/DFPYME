@@ -142,8 +142,8 @@ namespace BussinesLayer.Clases
             var total = 0;
             foreach (DataRow row in tabla.Rows)
             {
-                //total = total + Convert.ToInt32(row["Valor"]);
-                total = total + Convert.ToInt32(row["Pago"]);
+                total = total + Convert.ToInt32(row["Valor"]);
+                //total = total + Convert.ToInt32(row["Pago"]);
             }
             return total;
         }
@@ -164,6 +164,7 @@ namespace BussinesLayer.Clases
                 {
                     pago.IdFactura = sale.Id;
                     pago.NumeroFactura = sale.Numero;
+                    pago.NombreFormaPago += sale.Numero;
                     if (monto > sale.Saldo)
                     {
                         pago.Valor = pago.Pago = sale.Saldo;
@@ -178,6 +179,7 @@ namespace BussinesLayer.Clases
 
                         monto -= monto;
                     }
+                    sale.Saldo = Convert.ToInt32(sale.Total) - sale.Pagos;
                     miDaoFromaPago.IngresarPagoRemision(pago);
                     if (sale.Total.Equals(sale.Pagos))
                     {

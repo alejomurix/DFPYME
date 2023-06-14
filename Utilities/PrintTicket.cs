@@ -989,7 +989,21 @@ namespace Utilities
                 this.miTicket.AddHeaderLine("Fecha: " + invoice.FechaIngreso.ToShortDateString() + " " +
                     invoice.FechaIngreso.TimeOfDay.Hours + ":" + invoice.FechaIngreso.TimeOfDay.Minutes);
                 this.miTicket.AddHeaderLine("");
-                this.miTicket.AddHeaderLine("No. factura:   " + invoice.Numero);
+                //this.miTicket.AddHeaderLine("-----------------------------------");
+                if (invoice.Numero.Length > 20)
+                {
+                    this.miTicket.AddHeaderLine("Facturas No. ");
+                    UseObject.StringBuilderDataIzquierda(invoice.Numero, 35)
+                        .ForEach(d => miTicket.AddHeaderLine(d));
+
+                    /*var datos = UseObject.StringBuilderDataIzquierda(invoice.Numero, 35);
+                    datos.ForEach(d => miTicket.AddHeaderLine(d));*/
+                }
+                else
+                {
+                    this.miTicket.AddHeaderLine("Factura No.  " + invoice.Numero);
+                }
+                this.miTicket.AddHeaderLine("");
                 this.miTicket.AddHeaderLine("Valor factura: " + UseObject.InsertSeparatorMil(invoice.Total.ToString().Replace('.', ',')));
                 this.miTicket.AddHeaderLine("Valor pago:    " + UseObject.InsertSeparatorMil(invoice.FormasDePago.Sum(s => s.Valor).ToString().Replace('.', ',')));
                 this.miTicket.AddHeaderLine("");
@@ -1149,6 +1163,66 @@ namespace Utilities
             this.miTicket.AddHeaderLine("SOFTWARE:  DFPYME.");
             this.miTicket.AddHeaderLine("");
             this.EnviarImpresion();
+        }
+
+
+        public void PrintOrder(FacturaVenta factura)
+        {
+            miTicket.UseItem = UseItem;
+            miTicket.AddHeaderLine("ORDEN DE PEDIDO");
+            miTicket.AddHeaderLine("FACTS No. ");
+            miTicket.AddHeaderLine(factura.Numero);
+
+            miTicket.AddHeaderLine("-----------------------------------");
+            if (factura.Proveedor.NombreProveedor.Count() > 25)
+            {
+                var stringCliente = UseObject.StringBuilderDataIzquierda(factura.Proveedor.NombreProveedor, 25);
+                for (int i = 0; i < stringCliente.Count; i++)
+                {
+                    if (i.Equals(0))
+                    {
+                        this.miTicket.AddHeaderLine("CLIENTE : " + stringCliente[i]);
+                    }
+                    else
+                    {
+                        this.miTicket.AddHeaderLine("          " + stringCliente[i]);
+                    }
+                }
+            }
+            else
+            {
+                this.miTicket.AddHeaderLine("CLIENTE : " + factura.Proveedor.NombreProveedor);
+            }
+            this.miTicket.AddHeaderLine("NIT     : " + UseObject.InsertSeparatorMilMasDigito(factura.Proveedor.NitProveedor));
+            this.miTicket.AddHeaderLine("-----------------------------------");
+            this.miTicket.AddHeaderLine("");
+            this.miTicket.AddHeaderLine("DESCRIP.  CANT.    VENTA      TOTAL");
+            this.miTicket.AddHeaderLine("");
+            foreach (var p in factura.Productos)
+            {
+                if (!p.Retorno)
+                {
+                    p.Producto.NombreProducto = p.Producto.CodigoInternoProducto + " " + p.Producto.NombreProducto;
+                    if (p.Producto.NombreProducto.Length > MaxCharacters)
+                    {
+                        p.Producto.NombreProducto = p.Producto.NombreProducto.Substring(0, MaxCharacters);
+                    }
+                    miTicket.AddHeaderLine(p.Producto.NombreProducto);
+                    miTicket.AddHeaderLine(UseObject.StringBuilderDetalleProducto(
+                        UseObject.InsertSeparatorMil(p.Cantidad.ToString()),
+                        UseObject.InsertSeparatorMil(p.Valor.ToString()),
+                        UseObject.InsertSeparatorMil(p.Total.ToString())));
+                }
+            }
+            this.miTicket.AddHeaderLine("");
+            this.miTicket.AddHeaderLine("-----------------------------------");
+            this.total = factura.Productos.Sum(s => s.Total) + (factura.IcoBolsaPlastica.Cantidad * factura.IcoBolsaPlastica.Valor);
+            this.miTicket.AddHeaderLine("       TOTAL NETO :" + UseObject.StringBuilderDetalleTotal(
+                UseObject.InsertSeparatorMil(total.ToString())));
+            this.miTicket.AddHeaderLine("-----------------------------------");
+            this.miTicket.AddHeaderLine("");
+
+            EnviarImpresion();
         }
     }
 }

@@ -268,6 +268,11 @@ namespace DTO.Clases
 
         public double Price4 { set; get; }
 
+
+        public string CodeItem { set; get; }
+
+        public string CodeStandard { set; get; }
+
         #region Atributos de Presentacion y Edicion
 
         /// <summary>

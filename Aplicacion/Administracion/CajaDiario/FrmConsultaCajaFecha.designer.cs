@@ -133,7 +133,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 73);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 16);
+            this.label2.Size = new System.Drawing.Size(90, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "Informe Fiscal";
             // 
@@ -142,7 +142,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(14, 171);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 16);
+            this.label1.Size = new System.Drawing.Size(89, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Comprobante";
             this.label1.Visible = false;
@@ -176,7 +176,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(17, 73);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 16);
+            this.label4.Size = new System.Drawing.Size(90, 16);
             this.label4.TabIndex = 4;
             this.label4.Text = "Informe Fiscal";
             // 
@@ -185,7 +185,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(23, 171);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(90, 16);
+            this.label3.Size = new System.Drawing.Size(89, 16);
             this.label3.TabIndex = 3;
             this.label3.Text = "Comprobante";
             this.label3.Visible = false;
@@ -227,7 +227,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(16, 55);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(36, 16);
+            this.label9.Size = new System.Drawing.Size(35, 16);
             this.label9.TabIndex = 23;
             this.label9.Text = "Caja";
             // 
@@ -271,7 +271,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(276, 222);
+            this.tabPage1.Size = new System.Drawing.Size(276, 127);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Periodo mes";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -292,7 +292,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(14, 75);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(91, 16);
+            this.label10.Size = new System.Drawing.Size(90, 16);
             this.label10.TabIndex = 4;
             this.label10.Text = "Informe Fiscal";
             // 
@@ -313,7 +313,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.tpRetroActivo.Location = new System.Drawing.Point(4, 25);
             this.tpRetroActivo.Name = "tpRetroActivo";
             this.tpRetroActivo.Padding = new System.Windows.Forms.Padding(3);
-            this.tpRetroActivo.Size = new System.Drawing.Size(276, 222);
+            this.tpRetroActivo.Size = new System.Drawing.Size(276, 127);
             this.tpRetroActivo.TabIndex = 1;
             this.tpRetroActivo.Text = "Retroactivo";
             this.tpRetroActivo.UseVisualStyleBackColor = true;
@@ -336,7 +336,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(12, 144);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(91, 16);
+            this.label6.Size = new System.Drawing.Size(90, 16);
             this.label6.TabIndex = 4;
             this.label6.Text = "Informe Fiscal";
             // 
@@ -345,7 +345,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(13, 67);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(90, 16);
+            this.label5.Size = new System.Drawing.Size(89, 16);
             this.label5.TabIndex = 3;
             this.label5.Text = "Comprobante";
             // 
@@ -387,7 +387,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(13, 145);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(91, 16);
+            this.label8.Size = new System.Drawing.Size(90, 16);
             this.label8.TabIndex = 5;
             this.label8.Text = "Informe Fiscal";
             // 
@@ -396,7 +396,7 @@ namespace Aplicacion.Administracion.CajaDiario
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(16, 67);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(90, 16);
+            this.label7.Size = new System.Drawing.Size(89, 16);
             this.label7.TabIndex = 4;
             this.label7.Text = "Comprobante";
             // 

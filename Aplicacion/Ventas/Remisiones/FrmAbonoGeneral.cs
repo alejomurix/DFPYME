@@ -25,7 +25,7 @@ namespace Aplicacion.Ventas.Remisiones
 
         private readonly BussinesFormaPago miBussinesPago;
 
-        private readonly FormaPago pago;
+        private FormaPago pago;
 
         public DTO.Clases.Cliente Cliente { set; get; }
 
@@ -158,6 +158,8 @@ namespace Aplicacion.Ventas.Remisiones
                                 //pago.Valor = UseObject.RemoveSeparatorMil(txtAbono.Text); //Convert.ToInt32(txtAbono.Text);
                                 miBussinesPago.IngresarPagoRemision(Cliente, pago);
 
+                                pago.Valor = UseObject.RemoveSeparatorMil(txtAbono.Text);
+                                PrintIngresoPos(Cliente, pago);
                                 CompletaEventos.CapEvenAbonoRemision(pago);
 
                                 OptionPane.MessageSuccess("El pago a cliente se realizó con éxito.");
@@ -245,6 +247,125 @@ namespace Aplicacion.Ventas.Remisiones
             catch (Exception ex)
             {
                 OptionPane.MessageError(ex.Message);
+            }
+        }
+
+        private void PrintIngresoPos(DTO.Clases.Cliente cliente, FormaPago pago)
+        {
+            try
+            {
+                /*DialogResult rta = MessageBox.Show("¿Desea imprimir el comprobante de ingreso?", "Abono a Factura",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (rta.Equals(DialogResult.Yes))
+                {*/
+                    var miBussinesEmpresa = new BussinesEmpresa();
+                    var miBussinesUsuario = new BussinesUsuario();
+                    var miBussinesFactura = new BussinesFacturaVenta();
+                    var miBussinesIngreso = new BussinesIngreso();
+                    var miBussinesCliente = new BussinesCliente();
+                    var miBussinesCaja = new BussinesCaja();
+
+                    var empresaRow = miBussinesEmpresa.PrintEmpresa().Tables[0].AsEnumerable().First();
+
+                    //var ingresoRow = miBussinesIngreso.Ingresos(numero).AsEnumerable().First();
+                    //var tPagos = miBussinesIngreso.FormasPagoIngresoVenta(Convert.ToInt32(ingresoRow["id"]));
+                    //var cliente = miBussinesCliente.ClienteAEditar(ingresoRow["nitcliente"].ToString());
+                    //var usuario = miBussinesUsuario.ConsultaUsuario(Convert.ToInt32(ingresoRow["idusuario"])).
+                        //AsEnumerable().First()["nombre"].ToString();
+
+                    var caja = miBussinesCaja.CajaId(pago.Caja.Id);
+
+                    
+
+                    Ticket ticket = new Ticket();
+                    ticket.UseItem = false;
+
+                    ticket.AddHeaderLine(empresaRow["Nombre"].ToString().ToUpper());
+                    ticket.AddHeaderLine(empresaRow["Juridico"].ToString());
+                    ticket.AddHeaderLine("NIT " + UseObject.InsertSeparatorMilMasDigito(empresaRow["Nit"].ToString()));
+                    ticket.AddHeaderLine(empresaRow["Direccion"].ToString());
+                    ticket.AddHeaderLine("Tels. " + empresaRow["Telefono"].ToString());
+
+                    ticket.AddHeaderLine("Fecha : " + DateTime.Now.ToShortDateString() + "    Caja : " + caja.Numero);
+                    //ticket.AddHeaderLine("Cajero(a)  :  " + usuario);
+
+                    ticket.AddHeaderLine("===================================");
+                //ticket.AddHeaderLine("COMPROBANTE DE INGRESO Nro " + numero);
+                    ticket.AddHeaderLine("COMPROBANTE DE INGRESO ");
+                    ticket.AddHeaderLine("===================================");
+                    ticket.AddHeaderLine("Recibido de : " + cliente.NombresCliente.ToUpper());
+                    ticket.AddHeaderLine("NIT o C.C.  : " + UseObject.InsertSeparatorMilMasDigito(cliente.NitCliente));
+                    ticket.AddHeaderLine("===================================");
+                    ticket.AddHeaderLine("");
+                    ticket.AddHeaderLine("CONCEPTO                     VALOR ");
+                    ticket.AddHeaderLine("");
+                    int maxCharacters_18 = 18;
+                    int maxCharacters_15 = 15;
+                    List<string> datos = UseObject.StringBuilderDataIzquierda("Abonos a remisiones No. " + pago.NombreFormaPago, maxCharacters_18);
+                    string valor = pago.Valor.ToString();
+
+                /*
+                    string valor = "";
+                    List<string> datos = new List<string>();
+                    datos = UseObject.StringBuilderDataIzquierda(ingresoRow["Concepto"].ToString(), maxCharacters_18);
+                    valor = UseObject.InsertSeparatorMil(ingresoRow["Valor"].ToString());
+                */
+
+                    for (int i = 0; i < datos.Count; i++)
+                    {
+                        if (i == datos.Count - 1)
+                        {
+                            ticket.AddHeaderLine(datos[i] + UseObject.FuncionEspacio(maxCharacters_18 - datos[i].Length) + "  " +
+                                UseObject.FuncionEspacio(maxCharacters_15 - valor.Length) + valor);
+                        }
+                        else
+                        {
+                            ticket.AddHeaderLine(datos[i]);
+                        }
+                    }
+                    ticket.AddHeaderLine("");
+                    ticket.AddHeaderLine("===================================");
+                    ticket.AddHeaderLine("");
+                    ticket.AddHeaderLine("            TOTAL :" + UseObject.StringBuilderDetalleTotal(
+                        UseObject.InsertSeparatorMil(pago.Valor.ToString())));
+                    ticket.AddHeaderLine("");
+                    //string formaPago = "";
+
+                    /*
+                    foreach (DataRow pRow in tPagos.Rows)
+                    {
+                        formaPago = pRow["nombre"].ToString();
+                        valor = UseObject.InsertSeparatorMil(pRow["valor"].ToString());
+                        ticket.AddHeaderLine(UseObject.FuncionEspacio(17 - formaPago.Length) + formaPago + " :" +
+                            UseObject.FuncionEspacio(16 - valor.Length) + valor);
+                    }
+                    */
+
+                    valor = UseObject.InsertSeparatorMil(cliente.Sales.Sum(c => c.Saldo).ToString());
+                    ticket.AddHeaderLine("");
+                    ticket.AddHeaderLine("            SALDO :" + UseObject.FuncionEspacio(16 - valor.Length) + valor);
+                    //ticket.AddHeaderLine("Saldo : $" + UseObject.RemoveSeparatorMil(this.Cartera.Sum(c => c.Saldo).ToString()).ToString());
+
+                    ticket.AddHeaderLine("===================================");
+                    ticket.AddHeaderLine("");
+                    ticket.AddHeaderLine("");
+                    ticket.AddHeaderLine("Firma:");
+                    ticket.AddHeaderLine("-----------------------------------");
+                    ticket.AddHeaderLine("C.C. o NIT:");
+                    ticket.AddHeaderLine("-----------------------------------");
+                    ticket.AddHeaderLine("Fecha:");
+                    ticket.AddHeaderLine("-----------------------------------");
+                    ticket.AddHeaderLine("");
+                    ticket.AddHeaderLine("Software: DFPyme");
+                    ticket.AddHeaderLine("");
+
+                    ticket.PrintTicket("IMPREPOS");
+                    //ticket.PrintTicket("Microsoft XPS Document Writer");
+                //}
+            }
+            catch (Exception ex)
+            {
+                OptionPane.MessageError("Ocurrió un error al imprimir el comprobante.\n" + ex.Message);
             }
         }
 

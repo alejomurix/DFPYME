@@ -5,8 +5,12 @@ namespace DTO.Clases
     /// <summary>
     /// Representa una clase para el manejo del Inventario.
     /// </summary>
-    public class Inventario
+    public class Inventario : ICloneable 
     {
+
+        public virtual object Clone() { return this.MemberwiseClone(); }
+
+
         /// <summary>
         /// Obtiene o establece el Id del Inventario.
         /// </summary>

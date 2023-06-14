@@ -10338,6 +10338,97 @@ namespace DataAccessLayer.Clases
             }
         }
 
+        public void IngresarPagoGeneral(string nitCliente, Ingreso ingreso, List<FacturaVenta> cartera)
+        {
+            try
+            {
+               // string facturas = "";
+                var miDaoPago = new DaoFormaPago();
+                double pay = 0.0;
+                //var monto = pago.Valor;
+                //var monto = ingreso.FormasPago.Sum(p => p.Valor);
+
+                foreach (var pago in ingreso.FormasPago.Where(p => p.Valor > 0)
+                                          .OrderByDescending(p => p.IdFormaPago))
+                {
+                    pay = pago.Valor;
+                    foreach (var venta in cartera.Where(f => f.Saldo > 0).OrderBy(c => c.Id))
+                    {
+                        if (venta.Saldo > 0)
+                        {
+                            var p = (FormaPago)pago.Clone();
+                            p.IdFactura = venta.Id;
+                            p.NumeroFactura = venta.Numero;
+
+                            //if (venta.Saldo >= pago.Valor)
+                            if (venta.Saldo >= pay)
+                            {
+                                p.Valor = p.Pago = Convert.ToInt32(pay);
+                                venta.Saldo -= Convert.ToInt32(p.Valor);
+                                pay -= p.Valor;
+
+                                /*venta.Saldo -= Convert.ToInt32(p.Valor);
+                                p.Pago = Convert.ToInt32(p.Valor);
+                                pay -= p.Valor;*/
+
+                                /* p.Valor = p.Pago = venta.Saldo;
+                                pago.Valor -= venta.Saldo;
+                                venta.Saldo = 0; */
+                            }
+                            else
+                            {
+                                p.Valor = p.Pago = venta.Saldo;
+                                pay -= venta.Saldo;
+                                venta.Saldo = 0;
+                                //venta.Saldo -= Convert.ToInt32(pago.Valor);
+                                //pago.Valor = 0;
+                            }
+                            miDaoPago.IngresarPagoAFactura(p, true, false);
+                            //facturas += venta.Numero + ", ";
+                            ingreso.Concepto += venta.Numero + ", "; 
+
+                        }
+                        if (pay.Equals(0)) break;
+
+                        /*
+                        if (monto > 0)
+                        {
+                            pago.IdFactura = venta.Id;
+                            pago.NumeroFactura = venta.Numero;
+                            if (monto > venta.Saldo)
+                            {
+                                pago.Valor = pago.Pago = venta.Saldo;
+                                monto -= venta.Saldo;
+                                venta.Saldo = 0;
+                            }
+                            else
+                            {
+                                pago.Valor = monto;
+                                pago.Pago = Convert.ToInt32(monto);
+                                monto = 0;
+                                venta.Saldo = venta.Saldo - Convert.ToInt32(pago.Valor);
+                            }
+                            miDaoPago.IngresarPagoAFactura(pago, true, false);
+                            facturas += venta.Numero + ", ";
+                            ingreso.Concepto += venta.Numero + ", ";
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        */
+                    }
+
+                }
+
+                ingreso.Saldo = cartera.Sum(s => s.Saldo);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al realizar el abono al cliente\n" + ex.Message);
+            }
+        }
+
         /// <summary>
         /// Obtiene el resultado de la consulta de los productos de una Factura de Venta.
         /// </summary>
@@ -10652,7 +10743,8 @@ namespace DataAccessLayer.Clases
             var total = 0;
             foreach (DataRow row in tabla.Rows)
             {
-                total = total + Convert.ToInt32(row["Pago"]);
+                //total = total + Convert.ToInt32(row["Pago"]);
+                total = total + Convert.ToInt32(row["Valor"]);
             }
             return total;
         }

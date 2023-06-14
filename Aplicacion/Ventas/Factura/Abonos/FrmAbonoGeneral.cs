@@ -95,6 +95,8 @@ namespace Aplicacion.Ventas.Factura.Abonos
                                             "Realizar Abono", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                                     if (rta.Equals(DialogResult.Yes))
                                     {
+                                        var miBussinesFactura = new BussinesFacturaVenta();
+
                                         //Genero el Ingreso:
                                         var ingreso = new Ingreso();
                                         ingreso.Numero = miBussinesConsecutivo.Consecutivo("Ingreso");//AppConfiguracion.ValorSeccion("ingreso");
@@ -104,7 +106,8 @@ namespace Aplicacion.Ventas.Factura.Abonos
                                         ingreso.Fecha = DateTime.Now;
                                         ingreso.Estado = true;
 
-                                        var miBussinesFactura = new BussinesFacturaVenta();
+                                       
+                                        /**
                                         var pago = new FormaPago();
                                         pago.IdEgreso = Convert.ToInt32(AppConfiguracion.ValorSeccion("idturno"));
                                         if (txtEfectivo.Text != "0")
@@ -115,22 +118,44 @@ namespace Aplicacion.Ventas.Factura.Abonos
                                         {
                                             pago.IdFormaPago = 4;
                                         }
-                                        ingreso.IdUsuario = pago.Usuario.Id = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_user"));
-                                        ingreso.IdCaja = pago.Caja.Id = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"));
-                                        pago.Fecha = DateTime.Now;
-                                        pago.Valor = Convert.ToInt32(UseObject.RemoveSeparatorMil(txtAbono.Text));
+                                        */
+
+                                        /// ingreso.IdUsuario = pago.Usuario.Id = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_user"));
+                                        /// ingreso.IdCaja = pago.Caja.Id = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"));
+                                        
+                                        ingreso.IdUsuario = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_user"));
+                                        ingreso.IdCaja = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"));
+
+                                        ingreso.Valor = Convert.ToInt32(UseObject.RemoveSeparatorMil(txtAbono.Text)); // new line
+                                        ingreso.FormasPago = FormasDePago();    // new line
+
+                                        foreach (FormaPago p in ingreso.FormasPago)
+                                        {
+                                            p.Fecha = DateTime.Now;
+                                            p.Usuario.Id = ingreso.IdUsuario;
+                                            p.Caja.Id = ingreso.IdCaja;
+                                            p.IdEgreso = Convert.ToInt32(AppConfiguracion.ValorSeccion("idturno"));
+                                        }
+
+                                        ///pago.Fecha = DateTime.Now;
+                                        ///pago.Valor = Convert.ToInt32(UseObject.RemoveSeparatorMil(txtAbono.Text));
 
                                         //var factura = miBussinesFactura.IngresarPagoGeneral(NitCliente, pago, ingreso);
-                                        miBussinesFactura.IngresarPagoGeneral(NitCliente, pago, ingreso, this.Cartera);
-                                        pago.Valor = ingreso.Valor = Convert.ToInt32(UseObject.RemoveSeparatorMil(txtAbono.Text));
-                                        pago.NombreFormaPago = ingreso.Concepto;
 
-                                        ingreso.FormasPago = FormasDePago();
-                                       /* ingreso.FormasPago.Add(new FormaPago
-                                        {
-                                            IdFormaPago = 1,
-                                            Valor = ingreso.Valor
-                                        });*/
+                                        ///miBussinesFactura.IngresarPagoGeneral(NitCliente, pago, ingreso, this.Cartera);
+
+                                        miBussinesFactura.IngresarPagoGeneral(NitCliente, ingreso, Cartera);
+
+                                        ///pago.Valor = ingreso.Valor = Convert.ToInt32(UseObject.RemoveSeparatorMil(txtAbono.Text));
+                                        ///pago.NombreFormaPago = ingreso.Concepto; // *
+
+                                        ///ingreso.FormasPago = FormasDePago();
+
+                                        /* ingreso.FormasPago.Add(new FormaPago
+                                         {
+                                             IdFormaPago = 1,
+                                             Valor = ingreso.Valor
+                                         });*/
                                         miBussinesIngreso.Ingresar(ingreso, false);
                                         OptionPane.MessageInformation("El abono se ingreso con exito.");
                                         /*rta = MessageBox.Show("¿Desea imprimir el comprobante de ingreso?", "Abono a Factura",
@@ -156,6 +181,8 @@ namespace Aplicacion.Ventas.Factura.Abonos
                                                 pt.empresaRow = this.RowEmpresa;
                                                 pt.PrintPayments(new FacturaVenta
                                                 {
+                                                    Numero = ingreso.Concepto.Substring(25),
+                                                    Total = ingreso.Valor,
                                                     FechaIngreso = ingreso.Fecha,
                                                     FormasDePago = ingreso.FormasPago
                                                 });
@@ -163,7 +190,7 @@ namespace Aplicacion.Ventas.Factura.Abonos
                                         }
                                         else
                                         {
-                                            CompletaEventos.CapEvenAbonoFact(new List<FormaPago> { pago });
+                                            CompletaEventos.CapEvenAbonoFact(ingreso.FormasPago);
                                             PrintIngreso(ingreso.Numero);
                                         }
                                         //}
@@ -249,7 +276,7 @@ namespace Aplicacion.Ventas.Factura.Abonos
                     this.Close();
                 }
             }
-            /*
+            /**
             if (e.KeyData == Keys.F6)
             {
                 Validar();
@@ -365,7 +392,7 @@ namespace Aplicacion.Ventas.Factura.Abonos
                     //txtAbono.Focus();
                 }
             }*/
-            /*
+            /**
             if (e.KeyData == Keys.F6)
             {
                 Validar();

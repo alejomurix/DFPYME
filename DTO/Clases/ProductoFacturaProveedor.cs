@@ -71,6 +71,8 @@ namespace DTO.Clases
 
         public int Total { set; get; }
 
+        public string CodeStandard { set; get; }
+
         /// <summary>
         /// Inicializa una nueva instancia de la clase ProductoFacturaProveedor.
         /// </summary>

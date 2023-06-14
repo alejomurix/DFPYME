@@ -51,6 +51,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Encode.cs" />
+    <Compile Include="FilesIO.cs" />
     <Compile Include="Imprimir.cs" />
     <Compile Include="ObjectAbstract.cs" />
     <Compile Include="PayMethod.cs" />
