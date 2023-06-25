@@ -367,7 +367,9 @@ namespace Aplicacion.Ventas.Factura
 
         delegate void DelegadoAcceso(string data);
 
-       // private string PathAplication;
+        // private string PathAplication;
+
+        int CodeBarBasculaStart;
 
         public FrmFacturaPos()
         {
@@ -460,6 +462,7 @@ namespace Aplicacion.Ventas.Factura
                 }
 
                 maxSales = Convert.ToInt32(miBussinesConsecutivo.Consecutivo("maxVenta"));
+                CodeBarBasculaStart = Convert.ToInt32(miBussinesConsecutivo.Consecutivo("codeBarBasculaStart"));
 
                 factura = new FacturaVenta();
                 facturas = new List<FacturaVenta>();
@@ -470,13 +473,16 @@ namespace Aplicacion.Ventas.Factura
                 timerReader = Convert.ToInt32(AppConfiguracion.ValorSeccion("timeReader"));
                 commandCharacter = AppConfiguracion.ValorSeccion("commandCharacter");
 
-                serialPort = new SerialPort(portCOM, 9600, Parity.None, 8, StopBits.One)
+                if (!String.IsNullOrEmpty(portCOM))
                 {
-                    Handshake = Handshake.None,
-                    ReadTimeout = timerReader * 2,
-                    WriteTimeout = timerReader * 2
-                };
-                serialPort.DataReceived += new SerialDataReceivedEventHandler(spDataReceived);
+                    serialPort = new SerialPort(portCOM, 9600, Parity.None, 8, StopBits.One)
+                    {
+                        Handshake = Handshake.None,
+                        ReadTimeout = timerReader * 2,
+                        WriteTimeout = timerReader * 2
+                    };
+                    serialPort.DataReceived += new SerialDataReceivedEventHandler(spDataReceived);
+                }
 
                // PathAplication = Application.StartupPath;
             }
@@ -627,10 +633,15 @@ namespace Aplicacion.Ventas.Factura
 
                                 case Keys.F2:
                                     {
-                                        ReadPortCOM();
-                                        ///var frmPrecio = new EditarPrecio.FrmConsultaPrecio();
-                                        ///frmPrecio.ShowDialog();
-                                        //btnBuscarCliente_Click(this.btnBuscarCliente, new EventArgs());
+                                        if (!String.IsNullOrEmpty(portCOM))
+                                        {
+                                            ReadPortCOM();
+                                        }
+                                        else
+                                        {
+                                            var frmPrecio = new EditarPrecio.FrmConsultaPrecio();
+                                            frmPrecio.ShowDialog();
+                                        }
                                         break;
                                     }
                                 case Keys.F3:
@@ -1299,7 +1310,7 @@ namespace Aplicacion.Ventas.Factura
                                 String[] subString = new string[2];
                                 if (this.CodBarrasCantPeso)
                                 {
-                                    subString = UseObject.MiSubString(this.txtCodigoArticulo.Text, 3, 7);
+                                    subString = UseObject.MiSubString(this.txtCodigoArticulo.Text, CodeBarBasculaStart, 7);
                                     this.txtCantidad.Text = subString[1];
                                 }
                                 else

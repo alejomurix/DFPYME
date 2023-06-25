@@ -1325,11 +1325,11 @@ namespace DataAccessLayer.Clases
                         resumen.Fecha = fecha;
                         code = resumen.CodigoProducto = Irow["codigointernoproducto"].ToString();
 
-                        /*this.code = resumen.CodigoProducto;
-                        if (this.code == "6349")
+                        code = resumen.CodigoProducto;
+                        if (code == "1238")
                         {
-                            var j = this.code;
-                        }*/
+                            var j = code;
+                        }
 
                         resumen.IdMedida = Convert.ToInt32(Irow["idvalor_unidad_medida"]);
                         resumen.IdColor = Convert.ToInt32(Irow["idcolor"]);

@@ -164,7 +164,7 @@ namespace BussinesLayer.Clases
                 {
                     pago.IdFactura = sale.Id;
                     pago.NumeroFactura = sale.Numero;
-                    pago.NombreFormaPago += sale.Numero;
+                    pago.NombreFormaPago += sale.Numero + ", ";
                     if (monto > sale.Saldo)
                     {
                         pago.Valor = pago.Pago = sale.Saldo;
