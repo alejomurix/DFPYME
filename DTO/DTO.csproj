@@ -88,6 +88,7 @@
     <Compile Include="Clases\Kardex.cs" />
     <Compile Include="Clases\Lote.cs" />
     <Compile Include="Clases\Marca.cs" />
+    <Compile Include="Clases\ModelExport.cs" />
     <Compile Include="Clases\PagoAnticipo.cs" />
     <Compile Include="Clases\Permiso.cs" />
     <Compile Include="Clases\Plantilla.cs" />

@@ -2840,6 +2840,203 @@ namespace DataAccessLayer.Repository
             finally { miConexion.MiConexion.Close(); }
         }
 
+        /// END Section fiscal electronic invoice
+         
+
+        /// Section export contable data Inovice Electronic
+        
+        public List<DTO.Clases.ElectronicExport> InvoiceExport(DateTime fecha, DateTime fecha2, int centroCosto)
+        {
+            try
+            {
+                List<DTO.Clases.ElectronicExport> exports = new List<DTO.Clases.ElectronicExport>();
+
+                short neg = -1;
+                short exento = 0;
+                double ic = 0;
+                short cont = 0;
+
+                List<DTO.Clases.ResumenElectronic> invoices = Invoices(fecha, fecha2);
+                List<DTO.Clases.CuentaContable> cuentas = Cuentas();
+                var ctaExce = cuentas.Where(c => c.Tarifa.Equals(exento)).First();
+                var ctaCaja = cuentas.Where(c => c.Tarifa.Equals(neg)).First();
+                var numbers = invoices.GroupBy(i => i.Numero);
+                foreach(var nGroup in numbers)
+                {
+                    var n = nGroup.Key;
+                    var feQuery = invoices.Where(i => i.Numero.Equals(nGroup.Key));
+                    cont = 0;
+                    var fe_ = new DTO.Clases.ResumenElectronic();
+
+                    int c1 = feQuery.Count();
+                    foreach (var fe in feQuery)
+                    {
+                        fe_ = fe;
+                        cont++;
+                        ic += fe.IC;
+                        foreach(var cta in cuentas.Where(c => c.Tarifa.Equals(fe.IVA)))
+                        {
+                            DTO.Clases.ElectronicExport export = new DTO.Clases.ElectronicExport();
+
+                            export.FSOPORT = fe.Fecha;
+                            export.INUMSOP = fe.Numero;
+                            export.ICuenta = cta.Numero;
+                            export.INIT = fe.Cliente;
+
+                            if (cta.BaseTax) export.MCREDITO = Math.Round(fe.BaseVal, 0);
+                            else
+                            {
+                                export.MCREDITO = Math.Round(fe.BaseVal * fe.IVA / 100, 0);
+                                export.MVRBASE = Math.Round(fe.BaseVal, 0);
+                            }
+                            exports.Add(export);
+                        }
+                    }
+                    int c_ = feQuery.Count();
+                    if (ic > 0 && cont == c_)
+                    {
+                        var exp = exports.Where(e => e.ICuenta.Equals(ctaExce.Numero));
+                        if (exp.Count() > 0)
+                            exp.First().MCREDITO += Math.Round(ic, 0);
+                        else
+                        {
+                            DTO.Clases.ElectronicExport export = new DTO.Clases.ElectronicExport();
+                            export.FSOPORT = fe_.Fecha;
+                            export.INUMSOP = fe_.Numero;
+                            export.ICuenta = ctaExce.Numero;
+                            export.INIT = fe_.Cliente;
+
+                            export.MCREDITO = Math.Round(ic, 0);
+
+                            exports.Add(export);
+                        }
+
+                        // 1 añadir INITCXX Y PAGO
+                        exports.Last().INITCXX = fe_.Cliente;
+                        exports.Last().FPAGOCXX = fe_.Fecha;
+
+                        // 2 AÑADIR CUENTA DE CAJA
+                        DTO.Clases.ElectronicExport exportCaja = new DTO.Clases.ElectronicExport();
+                        exportCaja.FSOPORT = fe_.Fecha;
+                        exportCaja.INUMSOP = fe_.Numero;
+                        exportCaja.ICuenta = ctaCaja.Numero;
+                        exportCaja.INIT = fe_.Cliente;
+                        exportCaja.MDEBITO = Math.Round(feQuery.Sum(s => s.Total), 0);
+                        exports.Add(exportCaja);
+
+                    }
+                }
+                return exports;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally { }
+        }
+
+        private List<DTO.Clases.ResumenElectronic> Invoices(DateTime fecha, DateTime fecha2)
+        {
+            try
+            {
+                List<DTO.Clases.ResumenElectronic> invoices = new List<DTO.Clases.ResumenElectronic>();
+                string sql =
+                @"SELECT 
+                      documento_electronico.fecha, 
+                      documento_electronico.numero, 
+                      documento_electronico.nit_cliente, 
+                      sum(item_documento_electronico.precio_unitario * item_documento_electronico.cantidad) as v_base, 
+                      sum(item_documento_electronico.ic * item_documento_electronico.cantidad) as ic, 
+                      item_documento_electronico.iva, 
+                      sum(item_documento_electronico.total) as total 
+                    FROM 
+                      documento_electronico, 
+                      item_documento_electronico 
+                    WHERE 
+                      documento_electronico.id = item_documento_electronico.id_de AND 
+                      documento_electronico.estado AND 
+                      documento_electronico.transaccion_id != '' AND 
+                      documento_electronico.fecha BETWEEN @fecha AND @fecha2  
+                    GROUP BY 
+                      documento_electronico.fecha, 
+                      documento_electronico.numero, 
+                      documento_electronico.nit_cliente,
+                      item_documento_electronico.iva 
+                    ORDER BY documento_electronico.numero;";
+                CargarComando(sql);
+                miComando.Parameters.AddWithValue("fecha", fecha);
+                miComando.Parameters.AddWithValue("fecha2", fecha2);
+                miConexion.MiConexion.Open();
+                NpgsqlDataReader reader = miComando.ExecuteReader();
+                while (reader.Read())
+                {
+                    invoices.Add(new DTO.Clases.ResumenElectronic
+                    {
+                        Fecha = reader.GetDateTime(0),
+                        Numero = reader.GetString(1),
+                        Cliente = reader.GetString(2),
+                        BaseVal = reader.GetDouble(3),
+                        IC = reader.GetDouble(4),
+                        IVA = reader.GetDouble(5),
+                        Total = reader.GetDouble(6)
+                    });
+                }
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+                return invoices;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
+        private List<DTO.Clases.CuentaContable> Cuentas()
+        {
+            try
+            {
+                List<DTO.Clases.CuentaContable> cuentas = new List<DTO.Clases.CuentaContable>();
+                string sql =
+                @"SELECT 
+                      cuenta_contable.numero, 
+                      cuenta_contable.descripcion, 
+                      cuenta_contable.debito, 
+                      cuenta_contable.base_tax, 
+                      CASE WHEN cuenta_contable_iva.tarifa IS NULL THEN -1 
+                        ELSE cuenta_contable_iva.tarifa 
+                      END AS tarifa 
+                    FROM 
+                      cuenta_contable 
+                    LEFT JOIN 
+                      cuenta_contable_iva 
+                    ON 
+                      cuenta_contable.id = cuenta_contable_iva.id_cuenta_contable;";
+                CargarComando(sql);
+                miConexion.MiConexion.Open();
+                NpgsqlDataReader reader = miComando.ExecuteReader();
+                while (reader.Read())
+                {
+                    cuentas.Add(new DTO.Clases.CuentaContable
+                    {
+                        Numero = reader.GetInt32(0),
+                        Descripcion = reader.GetString(1),
+                        Debito = reader.GetBoolean(2),
+                        BaseTax = reader.GetBoolean(3),
+                        Tarifa = reader.GetDouble(4)
+                    });
+                }
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+                return cuentas;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
 
         public EnvironmentDE GetEnvironment()
         {

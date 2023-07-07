@@ -1829,6 +1829,14 @@ namespace FormulariosSistema
         {
             try
             {
+                Auxiliares.Form5 form = new Auxiliares.Form5();
+                var invos = repositoryModel.InvoiceExport(dtDateBegin.Value, dtDateEnd.Value, 1);
+                form.dataGridView1.DataSource = invos;
+                //form.dataGridView1.bin;
+                form.Show();
+
+                /*
+                 * 
                 BussinesLayer.Clases.BussinesEmpresa bsEmpresa = new BussinesLayer.Clases.BussinesEmpresa();
                 DataSet dsEmpresa = bsEmpresa.PrintEmpresa();
 
@@ -1922,6 +1930,8 @@ namespace FormulariosSistema
 
                 frmR.reportViewer.RefreshReport();
                 frmR.ShowDialog();
+
+                */
             }
             catch (Exception ex)
             {

@@ -1171,16 +1171,18 @@ namespace Aplicacion.Ventas.Factura
                 {
                     if (CodigoOrString())
                     {
-                        if (Convert.ToInt64(this.txtCodigoArticulo.Text) < 0)
+                        /// if (Convert.ToInt64(this.txtCodigoArticulo.Text) < 0)  //origin
+                        if (txtCodigoArticulo.Text.Length.Equals(13))                                        // longitud de codigo 13
                         {
-                            if (this.CodigoValido((Convert.ToInt64(this.txtCodigoArticulo.Text) * -1).ToString(), 13))
+                            /// if (this.CodigoValido((Convert.ToInt64(this.txtCodigoArticulo.Text) * -1).ToString(), 13))  // origin
+                            if (txtCodigoArticulo.Text[0].Equals('1'))                                      // primer caracter del codigo es 1
                             {
                                 //String[] subString = UseObject.MiSubString(this.txtCodigoArticulo.Text, 3, 7);
                                 //this.txtCantidad.Text = subString[1];
                                 String[] subString = new string[2];
                                 if (this.CodBarrasCantPeso)
                                 {
-                                    subString = UseObject.MiSubString(this.txtCodigoArticulo.Text, CodeBarBasculaStart, 7);
+                                    subString = UseObject.MiSubString(this.txtCodigoArticulo.Text, CodeBarBasculaStart, (7 - 1) );  // ojo.. refactorizar, date=28-06-2023
                                     this.txtCantidad.Text = subString[1];
                                 }
                                 else
@@ -1225,7 +1227,21 @@ namespace Aplicacion.Ventas.Factura
                             }
                             else
                             {
-                                OptionPane.MessageInformation("El código no es valido.");
+                                /// OptionPane.MessageInformation("El código no es valido.");
+                                if (ExisteProducto(txtCodigoArticulo.Text))
+                                {
+                                    if (CargarProducto())
+                                    {
+                                        if (RequiereCantidad)
+                                        {
+                                            txtCantidad.Focus();
+                                        }
+                                        else
+                                        {
+                                            CargarColorOconsulta();
+                                        }
+                                    }
+                                }
                             }
                         }
                         else
@@ -5373,183 +5389,196 @@ namespace Aplicacion.Ventas.Factura
                 txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
                 if (ClienteMatch)
                 {
-                    bool segment = false;
-
-                    if (IdEstado.Equals(1) || IdEstado.Equals(2))   //  contado o crédito
+                    if (IdEstado.Equals(2) && 
+                        (this.txtCliente.Text == "1000" ||
+                        this.txtCliente.Text == "10" ||
+                        this.txtCliente.Text == "22222222" ||
+                        this.txtCliente.Text == "222222222222"))
                     {
-                        /*
-                        var ts = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
-                                                 t.Field<double>("ValorMenosDescto") > maxSales);
-                        var can = ts.Count();
+                        miError.SetError(txtCliente, "Este cliente no permite creditos.");
+                    }
+                    else
+                    {
+                        bool segment = false;
 
-                        var pdtsNoret = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno"));
-
-                        var pdts = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno")).
-                                      Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))));
-                        */
-
-                        //if (maxSales > 0 && maxSales < miTabla.AsEnumerable().
-                        //Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))))) // segmentacion activa
-                        if (maxSales > 0 && maxSales < miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno")).
-                                Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad")))))
+                        if (IdEstado.Equals(1) || IdEstado.Equals(2))   //  contado o crédito
                         {
-                            //var rows = miTabla.AsEnumerable().Where(t => t.Field<double>("ValorMenosDescto") > maxSales).Count();
+                            /*
+                            var ts = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
+                                                     t.Field<double>("ValorMenosDescto") > maxSales);
+                            var can = ts.Count();
 
-                            // ningun articulo por unidad supera el tope -> se puede segmentar (true)
-                            //
-                            if (miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
-                                                t.Field<double>("ValorMenosDescto") > maxSales).Count().Equals(0))
+                            var pdtsNoret = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno"));
+
+                            var pdts = miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno")).
+                                          Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))));
+                            */
+
+                            //if (maxSales > 0 && maxSales < miTabla.AsEnumerable().
+                            //Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad"))))) // segmentacion activa
+                            if (maxSales > 0 && maxSales < miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno")).
+                                    Sum(s => (s.Field<double>("ValorMenosDescto") * Convert.ToDouble(s.Field<string>("Cantidad")))))
                             {
-                                segment = true;
-                            }
-                            // si segment = false, desactiva segmentar pos
-                            // msn.option, con mensaje de no puede segmentar y msn de elegir una opcion
+                                //var rows = miTabla.AsEnumerable().Where(t => t.Field<double>("ValorMenosDescto") > maxSales).Count();
 
-                            if (segment || Electronic)
-                            {
-                                //   retornar la seleccion del usuario: 1 segmentar; 2 fact electronic
-                                option = OptionPane.OptionBox(segment, Electronic);
-
-                                if (option.Equals("1") || option.Equals("2") || option.Equals("3"))
+                                // ningun articulo por unidad supera el tope -> se puede segmentar (true)
+                                //
+                                if (miTabla.AsEnumerable().Where(t => !t.Field<bool>("Retorno") &&
+                                                    t.Field<double>("ValorMenosDescto") > maxSales).Count().Equals(0))
                                 {
-                                    //SegmentaProducts(segment);
+                                    segment = true;
+                                }
+                                // si segment = false, desactiva segmentar pos
+                                // msn.option, con mensaje de no puede segmentar y msn de elegir una opcion
 
-                                    //var fs = facturas;
+                                if (segment || Electronic)
+                                {
+                                    //   retornar la seleccion del usuario: 1 segmentar; 2 fact electronic
+                                    option = OptionPane.OptionBox(segment, Electronic);
 
-                                    /*DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
-                                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                                    if (rta.Equals(DialogResult.Yes))
-                                    {*/
-                                    SegmentaProducts(segment);
-
-                                    if (IdEstado == 1)   // factura de contado
+                                    if (option.Equals("1") || option.Equals("2") || option.Equals("3"))
                                     {
+                                        //SegmentaProducts(segment);
 
-                                        var frmCancelarVenta = new FrmCancelarVenta();
-                                        frmCancelarVenta.FacturaPos = false;
+                                        //var fs = facturas;
 
-                                        frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
-                                            Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
-
-
-                                        frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
-                                            UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
-
-                                        frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
-                                        frmCancelarVenta.EsVenta = true;
-                                        Venta = true;
-                                        frmCancelarVenta.ShowDialog();
-
-
-                                        // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
-                                    }
-                                    else   //  factura crédito
-                                    {
-                                        DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
-                                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                        /*DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                                         if (rta.Equals(DialogResult.Yes))
+                                        {*/
+                                        SegmentaProducts(segment);
+
+                                        if (IdEstado == 1)   // factura de contado
                                         {
-                                            // guarda factura
-                                            LoadPayments();
+
+                                            var frmCancelarVenta = new FrmCancelarVenta();
+                                            frmCancelarVenta.FacturaPos = false;
+
+                                            frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                                Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+
+
+                                            frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                                UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
+
+                                            frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                                            frmCancelarVenta.EsVenta = true;
+                                            Venta = true;
+                                            frmCancelarVenta.ShowDialog();
+
+
+                                            // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
                                         }
+                                        else   //  factura crédito
+                                        {
+                                            DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                            if (rta.Equals(DialogResult.Yes))
+                                            {
+                                                // guarda factura
+                                                LoadPayments();
+                                            }
+                                        }
+                                        //}
+
                                     }
-                                    //}
+                                    else if (option.Equals("4"))  // option 4 = factura electronica
+                                    {
+                                        TransferTableObjetProducts();
+                                        var fact = NewFacturaVenta();
+                                        fact.Productos = products;
+                                        miBussinesFactura.FromPOStoElectronic(fact);
+                                        LimpiarCamposNewFactura();
+                                        OptionPane.MessageSuccess("El documento electronico se generó con éxito.");
+                                    }
 
                                 }
-                                else if (option.Equals("4"))  // option 4 = factura electronica
+                                else
                                 {
-                                    TransferTableObjetProducts();
-                                    var fact = NewFacturaVenta();
-                                    fact.Productos = products;
-                                    miBussinesFactura.FromPOStoElectronic(fact);
-                                    LimpiarCamposNewFactura();
-                                    OptionPane.MessageSuccess("El documento electronico se generó con éxito.");
+                                    OptionPane.MessageError("Articulo mayor al tope.\nNo cuenta con el modulo de Facturación Electronica.");
                                 }
 
-                            }
-                            else
-                            {
-                                OptionPane.MessageError("Articulo mayor al tope.\nNo cuenta con el modulo de Facturación Electronica.");
-                            }
+                                //                  TEST
 
-                            //                  TEST
+                                /*List<ProductoFacturaProveedor> products_ = new List<ProductoFacturaProveedor>();
+                                int num = 0;
 
-                            /*List<ProductoFacturaProveedor> products_ = new List<ProductoFacturaProveedor>();
-                            int num = 0;
-
-                            foreach (var fact in facturas)
-                            {
-                                num++;
-                                foreach (var prod in fact.Productos)
+                                foreach (var fact in facturas)
                                 {
-                                    prod.NumeroFactura = num.ToString();
-                                    products_.Add(prod);
+                                    num++;
+                                    foreach (var prod in fact.Productos)
+                                    {
+                                        prod.NumeroFactura = num.ToString();
+                                        products_.Add(prod);
+                                    }
                                 }
+                                Form1 f = new Form1();
+                                f.products = products_;
+                                f.Show();*/
+
+                                //                  END TEST
+
+
+                                // if (option = 1)  // segmenta
+                                //SegmentaProducts(true); // crea el conjunto de facturas con total products que no superan el tope
+                                // else     // option = 2 electronic
+                                //genElectronic();
+
+
                             }
-                            Form1 f = new Form1();
-                            f.products = products_;
-                            f.Show();*/
+                            else  //  no segmenta -> segment inactiva
+                            {
+                                /* DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                 if (rta.Equals(DialogResult.Yes))
+                                 {*/
+                                SegmentaProducts(segment);
+                                // guardaFactura();
+                                //LoadPayments();
 
-                            //                  END TEST
+                                if (IdEstado == 1)   // factura de contado
+                                {
+
+                                    var frmCancelarVenta = new FrmCancelarVenta();
+                                    frmCancelarVenta.FacturaPos = false;
+
+                                    frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                        Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
 
 
-                            // if (option = 1)  // segmenta
-                            //SegmentaProducts(true); // crea el conjunto de facturas con total products que no superan el tope
-                            // else     // option = 2 electronic
-                            //genElectronic();
+                                    frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                        UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
+
+                                    frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
+                                    frmCancelarVenta.EsVenta = true;
+                                    Venta = true;
+                                    frmCancelarVenta.ShowDialog();
 
 
+                                    // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
+                                }
+                                else   //  factura crédito
+                                {
+                                    // guarda factura
+                                    LoadPayments();
+                                }
+                                //}
+
+                            }
                         }
-                        else  //  no segmenta -> segment inactiva
+                        else    //  otros: cotiza, pendiente...
                         {
-                            /* DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
-                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                             if (rta.Equals(DialogResult.Yes))
-                             {*/
                             SegmentaProducts(segment);
                             // guardaFactura();
-                            //LoadPayments();
-
-                            if (IdEstado == 1)   // factura de contado
-                            {
-
-                                var frmCancelarVenta = new FrmCancelarVenta();
-                                frmCancelarVenta.FacturaPos = false;
-
-                                frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
-                                    Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
-
-
-                                frmCancelarVenta.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
-                                    UseObject.RemoveSeparatorMil(frmCancelarVenta.txtIva.Text)).ToString());
-
-                                frmCancelarVenta.txtTotal.Text = this.txtTotal.Text;
-                                frmCancelarVenta.EsVenta = true;
-                                Venta = true;
-                                frmCancelarVenta.ShowDialog();
-
-
-                                // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
-                            }
-                            else   //  factura crédito
-                            {
-                                // guarda factura
-                                LoadPayments();
-                            }
-                            //}
-
+                            LoadPayments();
                         }
-                    }
-                    else    //  otros: cotiza, pendiente...
-                    {
-                        SegmentaProducts(segment);
-                        // guardaFactura();
-                        LoadPayments();
-                    }
 
 
-                    //}
+                        //}
+                    }
+
                 }
+
             }
             else
             {
@@ -5655,6 +5684,18 @@ namespace Aplicacion.Ventas.Factura
                         facturas.ForEach(f =>
                             PrintPos(f.Id, f.Numero, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
                                 Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+
+                        if (facturas.Last().EstadoFactura.Id.Equals(2)) // crédito
+                        {
+                            rta = MessageBox.Show("¿Desea imprimir copia de la factura?", "Factura venta",
+                                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if (rta.Equals(DialogResult.Yes))
+                            {
+                                facturas.ForEach(f =>
+                                    PrintPos(f.Id, f.Numero, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                            }
+                        }
                     }
                     else
                     {

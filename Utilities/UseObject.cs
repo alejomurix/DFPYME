@@ -192,9 +192,11 @@ namespace Utilities
 
         public static string[] MiSubString(string cadena, int inicio, int medio)
         {
+            short index = 3;
             string codigo = "";
             string valor = "";
-            for (int i = 0; i < cadena.Length - 1; i++)
+            for (int i = 0; i < cadena.Length - 1; i++) 
+            ///for (int i = 0; i < cadena.Length; i++)
             {
                 if (i >= inicio && i <= medio)
                 {
@@ -202,7 +204,7 @@ namespace Utilities
                 }
                 if (i > medio)
                 {
-                    if (i == 10)
+                    if (i == (index + medio)) /// 10
                     {
                         valor += ".";
                     }

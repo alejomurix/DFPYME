@@ -303,14 +303,14 @@ namespace Aplicacion.Ventas.Cliente
         {
             if (!Validacion.EsVacio(txtNombres, miError, msnNombreReq))
             {
-                nombreMatch = true;
-                if (Validacion.ConFormato
+                nombreMatch = true; 
+                /**if (Validacion.ConFormato
                     (Validacion.TipoValidacion.Palabras, txtNombres, miError, msnNombreFormat))
                 {
                     nombreMatch = true;
                 }
                 else
-                    nombreMatch = false;
+                    nombreMatch = false;*/
             }
             else
                 nombreMatch = false;
