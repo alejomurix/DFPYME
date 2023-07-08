@@ -59,6 +59,12 @@
     <Compile Include="Auxiliares\Form5.Designer.cs">
       <DependentUpon>Form5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Auxiliares\FrmVerReporte.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Auxiliares\FrmVerReporte.Designer.cs">
+      <DependentUpon>FrmVerReporte.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomPanel.cs" />
     <Compile Include="FrmCIIUList.cs">
       <SubType>Form</SubType>
@@ -155,6 +161,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Auxiliares\Form5.resx">
       <DependentUpon>Form5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Auxiliares\FrmVerReporte.resx">
+      <DependentUpon>FrmVerReporte.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCIIUList.resx">
       <DependentUpon>FrmCIIUList.cs</DependentUpon>

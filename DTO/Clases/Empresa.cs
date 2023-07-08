@@ -19,6 +19,7 @@ namespace DTO.Clases
         public string DireccionEmpresa { get; set; }
         public bool EstadoEmpresa { get; set; }
         public bool RecaudaIVA { set; get; }
+        public int CentroCosto { get; set; }
         public string Descripcion { get; set; }
         public BindingList<Cuenta> cuenta { get; set; }
 

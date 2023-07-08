@@ -466,6 +466,7 @@
     <EmbeddedResource Include="Informes\ConsultaVentaProductosClienteClasifi.rdlc" />
     <EmbeddedResource Include="Informes\DocumentoEquivalente.rdlc" />
     <EmbeddedResource Include="Informes\DocumentoEquivalenteConcepto.rdlc" />
+    <EmbeddedResource Include="Informes\ExportContableInvoicesElectronic.rdlc" />
     <EmbeddedResource Include="Informes\FacturaVenta.rdlc" />
     <EmbeddedResource Include="Informes\FacturaVentaSimplificado.rdlc" />
     <EmbeddedResource Include="Informes\FacturaVenta_carta.rdlc" />
@@ -3292,6 +3293,7 @@
     <None Include="Properties\DataSources\DTO.Clases.Apertura.datasource" />
     <None Include="Properties\DataSources\DTO.Clases.ConsultaComprasCuentas.datasource" />
     <None Include="Properties\DataSources\DTO.Clases.ConsultaFacturaProducto.datasource" />
+    <None Include="Properties\DataSources\DTO.Clases.ElectronicExport.datasource" />
     <None Include="Properties\DataSources\DTO.Clases.Impuesto.datasource" />
     <None Include="Properties\DataSources\DTO.Clases.ProductoFacturaProveedor.datasource" />
     <None Include="Recursos\Iconos\Thumbs.db" />

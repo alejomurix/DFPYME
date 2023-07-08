@@ -323,6 +323,23 @@ namespace FormulariosSistema.Auxiliares
         {
             try
             {
+                var exportInvoices = repositoryModel.InvoiceExport(dtpFecha.Value, dtpFecha2.Value, 0);
+                var frmPrintInforme = new FrmVerReporte();
+                frmPrintInforme.Text = "Export electronic";
+                frmPrintInforme.rptVerInforme.LocalReport.DataSources.Clear();
+                frmPrintInforme.rptVerInforme.LocalReport.Dispose();
+                frmPrintInforme.rptVerInforme.Reset();
+
+                frmPrintInforme.rptVerInforme.LocalReport.DataSources.Add(
+                    new Microsoft.Reporting.WinForms.ReportDataSource("ElectronicExport", exportInvoices));
+
+                frmPrintInforme.rptVerInforme.LocalReport.ReportPath = @"C:\reports\ExportContableInvoicesElectronic.rdlc";
+                //frmPrintInforme.rptVerInforme.LocalReport.ReportPath = AppConfiguracion.ValorSeccion("report") + @"\reports\ExportContableInvoicesElectronic.rdlc";
+
+                frmPrintInforme.rptVerInforme.RefreshReport();
+                frmPrintInforme.Show();
+
+
                 string data = "";
                 //StringBuilder csvContent = new StringBuilder();
                // csvContent.Append("45445;");
@@ -389,6 +406,7 @@ namespace FormulariosSistema.Auxiliares
                 }*/
                 //string csvPath = "C:\\csv\\xyz.csv";
 
+                /**
                 if (this.table_1.Rows.Count > 0)
                 {
                     miOption = new OptionPane();
@@ -400,6 +418,7 @@ namespace FormulariosSistema.Auxiliares
                     miThread.Start();
                     //SaveExcel();
                 }
+                */
                 
                 //OptionPane.MessageInformation("Archivo generado correctamente.");
 
@@ -589,6 +608,46 @@ namespace FormulariosSistema.Auxiliares
 
         }
 
-       
+
+        /*
+        private void Finalizar()
+        {
+            try
+            {
+                miOption.FrmProgressBar.barraProgreso.Style = ProgressBarStyle.Blocks;
+                miOption.FrmProgressBar.Closed_ = false;
+                miOption.FrmProgressBar.Close();
+                this.Enabled = true;
+
+                if (ConsCompras.Count != 0)
+                {
+                    var frmPrintInforme = new FrmVerReporte();
+                    frmPrintInforme.Text = "Informe de compras";
+                    frmPrintInforme.rptVerInforme.LocalReport.DataSources.Clear();
+                    frmPrintInforme.rptVerInforme.LocalReport.Dispose();
+                    frmPrintInforme.rptVerInforme.Reset();
+
+                    
+                    frmPrintInforme.rptVerInforme.LocalReport.DataSources.Add(
+                        new Microsoft.Reporting.WinForms.ReportDataSource("ComprasContable", ConsCompras));
+
+                    frmPrintInforme.rptVerInforme.LocalReport.ReportPath = AppConfiguracion.ValorSeccion("report") + @"\reports\Informe_Contable_Compras.rdlc";
+                    
+
+                    frmPrintInforme.rptVerInforme.RefreshReport();
+                    frmPrintInforme.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                miOption.FrmProgressBar.barraProgreso.Style = ProgressBarStyle.Blocks;
+                miOption.FrmProgressBar.Closed_ = false;
+                miOption.FrmProgressBar.Close();
+                this.Enabled = true;
+                OptionPane.MessageError(ex.Message);
+            }
+        }
+        */
+
     }
 }

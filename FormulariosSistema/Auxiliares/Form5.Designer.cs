@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGrid_1 = new System.Windows.Forms.DataGridView();
             this.dtpFecha = new System.Windows.Forms.DateTimePicker();
             this.dtpFecha2 = new System.Windows.Forms.DateTimePicker();
@@ -58,28 +58,27 @@
             this.txtTotalNetoIvaCosto = new System.Windows.Forms.TextBox();
             this.txtTotalIvaCosto = new System.Windows.Forms.TextBox();
             this.txtTotalBaseIvaCosto = new System.Windows.Forms.TextBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid_1)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvIvaCosto)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGrid_1
             // 
             this.dataGrid_1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid_1.Location = new System.Drawing.Point(12, 54);
+            this.dataGrid_1.Location = new System.Drawing.Point(555, 6);
             this.dataGrid_1.Name = "dataGrid_1";
-            this.dataGrid_1.Size = new System.Drawing.Size(853, 17);
+            this.dataGrid_1.Size = new System.Drawing.Size(49, 17);
             this.dataGrid_1.TabIndex = 0;
+            this.dataGrid_1.Visible = false;
             // 
             // dtpFecha
             // 
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecha.Location = new System.Drawing.Point(473, 6);
+            this.dtpFecha.Location = new System.Drawing.Point(12, 8);
             this.dtpFecha.Name = "dtpFecha";
             this.dtpFecha.Size = new System.Drawing.Size(108, 20);
             this.dtpFecha.TabIndex = 1;
@@ -87,18 +86,18 @@
             // dtpFecha2
             // 
             this.dtpFecha2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecha2.Location = new System.Drawing.Point(587, 7);
+            this.dtpFecha2.Location = new System.Drawing.Point(126, 8);
             this.dtpFecha2.Name = "dtpFecha2";
             this.dtpFecha2.Size = new System.Drawing.Size(115, 20);
             this.dtpFecha2.TabIndex = 2;
             // 
             // btnCargar
             // 
-            this.btnCargar.Location = new System.Drawing.Point(11, 3);
+            this.btnCargar.Location = new System.Drawing.Point(247, 6);
             this.btnCargar.Name = "btnCargar";
             this.btnCargar.Size = new System.Drawing.Size(75, 23);
             this.btnCargar.TabIndex = 3;
-            this.btnCargar.Text = "Cargar";
+            this.btnCargar.Text = "Load";
             this.btnCargar.UseVisualStyleBackColor = true;
             this.btnCargar.Click += new System.EventHandler(this.btnCargar_Click);
             // 
@@ -135,19 +134,20 @@
             // 
             // txtSql
             // 
-            this.txtSql.Location = new System.Drawing.Point(11, 32);
+            this.txtSql.Location = new System.Drawing.Point(484, 6);
             this.txtSql.Multiline = true;
             this.txtSql.Name = "txtSql";
-            this.txtSql.Size = new System.Drawing.Size(853, 16);
+            this.txtSql.Size = new System.Drawing.Size(50, 16);
             this.txtSql.TabIndex = 5;
+            this.txtSql.Visible = false;
             // 
             // btnCsv
             // 
-            this.btnCsv.Location = new System.Drawing.Point(92, 3);
+            this.btnCsv.Location = new System.Drawing.Point(328, 6);
             this.btnCsv.Name = "btnCsv";
             this.btnCsv.Size = new System.Drawing.Size(75, 23);
             this.btnCsv.TabIndex = 3;
-            this.btnCsv.Text = "CSV";
+            this.btnCsv.Text = "Export";
             this.btnCsv.UseVisualStyleBackColor = true;
             this.btnCsv.Click += new System.EventHandler(this.btnCsv_Click);
             // 
@@ -235,9 +235,9 @@
             // 
             this.groupBox3.Controls.Add(this.dgvIvaCosto);
             this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.groupBox3.Location = new System.Drawing.Point(419, 334);
+            this.groupBox3.Location = new System.Drawing.Point(419, 491);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(450, 167);
+            this.groupBox3.Size = new System.Drawing.Size(450, 10);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "IVA en Costos";
@@ -246,14 +246,14 @@
             // 
             this.dgvIvaCosto.AllowUserToAddRows = false;
             this.dgvIvaCosto.BackgroundColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvIvaCosto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvIvaCosto.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             this.dgvIvaCosto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvIvaCosto.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TarifaIvaCosto,
@@ -270,10 +270,10 @@
             // TarifaIvaCosto
             // 
             this.TarifaIvaCosto.DataPropertyName = "Tarifa";
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle27.Format = "N1";
-            dataGridViewCellStyle27.NullValue = null;
-            this.TarifaIvaCosto.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.Format = "N1";
+            dataGridViewCellStyle17.NullValue = null;
+            this.TarifaIvaCosto.DefaultCellStyle = dataGridViewCellStyle17;
             this.TarifaIvaCosto.HeaderText = "Tarifa";
             this.TarifaIvaCosto.Name = "TarifaIvaCosto";
             this.TarifaIvaCosto.Width = 110;
@@ -281,10 +281,10 @@
             // BaseIvaCosto
             // 
             this.BaseIvaCosto.DataPropertyName = "BaseGravable";
-            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle28.Format = "N0";
-            dataGridViewCellStyle28.NullValue = null;
-            this.BaseIvaCosto.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle18.Format = "N0";
+            dataGridViewCellStyle18.NullValue = null;
+            this.BaseIvaCosto.DefaultCellStyle = dataGridViewCellStyle18;
             this.BaseIvaCosto.HeaderText = "Base";
             this.BaseIvaCosto.Name = "BaseIvaCosto";
             this.BaseIvaCosto.Width = 110;
@@ -292,10 +292,10 @@
             // IvaCosto
             // 
             this.IvaCosto.DataPropertyName = "ValorIva";
-            dataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle29.Format = "N0";
-            dataGridViewCellStyle29.NullValue = null;
-            this.IvaCosto.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle19.Format = "N0";
+            dataGridViewCellStyle19.NullValue = null;
+            this.IvaCosto.DefaultCellStyle = dataGridViewCellStyle19;
             this.IvaCosto.HeaderText = "IVA";
             this.IvaCosto.Name = "IvaCosto";
             this.IvaCosto.Width = 110;
@@ -303,10 +303,10 @@
             // SubtotalIvaCosto
             // 
             this.SubtotalIvaCosto.DataPropertyName = "Total";
-            dataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle30.Format = "N0";
-            dataGridViewCellStyle30.NullValue = null;
-            this.SubtotalIvaCosto.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle20.Format = "N0";
+            dataGridViewCellStyle20.NullValue = null;
+            this.SubtotalIvaCosto.DefaultCellStyle = dataGridViewCellStyle20;
             this.SubtotalIvaCosto.HeaderText = "SubTotal";
             this.SubtotalIvaCosto.Name = "SubtotalIvaCosto";
             // 
@@ -341,21 +341,12 @@
             this.txtTotalBaseIvaCosto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtTotalBaseIvaCosto.TextChanged += new System.EventHandler(this.txtTotalBaseIvaCosto_TextChanged);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Green;
-            this.pictureBox1.Location = new System.Drawing.Point(58, 380);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(73, 61);
-            this.pictureBox1.TabIndex = 21;
-            this.pictureBox1.TabStop = false;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 77);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 35);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(851, 242);
+            this.dataGridView1.Size = new System.Drawing.Size(1036, 421);
             this.dataGridView1.TabIndex = 22;
             // 
             // Form5
@@ -363,9 +354,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(877, 331);
+            this.ClientSize = new System.Drawing.Size(1060, 468);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtTotalNetoIvaCosto);
             this.Controls.Add(this.txtTotalIvaCosto);
             this.Controls.Add(this.txtTotalBaseIvaCosto);
@@ -383,14 +373,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form5";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Consulta de facturas de venta repetidas";
+            this.Text = "Export electonic invioces";
             this.Load += new System.EventHandler(this.Form3_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid_1)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvIvaCosto)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -424,7 +413,6 @@
         private System.Windows.Forms.TextBox txtTotalNetoIvaCosto;
         private System.Windows.Forms.TextBox txtTotalIvaCosto;
         private System.Windows.Forms.TextBox txtTotalBaseIvaCosto;
-        private System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.DataGridView dataGridView1;
     }
 }

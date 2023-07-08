@@ -799,7 +799,7 @@ namespace DataAccessLayer.Repository
                 CargarAdapter(sql);
                 miAdapter.Fill(tCompany);
                 c.Company = tCompany.FirstOrDefault();
-
+                
                 c.City = GetCityById(c.Company.idciudad);
 
                 sql = "SELECT * FROM details_tributary_empresa;";
@@ -2849,6 +2849,9 @@ namespace DataAccessLayer.Repository
         {
             try
             {
+                Clases.DaoEmpresa daoEmpresa = new DaoEmpresa();
+                centroCosto = daoEmpresa.ObtenerEmpresa().CentroCosto;
+
                 List<DTO.Clases.ElectronicExport> exports = new List<DTO.Clases.ElectronicExport>();
 
                 short neg = -1;
@@ -2865,6 +2868,7 @@ namespace DataAccessLayer.Repository
                 {
                     var n = nGroup.Key;
                     var feQuery = invoices.Where(i => i.Numero.Equals(nGroup.Key));
+                    ic = 0;
                     cont = 0;
                     var fe_ = new DTO.Clases.ResumenElectronic();
 
@@ -2878,9 +2882,13 @@ namespace DataAccessLayer.Repository
                         {
                             DTO.Clases.ElectronicExport export = new DTO.Clases.ElectronicExport();
 
+                            export.IEMP = 1;            ///
                             export.FSOPORT = fe.Fecha;
+                            export.ITDSOP = 14;         ///
                             export.INUMSOP = fe.Numero;
                             export.ICuenta = cta.Numero;
+                            export.ICCSUBCC = centroCosto;
+                            export.TDETALLE = fe.Numero;
                             export.INIT = fe.Cliente;
 
                             if (cta.BaseTax) export.MCREDITO = Math.Round(fe.BaseVal, 0);
@@ -2895,15 +2903,19 @@ namespace DataAccessLayer.Repository
                     int c_ = feQuery.Count();
                     if (ic > 0 && cont == c_)
                     {
-                        var exp = exports.Where(e => e.ICuenta.Equals(ctaExce.Numero));
+                        var exp = exports.Where(e => e.INUMSOP.Equals(fe_.Numero) && e.ICuenta.Equals(ctaExce.Numero));
                         if (exp.Count() > 0)
                             exp.First().MCREDITO += Math.Round(ic, 0);
                         else
                         {
                             DTO.Clases.ElectronicExport export = new DTO.Clases.ElectronicExport();
+                            export.IEMP = 1;            ///
                             export.FSOPORT = fe_.Fecha;
+                            export.ITDSOP = 14;         ///
                             export.INUMSOP = fe_.Numero;
                             export.ICuenta = ctaExce.Numero;
+                            export.ICCSUBCC = centroCosto;
+                            export.TDETALLE = fe_.Numero;
                             export.INIT = fe_.Cliente;
 
                             export.MCREDITO = Math.Round(ic, 0);
@@ -2911,20 +2923,27 @@ namespace DataAccessLayer.Repository
                             exports.Add(export);
                         }
 
-                        // 1 añadir INITCXX Y PAGO
-                        exports.Last().INITCXX = fe_.Cliente;
-                        exports.Last().FPAGOCXX = fe_.Fecha;
-
-                        // 2 AÑADIR CUENTA DE CAJA
-                        DTO.Clases.ElectronicExport exportCaja = new DTO.Clases.ElectronicExport();
-                        exportCaja.FSOPORT = fe_.Fecha;
-                        exportCaja.INUMSOP = fe_.Numero;
-                        exportCaja.ICuenta = ctaCaja.Numero;
-                        exportCaja.INIT = fe_.Cliente;
-                        exportCaja.MDEBITO = Math.Round(feQuery.Sum(s => s.Total), 0);
-                        exports.Add(exportCaja);
-
                     }
+
+                    // 1 añadir INITCXX Y PAGO
+                    exports.Where(e => e.INUMSOP.Equals(fe_.Numero)).Last().INITCXX = fe_.Cliente;
+                    exports.Where(e => e.INUMSOP.Equals(fe_.Numero)).Last().FPAGOCXX = fe_.Fecha;
+
+                    // 2 AÑADIR CUENTA DE CAJA
+                    DTO.Clases.ElectronicExport exportCaja = new DTO.Clases.ElectronicExport();
+                    exportCaja.IEMP = 1;            ///
+                    exportCaja.FSOPORT = fe_.Fecha;
+                    exportCaja.ITDSOP = 14;         ///
+                    exportCaja.INUMSOP = fe_.Numero;
+                    exportCaja.ICuenta = ctaCaja.Numero;
+                    exportCaja.ICCSUBCC = centroCosto;
+                    exportCaja.TDETALLE = fe_.Numero;
+                    exportCaja.INIT = fe_.Cliente;
+                    //exportCaja.MDEBITO = Math.Round(feQuery.Sum(s => s.Total), 0);
+                    exportCaja.MDEBITO = Math.Round(exports.Where(e => e.INUMSOP.Equals(fe_.Numero)).Sum(s => s.MCREDITO), 0);
+                    exports.Add(exportCaja);
+
+                    
                 }
                 return exports;
             }
@@ -2962,7 +2981,7 @@ namespace DataAccessLayer.Repository
                       documento_electronico.numero, 
                       documento_electronico.nit_cliente,
                       item_documento_electronico.iva 
-                    ORDER BY documento_electronico.numero;";
+                    ORDER BY documento_electronico.numero, item_documento_electronico.iva DESC;";
                 CargarComando(sql);
                 miComando.Parameters.AddWithValue("fecha", fecha);
                 miComando.Parameters.AddWithValue("fecha2", fecha2);
@@ -3011,7 +3030,9 @@ namespace DataAccessLayer.Repository
                     LEFT JOIN 
                       cuenta_contable_iva 
                     ON 
-                      cuenta_contable.id = cuenta_contable_iva.id_cuenta_contable;";
+                      cuenta_contable.id = cuenta_contable_iva.id_cuenta_contable
+                    ORDER BY 
+                      cuenta_contable_iva.tarifa DESC, cuenta_contable.numero DESC;";
                 CargarComando(sql);
                 miConexion.MiConexion.Open();
                 NpgsqlDataReader reader = miComando.ExecuteReader();

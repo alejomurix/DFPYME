@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Aplicacion.Ventas.Consultas
+namespace FormulariosSistema.Auxiliares
 {
     public partial class FrmVerReporte : Form
     {

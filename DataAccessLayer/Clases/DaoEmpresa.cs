@@ -264,6 +264,7 @@ namespace DataAccessLayer.Clases
                     empresa.Departamento.IdDepartamento = miReader.GetInt32(16);
                     empresa.Ciudad.IdCiudad = miReader.GetInt32(17);
                     empresa.RecaudaIVA = miReader.GetBoolean(18);
+                    empresa.CentroCosto = miReader.GetInt32(19);
                 }
                 miConexion.MiConexion.Close();
                 miComando.Dispose();

@@ -14,7 +14,7 @@ namespace Aplicacion.Clases
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Aplicacion.Configuracion.Conexion.FrmConexion());
 
-            Application.Run(new Aplicacion.Principal.frmPrincipal());
+             Application.Run(new Aplicacion.Principal.frmPrincipal());
 
             //    Application.Run(new Aplicacion.Ventas.Devolucion.FrmCanjeArticulo());
             // Application.Run(new Aplicacion.Administracion.Puc.FrmConsultaPuc());
@@ -118,6 +118,9 @@ namespace Aplicacion.Clases
             //Ventas.Factura.Form1 frm = new Ventas.Factura.Form1();
             //frm.Show();
             ///Application.Run(new Ventas.Factura.Form1());
+            ///
+
+            Application.Run(new FormulariosSistema.Auxiliares.Form5());
         }
     }
 }
