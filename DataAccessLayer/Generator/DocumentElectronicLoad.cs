@@ -33,6 +33,20 @@ namespace DataAccessLayer.Generator
             LoadTotalImpuesto(false); // Carga impuestos;  true : Carga retenciones
             LoadItem();
 
+            /**
+            double iim_4 = 0;
+            foreach(var items in InvoiceType.ItemFields)
+            {
+                foreach (var tImps in items.TotalImpuestos)
+                {
+                    iim_4 += tImps.Impuestos.Where(i => i.ID.Equals("01")).Sum(s => s.BaseImponible);
+                    
+                }
+            }
+            */
+
+            //var iim_4 = InvoiceType.ItemFields.Select(sl => sl.TotalImpuestos.Select(st => st.Impuestos.Sum(s => s.BaseImponible)));
+
             XmlSerializer xmlSerialize = new XmlSerializer(typeof(InvoiceType));
             Stream str = new FileStream("/xmlDocumnets/DIAN_" + number + ".xml", FileMode.Create, FileAccess.Write);
             xmlSerialize.Serialize(str, this.InvoiceType);
@@ -355,8 +369,47 @@ namespace DataAccessLayer.Generator
                     });
                 }
 
-                /// ***
-                Impuestos = new List<Impuesto>();
+            Impuestos = new List<Impuesto>();
+            foreach (var tax in
+                    from t in taxes.Where(t => t.State.Equals(stateTax) && t.ID.Equals("04"))
+                    group t by new
+                    {
+                        t.ID,
+                        t.Tarifa
+                    }
+                        into taxs
+                    select new
+                    {
+                        ID = taxs.Key.ID,
+                        Tarifa = taxs.Key.Tarifa,
+                        Base = taxs.Sum(t => t.Base),
+                        Value = taxs.Sum(t => t.Value)
+                    })
+            {
+                Impuestos.Add(new Impuesto
+                {
+                    ID = tax.ID,
+                    Base = tax.Base,
+                    Tarifa = tax.Tarifa.ToString().Replace(',', '.'),
+                    Valor = Math.Round(tax.Base * tax.Tarifa / 100, 2),   ///Valor = tax.Value,
+                    MonedaBase = this.Document.Moneda,
+                    MonedaValor = this.Document.Moneda
+                });
+
+            }
+            if (Impuestos.Count > 0)
+            {
+                InvoiceType.TotalImpuestos.Add(new TotalImpuesto
+                {
+                    ImpRetenido = stateTax,
+                    Moneda = this.Document.Moneda,
+                    Valor = Math.Round(Impuestos.Sum(s => s.Valor), 2),
+                    Impuestos = Impuestos
+                });
+            }
+
+            /// ***
+            Impuestos = new List<Impuesto>();
                 foreach (var tax in
                     from t in taxes.Where(t => t.State.Equals(stateTax) && t.ID.Equals("02"))
                     group t by new

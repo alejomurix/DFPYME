@@ -2276,7 +2276,8 @@ else
                         {
                             //var j = (tRow.Single().Field<double>("cantidad")).ToString();
                             //var j1 = tRow.Single().Field<double>("cantidad").ToString();
-                            gRow.Cells["Devolucion"].Value = (tRow.Single().Field<double>("cantidad")).ToString();
+                            ///gRow.Cells["Devolucion"].Value = (tRow.Single().Field<double>("cantidad")).ToString();
+                            gRow.Cells["Devolucion"].Value = tRow.Sum(s => s.Field<double>("cantidad")).ToString();
                         }
                         else
                         {

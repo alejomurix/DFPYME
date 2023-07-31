@@ -3041,16 +3041,34 @@ namespace Aplicacion.Ventas.Remisiones
                         }
                         if (rta_.Equals(DialogResult.Yes))
                         {*/
-                            ///if (!ExtendForms)
-                            ///{
-                                var frmCancel = new Factura.FrmCancelarVenta();
-                                frmCancel.txtTotal.Text = txtTotal.Text;
-                                frmCancel.EsVenta = false;
-                               /// ExtendForms = true;
-                                Venta = true;
-                                frmCancel.ShowDialog();
-                                txtCodigoArticulo.Focus();
-                           /// }
+                        ///if (!ExtendForms)
+                        ///{
+
+
+                        var frmCancelV2 = new Factura.PagosV2.FrmCancelarVentaV2();
+
+                        frmCancelV2.txtTotal.Text = this.txtTotal.Text;
+                        frmCancelV2.txtEfectivo.Focus();
+                        DialogResult dg = frmCancelV2.ShowDialog();
+                        if (dg.Equals(DialogResult.OK))
+                        {
+                            miFormasPago = frmCancelV2.Formas;
+                            CargarYguardarFacturaPos();
+                            // LoadPayments();
+                        }
+
+
+                        /**
+                        var frmCancel = new Factura.FrmCancelarVenta();
+                        frmCancel.txtTotal.Text = txtTotal.Text;
+                        frmCancel.EsVenta = false;
+                        /// ExtendForms = true;
+                        Venta = true;
+                        frmCancel.ShowDialog();
+                        txtCodigoArticulo.Focus();
+                        */
+
+                        /// }
                         /**}
                         else
                         {

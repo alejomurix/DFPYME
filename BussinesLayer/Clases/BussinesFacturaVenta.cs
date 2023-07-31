@@ -105,6 +105,7 @@ namespace BussinesLayer.Clases
                 FechaPago = factura.FechaLimite//,
                 //Neto = factura.Productos.Sum(p => p.Total)
             };
+            if (de.NitCliente.Equals("22222222")) de.NitCliente += "2222";
             de = repositoryModel.AddElectronicDocument(de);
             int cont = 1;
             foreach (var p in factura.Productos)

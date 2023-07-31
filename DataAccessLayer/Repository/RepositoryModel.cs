@@ -1224,6 +1224,17 @@ namespace DataAccessLayer.Repository
                         Value = Math.Round(item.IC * item.Quantity, 2)
                     });
                 }
+                if (item.INC > 0)
+                {
+                    taxes.Add(new Tax
+                    {
+                        State = false,
+                        ID = "04",
+                        Base = Math.Round(item.UnitPrice * item.Quantity, 2),
+                        Tarifa = item.INC,
+                        Value = Math.Round(Math.Round(item.UnitPrice * item.Quantity, 2) * item.INC / 100, 2)
+                    });
+                }
                 return taxes;
 
 
@@ -1937,6 +1948,9 @@ namespace DataAccessLayer.Repository
                     item.Taxes = Taxes(item);
                 }
                 ed.Retentions = this.TaxesElectronicDocument(ed.ID);
+                //this.Document.Neto = this.Document.Total - Math.Round(this.Document.Retentions.Sum(s => s.Value), 2);
+                ed.Neto = ed.Total - Math.Round(ed.Retentions.Sum(s => s.Value), 2);
+                this.EditElectronicDocument(ed);
                 //ed.Items = this.UpdateTaxes(ed.ID);
                 this.UpdateNumberItemDE(ed.ID);
                 return ed;

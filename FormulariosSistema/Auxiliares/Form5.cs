@@ -15,6 +15,7 @@ using System.Xml.Linq;
 using System.IO;
 using SpreadsheetLight;
 using DataAccessLayer.Repository;
+using Microsoft.Reporting.WinForms;
 
 namespace FormulariosSistema.Auxiliares
 {
@@ -333,8 +334,15 @@ namespace FormulariosSistema.Auxiliares
                 frmPrintInforme.rptVerInforme.LocalReport.DataSources.Add(
                     new Microsoft.Reporting.WinForms.ReportDataSource("ElectronicExport", exportInvoices));
 
-                frmPrintInforme.rptVerInforme.LocalReport.ReportPath = @"C:\reports\ExportContableInvoicesElectronic.rdlc";
-                //frmPrintInforme.rptVerInforme.LocalReport.ReportPath = AppConfiguracion.ValorSeccion("report") + @"\reports\ExportContableInvoicesElectronic.rdlc";
+                //frmPrintInforme.rptVerInforme.LocalReport.ReportPath = @"C:\reports\ExportContableInvoicesElectronic.rdlc";
+                //frmPrintInforme.rptVerInforme.LocalReport.ReportPath = @"C:\Users\Asus\projects\DFPYME\Aplicacion\Informes\ExportContableInvoicesElectronic.rdlc";
+                
+                frmPrintInforme.rptVerInforme.LocalReport.ReportPath = Application.StartupPath + @"\reports\ExportContableInvoicesElectronic.rdlc";
+
+                /*var dateStar = new ReportParameter();
+                dateStar.Name = "DateStar"; 
+                dateStar.Values.Add(dtpFecha.Value.ToShortDateString());
+                frmPrintInforme.rptVerInforme.LocalReport.SetParameters(dateStar);*/
 
                 frmPrintInforme.rptVerInforme.RefreshReport();
                 frmPrintInforme.Show();

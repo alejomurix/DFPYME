@@ -91,7 +91,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!FSOPORT.Value</Value>
-                              <Style />
+                              <Style>
+                                <Format>d</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
@@ -111,6 +113,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -282,7 +285,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!MDEBITO.Value</Value>
+                              <Value>=IIF(Fields!MDEBITO.Value = 0, "", Fields!MDEBITO.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -314,7 +317,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!MCREDITO.Value</Value>
+                              <Value>=IIF(Fields!MCREDITO.Value = 0, "", Fields!MCREDITO.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -346,7 +349,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!MVRBASE.Value</Value>
+                              <Value>=IIF(Fields!MVRBASE.Value = 0, "", Fields!MVRBASE.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -442,8 +445,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!FPAGOCXX.Value</Value>
-                              <Style />
+                              <Value>=IIF(Fields!FPAGOCXX.Value &lt; CDate("01/01/2000 1:00:00"), "", Fields!FPAGOCXX.Value)</Value>
+                              <Style>
+                                <Format>d</Format>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>

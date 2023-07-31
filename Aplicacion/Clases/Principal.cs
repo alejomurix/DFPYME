@@ -120,7 +120,7 @@ namespace Aplicacion.Clases
             ///Application.Run(new Ventas.Factura.Form1());
             ///
 
-            Application.Run(new FormulariosSistema.Auxiliares.Form5());
+            ///Application.Run(new FormulariosSistema.Auxiliares.Form5());
         }
     }
 }

@@ -208,7 +208,7 @@ namespace FormulariosSistema
             {
                 this.Documents = this.repositoryModel.Documents(this.txtDocument.Text);
                 this.dgvDocuments.DataSource = null;
-                this.dgvDocuments.DataSource = this.Documents;
+                this.dgvDocuments.DataSource = Documents;
             }
             catch (Exception ex)
             {
@@ -1785,13 +1785,15 @@ namespace FormulariosSistema
                     this.TotalInvoice.SubTotal = this.document.Items.Sum(s => s.SubTotal);
                     this.TotalInvoice.IVA = Math.Round(this.document.Items.Sum(s => ((s.UnitPrice * s.Quantity) * s.IVA / 100)), 2);
                     this.TotalInvoice.IC = Math.Round(this.document.Items.Sum(s => s.IC * s.Quantity), 2);
-                    this.TotalInvoice.Total = this.TotalInvoice.SubTotal + this.TotalInvoice.IVA + this.TotalInvoice.IC;
+                    this.TotalInvoice.INC = Math.Round(this.document.Items.Sum(s => ((s.UnitPrice * s.Quantity) * s.INC / 100)), 2);
+                    this.TotalInvoice.Total = this.TotalInvoice.SubTotal + this.TotalInvoice.IVA + this.TotalInvoice.IC + this.TotalInvoice.INC;
                     this.TotalInvoice.Retention = Math.Round(this.document.Retentions.Sum(s => s.Value), 2);
                     this.TotalInvoice.Neto = this.TotalInvoice.Total - this.TotalInvoice.Retention;
 
                     this.txtSubtotal.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.SubTotal.ToString());
                     this.txtIVA.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.IVA.ToString());
                     this.txtIC.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.IC.ToString());
+                    this.txtINC.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.INC.ToString());
                     this.txtTotalPie.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.Total.ToString());
                     this.txtRetencion.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.Retention.ToString());
                     this.txtNeto.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.Neto.ToString());

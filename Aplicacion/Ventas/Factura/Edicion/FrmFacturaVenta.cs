@@ -2863,16 +2863,28 @@ namespace Aplicacion.Ventas.Factura.Edicion
                         }
                         else
                         {
+                            var frmCancelV2 = new PagosV2.FrmCancelarVentaV2();
+                            frmCancelV2.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                        Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+                            frmCancelV2.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                UseObject.RemoveSeparatorMil(frmCancelV2.txtIva.Text)).ToString());
+
+                            frmCancelV2.txtTotal.Text = txtTotal.Text;
+                            frmCancelV2.txtEfectivo.Focus();
+                            DialogResult dg = frmCancelV2.ShowDialog();
+                            if (dg.Equals(DialogResult.OK))
+                            {
+                                miFormasPago = frmCancelV2.Formas;
+                                CargarYguardarFacturaPos();
+                                //LoadPayments();
+                            }
+
+                            /**
                             Venta = true;
                             var frmCancelarVenta = new Factura.Edicion.FrmCancelarVenta();
 
                             var cant = miTabla.AsEnumerable().Sum(s => Convert.ToDouble(s.Field<string>("Cantidad")));
                             var v_iva = miTabla.AsEnumerable().Sum(s => s.Field<double>("ValorIva"));
-
-                            /*var suma_ = miTabla.AsEnumerable().Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))));
-                            var suma_2 = Convert.ToInt32(miTabla.AsEnumerable().Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad")))));
-                            var suma_3 = UseObject.InsertSeparatorMil(
-                                Convert.ToInt32(miTabla.AsEnumerable().Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());*/
 
                             frmCancelarVenta.txtIva.Text = UseObject.InsertSeparatorMil(
                                 Convert.ToInt32(miTabla.AsEnumerable().Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
@@ -2883,6 +2895,8 @@ namespace Aplicacion.Ventas.Factura.Edicion
                             frmCancelarVenta.txtTotal.Text = txtTotalMenosRete.Text;
                             frmCancelarVenta.EsVenta = true;
                             frmCancelarVenta.ShowDialog();
+                            */
+
                         }
                     }
                 }

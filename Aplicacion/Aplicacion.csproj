@@ -858,6 +858,9 @@
     <EmbeddedResource Include="Ventas\Factura\FrmUtilidad.resx">
       <DependentUpon>FrmUtilidad.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ventas\Factura\PagosV2\FrmCancelarVentaV2.resx">
+      <DependentUpon>FrmCancelarVentaV2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ventas\Factura\Saldos\FrmSaldoCliente.resx">
       <DependentUpon>FrmSaldoCliente.cs</DependentUpon>
     </EmbeddedResource>
@@ -2612,6 +2615,12 @@
     </Compile>
     <Compile Include="Ventas\Factura\FrmUtilidad.Designer.cs">
       <DependentUpon>FrmUtilidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas\Factura\PagosV2\FrmCancelarVentaV2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ventas\Factura\PagosV2\FrmCancelarVentaV2.Designer.cs">
+      <DependentUpon>FrmCancelarVentaV2.cs</DependentUpon>
     </Compile>
     <Compile Include="Ventas\Factura\Saldos\FrmSaldoCliente.cs">
       <SubType>Form</SubType>

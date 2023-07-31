@@ -377,10 +377,12 @@ namespace Aplicacion.Ventas.Devolucion
                     foreach (DataRow row in miTabla.Rows)
                     {
                         var devolucion = new DTO.Clases.Devolucion();
-                        devolucion.Factura = Factura.Numero;
+                        //devolucion.Factura = Factura.Numero;
+                        if (!String.IsNullOrEmpty(txtNumeroFactura.Text) && Validacion.ValidarEntero(txtNumeroFactura.Text))
+                            devolucion.Factura = txtNumeroFactura.Text;
                         devolucion.Producto.CodigoProducto = row["Codigo"].ToString();
                         devolucion.Fecha = DateTime.Now;
-                        var i = devolucion.Fecha.TimeOfDay;
+                        //var i = devolucion.Fecha.TimeOfDay;
                         devolucion.Valor = Convert.ToInt32(row["ValorUnitario"]);
                         devolucion.Cantidad = Convert.ToDouble(row["Cantidad"]);
                         devolucion.Iva = UseObject.RemoveCharacter(row["Iva"].ToString(), '%');//Convert.ToDouble(row["Iva"]);

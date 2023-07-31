@@ -5450,7 +5450,23 @@ namespace Aplicacion.Ventas.Factura
 
                                         if (IdEstado == 1)   // factura de contado
                                         {
+                                            var frmCancelV2 = new PagosV2.FrmCancelarVentaV2();
 
+                                            frmCancelV2.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                                Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+                                            frmCancelV2.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                                UseObject.RemoveSeparatorMil(frmCancelV2.txtIva.Text)).ToString());
+
+                                            frmCancelV2.txtTotal.Text = this.txtTotal.Text;
+                                            frmCancelV2.txtEfectivo.Focus();
+                                            DialogResult dg = frmCancelV2.ShowDialog();
+                                            if (dg.Equals(DialogResult.OK))
+                                            {
+                                                miFormasPago = frmCancelV2.Formas;
+                                                LoadPayments();
+                                            }
+
+                                            /**
                                             var frmCancelarVenta = new FrmCancelarVenta();
                                             frmCancelarVenta.FacturaPos = false;
 
@@ -5465,7 +5481,7 @@ namespace Aplicacion.Ventas.Factura
                                             frmCancelarVenta.EsVenta = true;
                                             Venta = true;
                                             frmCancelarVenta.ShowDialog();
-
+                                            */
 
                                             // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
                                         }
@@ -5538,7 +5554,22 @@ namespace Aplicacion.Ventas.Factura
 
                                 if (IdEstado == 1)   // factura de contado
                                 {
+                                    var frmCancelV2 = new PagosV2.FrmCancelarVentaV2();
+                                    frmCancelV2.txtIva.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(miTabla.AsEnumerable().
+                                                Sum(s => (s.Field<double>("ValorIva") * Convert.ToDouble(s.Field<string>("Cantidad"))))).ToString());
+                                    frmCancelV2.txtBase.Text = UseObject.InsertSeparatorMil((UseObject.RemoveSeparatorMil(txtTotal.Text) -
+                                        UseObject.RemoveSeparatorMil(frmCancelV2.txtIva.Text)).ToString());
 
+                                    frmCancelV2.txtTotal.Text = this.txtTotal.Text;
+                                    frmCancelV2.txtEfectivo.Focus();
+                                    DialogResult dg = frmCancelV2.ShowDialog();
+                                    if (dg.Equals(DialogResult.OK))
+                                    {
+                                        miFormasPago = frmCancelV2.Formas;
+                                        LoadPayments();
+                                    }
+
+                                    /**
                                     var frmCancelarVenta = new FrmCancelarVenta();
                                     frmCancelarVenta.FacturaPos = false;
 
@@ -5553,14 +5584,19 @@ namespace Aplicacion.Ventas.Factura
                                     frmCancelarVenta.EsVenta = true;
                                     Venta = true;
                                     frmCancelarVenta.ShowDialog();
-
+                                    */
 
                                     // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
                                 }
                                 else   //  factura crédito
                                 {
-                                    // guarda factura
-                                    LoadPayments();
+                                    DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
+                                                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                    if (rta.Equals(DialogResult.Yes))
+                                    {
+                                        // guarda factura
+                                        LoadPayments();
+                                    }
                                 }
                                 //}
 
@@ -5685,6 +5721,7 @@ namespace Aplicacion.Ventas.Factura
                             PrintPos(f.Id, f.Numero, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
                                 Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
 
+                        /**
                         if (facturas.Last().EstadoFactura.Id.Equals(2)) // crédito
                         {
                             rta = MessageBox.Show("¿Desea imprimir copia de la factura?", "Factura venta",
@@ -5696,6 +5733,7 @@ namespace Aplicacion.Ventas.Factura
                                         Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
                             }
                         }
+                        */
                     }
                     else
                     {
@@ -5845,60 +5883,76 @@ namespace Aplicacion.Ventas.Factura
 
         private void LimpiarCamposNewFactura()
         {
-            while (dgvListaArticulos.RowCount != 0)
+            try
             {
-                dgvListaArticulos.Rows.RemoveAt(0);
-            }
-            miFormasPago.Clear();
+                while (dgvListaArticulos.RowCount != 0)
+                {
+                    dgvListaArticulos.Rows.RemoveAt(0);
+                }
+                miFormasPago.Clear();
 
-            if (CargaCliente)
-            {
-                txtCliente.Text = "22222222";
-                txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
-                txtCodigoArticulo.Focus();
-            }
-            else
-            {
-                NitCliente = "";
-                txtCliente.Text = NitCliente;
-                txtNombreCliente.Text = "";
-                txtCliente.Focus();
-            }
-            /* NitCliente = "";
-             txtCliente.Text = NitCliente;
-             txtNombreCliente.Text = "";
-             txtCliente.Focus();*/
-            //txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
+                if (CargaCliente)
+                {
+                    txtCliente.Text = "22222222";
+                    txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
+                    txtCodigoArticulo.Focus();
+                }
+                else
+                {
+                    NitCliente = "";
+                    txtCliente.Text = NitCliente;
+                    txtNombreCliente.Text = "";
+                    txtCliente.Focus();
+                }
+                /* NitCliente = "";
+                 txtCliente.Text = NitCliente;
+                 txtNombreCliente.Text = "";
+                 txtCliente.Focus();*/
+                //txtCliente_KeyPress(this.txtCliente, new KeyPressEventArgs((char)Keys.Enter));
 
-            this.txtCantidad.Text = "1";
-            this.txtTotal.Text = "0";
-            this.txtSubtotal.Text = "0";
-            this.txtTotalMenosRete.Text = "0";
-            txtDescuentoFactura.Text = "0";
-            rbtnDesctoFactura.Checked = true;
-            cbContado.SelectedIndex = 0;
-            //cbDesctoRecargo.SelectedIndex = 0;
-            //cbDescuentoProducto.Enabled = false;
-            // cbRecargoProducto.Enabled = false;
-            tsCbContado_SelectedIndexChanged(this.cbContado, new EventArgs());
-            tsCbDesctoRecargo_SelectedIndexChanged(null, null);
-            lblDescuentoFactura.Text = "Descto/Fact";
-            lblDesctoProducto.Text = "Descto%";
-            lblDatosProducto.Text = "";
-            lblPrecioProducto.Text = "";
-            DesctoAplica = 0;
-            this.txtIcoBolsaCant.Text = "0";
-            this.txtIcoBolsaTotal.Text = "0";
-            this.txtIcoBolsaUnit.Text = "0";
-            miTabla.Clear();
-            products.Clear();
-            facturas.Clear();
-            this.ImpstoBolsa = null;
-            this.miFactura.IcoBolsaPlastica = new ImpuestoBolsa();
-            miFactura.Productos.Clear();
-            CargarRetencion();
-            ValidarRetencion();
-            RecargarRetencion();
+                this.txtCantidad.Text = "1";
+                this.txtTotal.Text = "0";
+                this.txtSubtotal.Text = "0";
+                this.txtTotalMenosRete.Text = "0";
+                txtDescuentoFactura.Text = "0";
+                rbtnDesctoFactura.Checked = true;
+                cbContado.SelectedIndex = 0;
+                //cbDesctoRecargo.SelectedIndex = 0;
+                //cbDescuentoProducto.Enabled = false;
+                // cbRecargoProducto.Enabled = false;
+                tsCbContado_SelectedIndexChanged(this.cbContado, new EventArgs());
+                tsCbDesctoRecargo_SelectedIndexChanged(null, null);
+                lblDescuentoFactura.Text = "Descto/Fact";
+                lblDesctoProducto.Text = "Descto%";
+                lblDatosProducto.Text = "";
+                lblPrecioProducto.Text = "";
+                DesctoAplica = 0;
+                this.txtIcoBolsaCant.Text = "0";
+                this.txtIcoBolsaTotal.Text = "0";
+                this.txtIcoBolsaUnit.Text = "0";
+                miTabla.Clear();
+                products.Clear();
+                facturas.Clear();
+                this.ImpstoBolsa = new ImpuestoBolsa();
+                this.miFactura.IcoBolsaPlastica = new ImpuestoBolsa();
+                miFactura.Productos.Clear();
+                CargarRetencion();
+                ValidarRetencion();
+                RecargarRetencion();
+            }
+            catch { }
+            /*finally
+            {
+                miFormasPago.Clear();
+
+                miTabla.Clear();
+                products.Clear();
+                //ImpstoBolsa =  miBussinesImpstoBolsa.ImpuestoBolsa(1);
+                ImpstoBolsa.Cantidad = 0;
+                miFactura.Productos.Clear();
+                facturas.Clear();
+                this.miFactura.IcoBolsaPlastica = new ImpuestoBolsa();
+            }*/
         }
 
         private void CargarFacturaEdicion()

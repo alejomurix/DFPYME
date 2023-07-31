@@ -407,6 +407,7 @@ namespace Aplicacion.Ventas.CarteraRemision
                 dgvCartera.DataSource = remisiones;
                 txtTotal.Text = UseObject.InsertSeparatorMil(remisiones.Sum(s => s.Saldo).ToString());
 
+                if (remisiones.Count > 0) SaldoDeCliente();
 
                 //dgvCartera.DataSource = Tabla;
                 //txtTotal.Text = UseObject.InsertSeparatorMil(Tabla.AsEnumerable().Sum(s => s.Field<int>("Saldo")).ToString());
