@@ -2436,6 +2436,177 @@ namespace Aplicacion.Ventas.Factura
             return resultado;
         }
 
+        private bool CargarProducto_()
+        {
+            var resultado = false;
+            try
+            {
+                ArrayProducto = miBussinesProducto.ProductoBasico(txtCodigoArticulo.Text);
+                MiProducto = (Producto)ArrayProducto[0];
+
+                if (MiProducto.IdTipoInventario.Equals(IdTipoInventarioProductoNoFabricado) ||
+                    MiProducto.IdTipoInventario.Equals(IdTipoInventarioProductoFabricado))
+                {
+
+                    var tabla = miBussinesMedida.MedidasDeProducto(MiProducto.CodigoInternoProducto);
+                    if (!MiProducto.AplicaTalla)
+                    {
+                        miMedida = (ValorUnidadMedida)ArrayProducto[1];
+                        SingleSize = true;
+                    }
+                    else
+                    {
+
+                        if (tabla.Rows.Count == 1)
+                        {
+                            var q = (from d in tabla.AsEnumerable()
+                                     select d).Single();
+                            //miMedida.IdValorUnidadMedida = Convert.ToInt32(q["idvalor_unidad_medida"]);
+                            miTallaYcolor.IdTalla = Convert.ToInt32(q["idvalor_unidad_medida"]);
+                            q = null;
+                            SingleSize = true;
+                        }
+                        else
+                        {
+                            SingleSize = false;
+                        }
+                        //tabla.Clear();
+                        //tabla = null;
+                    }
+                    if (MiProducto.AplicaColor)
+                    {
+                        if (tabla.Rows.Count == 1)
+                        {
+                            var q = (from d in tabla.AsEnumerable()
+                                     select d).Single();
+                            var tablaColor = miBussinesColor.ColoresDeProducto
+                                (MiProducto.CodigoInternoProducto, Convert.ToInt32(q["idvalor_unidad_medida"]));
+                            if (tablaColor.Rows.Count == 1)
+                            {
+                                var c = (from d in tablaColor.AsEnumerable()
+                                         select d).Single();
+                                miTallaYcolor.IdColor = Convert.ToInt32(c["idcolor"]);
+                                SingleColor = true;
+                            }
+                            else
+                            {
+                                SingleColor = false;
+                            }
+                        }
+                        else
+                        {
+                            SingleColor = false;
+                        }
+                    }
+                    else
+                    {
+                        SingleColor = true;
+                    }
+                    lblDatosProducto.Text = MiProducto.CodigoInternoProducto + " - " + MiProducto.NombreProducto;
+                    var valorVenta = MiProducto.ValorVentaProducto - Convert.ToInt32(MiProducto.Impoconsumo); // nuevo: Convert.ToInt32(MiProducto.Impoconsumo)
+                    if (DesctoAplica > 0)
+                    {
+
+                        valorVenta = Convert.ToInt32(valorVenta - Math.Round((valorVenta * DesctoAplica / 100), 1)); // edición por impoconsumo
+                        /*valorVenta = Convert.ToInt32(Math.Round((MiProducto.ValorVentaProducto -
+                            (MiProducto.ValorVentaProducto * DesctoAplica / 100)), 1));*/
+                    }
+                    else
+                    {
+                        double descto = 0.0;
+                        switch (cliente.IdTipoCliente)
+                        {
+                            case 2: // cliente mayorista
+                                {
+                                    if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("permitirDesctoMayor")))
+                                    {
+                                        descto = MiProducto.DescuentoMayor;
+                                    }
+                                    break;
+                                }
+                            case 3: // cliente distribuidor
+                                {
+                                    descto = MiProducto.DescuentoDistribuidor;
+                                    break;
+                                }
+                        }
+                        valorVenta = Convert.ToInt32(valorVenta - Math.Round((valorVenta * descto / 100), 1));   // edición por impoconsumo
+                        /*valorVenta = Convert.ToInt32(Math.Round((MiProducto.ValorVentaProducto -
+                            (MiProducto.ValorVentaProducto * descto / 100)), 1));*/
+                    }
+                    valorVenta += Convert.ToInt32(this.MiProducto.Impoconsumo);
+                    if (this.RedondearPrecio2)
+                    {
+                        //txtValorUnitario.Text = UseObject.InsertSeparatorMil(
+                        //UseObject.Aproximar(Convert.ToInt32(valorVenta), Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio"))).ToString());
+
+                        //lblPrecioProducto.Text = "v/u  " + txtValorUnitario.Text;
+                    }
+                    else
+                    {
+                        //txtValorUnitario.Text = UseObject.InsertSeparatorMil(valorVenta.ToString());
+                        //lblPrecioProducto.Text = "v/u  " + txtValorUnitario.Text;
+                    }
+
+                    //UseObject.Aproximar(vUnitario, Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio")));
+                    //lblPrecioProducto.Text = "v/u  " + UseObject.InsertSeparatorMil(
+                    // UseObject.Aproximar(Convert.ToInt32(valorVenta), Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio"))).ToString());
+                    if (!MiProducto.AplicaTalla && !MiProducto.AplicaColor)
+                    {
+                        btnTallaYcolor.Enabled = false;
+                    }
+                    else
+                    {
+                        btnTallaYcolor.Enabled = true;
+                    }
+                    txtCantidad.Text = txtCantidad.Text.Replace('.', ',');
+                    if (!MiProducto.CantidadDecimal)
+                    {
+                        try
+                        {
+                            if (!String.IsNullOrEmpty(txtCantidad.Text))
+                            {
+                                Convert.ToInt32(txtCantidad.Text);
+                                miError.SetError(txtCantidad, null);
+                                resultado = true;
+                            }
+                            else
+                            {
+                            }
+                            /*Convert.ToInt32(txtCantidad.Text);
+                            miError.SetError(txtCantidad, null);
+                            resultado = true;*/
+
+                            //EstructurarConsulta();
+                        }
+                        catch
+                        {
+                            //OptionPane.MessageError("Este Producto no admite cantidad en decimal.");
+                            miError.SetError(txtCantidad, "Este Producto no admite cantidad en decimal.");
+                            txtCantidad.Focus();
+                            txtCantidad.SelectAll();
+                            resultado = false;
+                        }
+                    }
+                    else
+                    {
+                        miError.SetError(txtCantidad, null);
+                        resultado = true;
+                        //EstructurarConsulta();
+                    }
+                }
+                else
+                {
+                    OptionPane.MessageInformation("Este producto no se puede facturar.");
+                }
+            }
+            catch (Exception ex)
+            {
+                OptionPane.MessageError(ex.Message);
+            }
+            return resultado;
+        }
+
         private bool CargarProducto(string codigo)
         {
             var resultado = false;

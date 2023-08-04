@@ -864,12 +864,12 @@ namespace Utilities
                         }
                     }
                 }
-                this.miTicket.AddHeaderLine("-----------------------------------");
-                foreach (var datos in UseObject.StringBuilderDataCenter("SOFTWARE DFPYME", this.MaxCharacters))
+                                            this.miTicket.AddHeaderLine("-----------------------------------");
+                foreach (var datos in UseObject.StringBuilderDataCenter("IMPRESO POR SOFTWARE DFPYME", this.MaxCharacters))
                 {
                     this.miTicket.AddHeaderLine(datos);
                 }
-                foreach (var datos in UseObject.StringBuilderDataCenter("INTREDETE", this.MaxCharacters))
+                foreach (var datos in UseObject.StringBuilderDataCenter("INTREDETE NIT: 901448365-5", this.MaxCharacters))
                 {
                     this.miTicket.AddHeaderLine(datos);
                 }

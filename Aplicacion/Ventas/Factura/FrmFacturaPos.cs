@@ -3191,11 +3191,10 @@ namespace Aplicacion.Ventas.Factura
                         SingleColor = true;
                     }
                     lblDatosProducto.Text = MiProducto.CodigoInternoProducto + " - " + MiProducto.NombreProducto;
-                    var valorVenta = MiProducto.ValorVentaProducto;
+                    var valorVenta = MiProducto.ValorVentaProducto - Convert.ToInt32(MiProducto.Impoconsumo);
                     if (DesctoAplica > 0)
                     {
-                        valorVenta = Convert.ToInt32(Math.Round((MiProducto.ValorVentaProducto -
-                            (MiProducto.ValorVentaProducto * DesctoAplica / 100)), 1));
+                        valorVenta = Convert.ToInt32(valorVenta - Math.Round((valorVenta * DesctoAplica / 100), 1));
                     }
                     else
                     {
@@ -3216,10 +3215,13 @@ namespace Aplicacion.Ventas.Factura
                                     break;
                                 }
                         }
-                        valorVenta = Convert.ToInt32(Math.Round((MiProducto.ValorVentaProducto -
-                            (MiProducto.ValorVentaProducto * descto / 100)), 1));
+                        valorVenta = Convert.ToInt32(valorVenta - Math.Round((valorVenta * descto / 100), 1));
                     }
+                    valorVenta += Convert.ToInt32(MiProducto.Impoconsumo);
+
                     lblPrecioProducto.Text = "v/u  " + UseObject.InsertSeparatorMil(valorVenta.ToString());
+                    txtValorUnitario.Text = UseObject.InsertSeparatorMil(valorVenta.ToString());
+
                     //UseObject.Aproximar(vUnitario, Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio")));
                     /*lblPrecioProducto.Text = "v/u  " + UseObject.InsertSeparatorMil(
                         UseObject.Aproximar(Convert.ToInt32(valorVenta), Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio"))).ToString());*/
@@ -6986,6 +6988,20 @@ namespace Aplicacion.Ventas.Factura
                 facturas.ForEach(f => 
                     f.Id = miBussinesFactura.IngresarFactura(f, Edicion, chkAntigua.Checked, ConsecutivoCaja));
 
+                /*
+                if (IdEstado.Equals(1))
+                {
+                    var frmCambio = new FrmCambio();
+                    frmCambio.txtTotal.Text = this.txtTotal.Text; //this.txtTotalMenosRete.Text;
+
+                    frmCambio.txtEfectivo.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(pagoVar).ToString());
+
+                    frmCambio.txtCambio.Text = UseObject.InsertSeparatorMil((
+                        UseObject.RemoveSeparatorMil(frmCambio.txtEfectivo.Text) - UseObject.RemoveSeparatorMil(frmCambio.txtTotal.Text)).ToString());
+                    frmCambio.ShowDialog();
+                }
+                */
+
                 DialogResult rta = DialogResult.Yes;
                 if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("preguntaPrintVenta")))
                 {
@@ -7101,6 +7117,7 @@ namespace Aplicacion.Ventas.Factura
                     //facturas.ForEach(f => PrintVoucherTransaction(f))
                 }
 
+                
                 if (IdEstado.Equals(1))
                 {
                     var frmCambio = new FrmCambio();
@@ -7112,6 +7129,7 @@ namespace Aplicacion.Ventas.Factura
                         UseObject.RemoveSeparatorMil(frmCambio.txtEfectivo.Text) - UseObject.RemoveSeparatorMil(frmCambio.txtTotal.Text)).ToString());
                     frmCambio.ShowDialog();
                 }
+                
 
                 LimpiarCamposNewFactura();
 
