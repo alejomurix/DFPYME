@@ -2179,6 +2179,28 @@ namespace DataAccessLayer.Repository
             finally { miConexion.MiConexion.Close(); }
         }
 
+        public List<ElectronicDocument> Documents(int filter, string customer)
+        {
+            try
+            {
+                List<ElectronicDocument> documents = new List<ElectronicDocument>();
+                CargarComandoSP("document_electronic_queries");
+                miComando.Parameters.AddWithValue("", filter);
+                miComando.Parameters.AddWithValue("", customer);
+                miConexion.MiConexion.Open();
+                LoadReader(miComando.ExecuteReader(), documents);
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+                return documents;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
+
         /*
         public List<ElectronicDocument> Documents(string cliente)
         {
@@ -2238,21 +2260,18 @@ namespace DataAccessLayer.Repository
                     NameCustomer = reader.GetString(4),
                     MetodoPago = reader.GetInt32(5),
                     MetPago = reader.GetString(6),
-
                     MedioPago = reader.GetString(7),
-
-                    //Fecha = reader.GetDateTime(7),
                     Fecha = Convert.ToDateTime(reader.GetString(9)),
                     FechaPago = reader.GetDateTime(10),
                     Total = reader.GetDouble(11),
                     Neto = reader.GetDouble(12),
-
                     Payment = reader.GetDouble(13),
-                    Estado = reader.GetBoolean(14),
-                    IdStatus = reader.GetInt32(15),
-                    Status = reader.GetString(16),
-                    Cancelled = reader.GetBoolean(17),
-                    TransaccionID = reader.GetString(18)
+                    Balance = Convert.ToDouble(reader.GetDouble(14)),
+                    Estado = reader.GetBoolean(15),
+                    IdStatus = reader.GetInt32(16),
+                    Status = reader.GetString(17),
+                    Cancelled = reader.GetBoolean(18),
+                    TransaccionID = reader.GetString(19)
                 });
             }
         }

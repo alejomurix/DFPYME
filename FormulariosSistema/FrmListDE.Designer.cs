@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle46 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle47 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle48 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle49 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle50 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle51 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmListDE));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtNeto = new System.Windows.Forms.TextBox();
@@ -74,7 +75,34 @@
             this.ValorUnitario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdItem = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvDocuments = new System.Windows.Forms.DataGridView();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnSigned = new System.Windows.Forms.Button();
+            this.btnGenNC = new System.Windows.Forms.Button();
+            this.btnPayment = new System.Windows.Forms.Button();
+            this.btnGENXML = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txtTotalCartera = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtSaldoCliente = new System.Windows.Forms.TextBox();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Numero = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NitCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MetodoPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Pagos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Saldo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EstadoBool = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Estatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cancelled = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cpElements = new FormulariosSistema.CustomPanel();
+            this.cbFilter = new System.Windows.Forms.ComboBox();
             this.dtDateBegin = new System.Windows.Forms.DateTimePicker();
             this.dtDateEnd = new System.Windows.Forms.DateTimePicker();
             this.btnFiscal = new System.Windows.Forms.Button();
@@ -85,39 +113,21 @@
             this.lblMsnStandBy = new System.Windows.Forms.Label();
             this.btnBuscarDocument = new System.Windows.Forms.Button();
             this.txtDocument = new System.Windows.Forms.TextBox();
-            this.dgvDocuments = new System.Windows.Forms.DataGridView();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Numero = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NitCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Fecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MetodoPago = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Pagos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EstadoBool = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Estado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Estatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Cancelled = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnCopy = new System.Windows.Forms.Button();
-            this.btnSigned = new System.Windows.Forms.Button();
-            this.btnGenNC = new System.Windows.Forms.Button();
-            this.btnPayment = new System.Windows.Forms.Button();
-            this.btnGENXML = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTaxRetenciones)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
-            this.cpElements.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDocuments)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            this.cpElements.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox4
             // 
             this.groupBox4.BackColor = System.Drawing.Color.LightSteelBlue;
             this.groupBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.groupBox4.Controls.Add(this.groupBox3);
             this.groupBox4.Controls.Add(this.groupBox2);
             this.groupBox4.Controls.Add(this.groupBox1);
             this.groupBox4.Controls.Add(this.dgvItems);
@@ -133,7 +143,7 @@
             this.groupBox4.ForeColor = System.Drawing.Color.Blue;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(1027, 645);
+            this.groupBox4.Size = new System.Drawing.Size(1091, 627);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "LISTADO DOCUMENTOS ELECTRONICOS";
@@ -154,7 +164,7 @@
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.txtSubtotal);
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Location = new System.Drawing.Point(618, 516);
+            this.groupBox2.Location = new System.Drawing.Point(683, 462);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(401, 122);
             this.groupBox2.TabIndex = 28;
@@ -194,7 +204,7 @@
             this.label17.Location = new System.Drawing.Point(196, 89);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(54, 16);
+            this.label17.Size = new System.Drawing.Size(53, 16);
             this.label17.TabIndex = 0;
             this.label17.Text = "NETO:";
             // 
@@ -206,7 +216,7 @@
             this.label13.Location = new System.Drawing.Point(7, 65);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(26, 16);
+            this.label13.Size = new System.Drawing.Size(25, 16);
             this.label13.TabIndex = 0;
             this.label13.Text = "IC:";
             // 
@@ -244,7 +254,7 @@
             this.label16.Location = new System.Drawing.Point(196, 65);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(99, 16);
+            this.label16.Size = new System.Drawing.Size(98, 16);
             this.label16.TabIndex = 0;
             this.label16.Text = "Retenciones:";
             // 
@@ -256,7 +266,7 @@
             this.label12.Location = new System.Drawing.Point(7, 41);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(36, 16);
+            this.label12.Size = new System.Drawing.Size(35, 16);
             this.label12.TabIndex = 0;
             this.label12.Text = "IVA:";
             // 
@@ -281,7 +291,7 @@
             this.label15.Location = new System.Drawing.Point(196, 41);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(48, 16);
+            this.label15.Size = new System.Drawing.Size(47, 16);
             this.label15.TabIndex = 0;
             this.label15.Text = "Total:";
             // 
@@ -306,7 +316,7 @@
             this.label14.Location = new System.Drawing.Point(7, 89);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(37, 16);
+            this.label14.Size = new System.Drawing.Size(36, 16);
             this.label14.TabIndex = 0;
             this.label14.Text = "INC:";
             // 
@@ -331,7 +341,7 @@
             this.label9.Location = new System.Drawing.Point(7, 17);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(75, 16);
+            this.label9.Size = new System.Drawing.Size(74, 16);
             this.label9.TabIndex = 0;
             this.label9.Text = "SubTotal:";
             // 
@@ -340,7 +350,7 @@
             this.groupBox1.BackColor = System.Drawing.Color.LightSteelBlue;
             this.groupBox1.Controls.Add(this.dgvTaxRetenciones);
             this.groupBox1.ForeColor = System.Drawing.Color.Blue;
-            this.groupBox1.Location = new System.Drawing.Point(182, 516);
+            this.groupBox1.Location = new System.Drawing.Point(247, 462);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(430, 122);
             this.groupBox1.TabIndex = 27;
@@ -382,10 +392,10 @@
             // BaseRete
             // 
             this.BaseRete.DataPropertyName = "Base";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = null;
-            this.BaseRete.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle46.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle46.Format = "N2";
+            dataGridViewCellStyle46.NullValue = null;
+            this.BaseRete.DefaultCellStyle = dataGridViewCellStyle46;
             this.BaseRete.HeaderText = "Base";
             this.BaseRete.Name = "BaseRete";
             this.BaseRete.Width = 90;
@@ -393,8 +403,8 @@
             // TarifaRete
             // 
             this.TarifaRete.DataPropertyName = "Tarifa";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.TarifaRete.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle47.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.TarifaRete.DefaultCellStyle = dataGridViewCellStyle47;
             this.TarifaRete.HeaderText = "Tarifa";
             this.TarifaRete.Name = "TarifaRete";
             this.TarifaRete.Width = 70;
@@ -402,10 +412,10 @@
             // ValorRete
             // 
             this.ValorRete.DataPropertyName = "Value";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.ValorRete.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle48.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle48.Format = "N2";
+            dataGridViewCellStyle48.NullValue = null;
+            this.ValorRete.DefaultCellStyle = dataGridViewCellStyle48;
             this.ValorRete.HeaderText = "Valor";
             this.ValorRete.Name = "ValorRete";
             this.ValorRete.Width = 90;
@@ -426,11 +436,11 @@
             this.TotalItem,
             this.IdItem});
             this.dgvItems.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvItems.Location = new System.Drawing.Point(7, 305);
+            this.dgvItems.Location = new System.Drawing.Point(72, 282);
             this.dgvItems.Name = "dgvItems";
             this.dgvItems.RowHeadersVisible = false;
             this.dgvItems.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.MintCream;
-            this.dgvItems.Size = new System.Drawing.Size(1012, 207);
+            this.dgvItems.Size = new System.Drawing.Size(1012, 180);
             this.dgvItems.TabIndex = 26;
             // 
             // Codigo
@@ -450,10 +460,10 @@
             // Cantidad
             // 
             this.Cantidad.DataPropertyName = "Quantity";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N2";
-            dataGridViewCellStyle4.NullValue = null;
-            this.Cantidad.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle40.Format = "N2";
+            dataGridViewCellStyle40.NullValue = null;
+            this.Cantidad.DefaultCellStyle = dataGridViewCellStyle40;
             this.Cantidad.HeaderText = "Cant.";
             this.Cantidad.Name = "Cantidad";
             this.Cantidad.Width = 60;
@@ -461,10 +471,10 @@
             // Valor
             // 
             this.Valor.DataPropertyName = "UnitPrice";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = null;
-            this.Valor.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle41.Format = "N2";
+            dataGridViewCellStyle41.NullValue = null;
+            this.Valor.DefaultCellStyle = dataGridViewCellStyle41;
             this.Valor.HeaderText = "Valor";
             this.Valor.Name = "Valor";
             this.Valor.Width = 105;
@@ -472,8 +482,8 @@
             // Iva
             // 
             this.Iva.DataPropertyName = "IVA";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Iva.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Iva.DefaultCellStyle = dataGridViewCellStyle42;
             this.Iva.HeaderText = "IVA";
             this.Iva.Name = "Iva";
             this.Iva.Width = 60;
@@ -481,10 +491,10 @@
             // Ico
             // 
             this.Ico.DataPropertyName = "IC";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "N1";
-            dataGridViewCellStyle7.NullValue = null;
-            this.Ico.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle43.Format = "N1";
+            dataGridViewCellStyle43.NullValue = null;
+            this.Ico.DefaultCellStyle = dataGridViewCellStyle43;
             this.Ico.HeaderText = "ICO";
             this.Ico.Name = "Ico";
             this.Ico.Width = 85;
@@ -492,10 +502,10 @@
             // ValorUnitario
             // 
             this.ValorUnitario.DataPropertyName = "Neto";
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "N2";
-            dataGridViewCellStyle8.NullValue = null;
-            this.ValorUnitario.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle44.Format = "N2";
+            dataGridViewCellStyle44.NullValue = null;
+            this.ValorUnitario.DefaultCellStyle = dataGridViewCellStyle44;
             this.ValorUnitario.HeaderText = "V. Unit";
             this.ValorUnitario.Name = "ValorUnitario";
             this.ValorUnitario.Width = 107;
@@ -503,10 +513,10 @@
             // TotalItem
             // 
             this.TotalItem.DataPropertyName = "Total";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = null;
-            this.TotalItem.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle45.Format = "N2";
+            dataGridViewCellStyle45.NullValue = null;
+            this.TotalItem.DefaultCellStyle = dataGridViewCellStyle45;
             this.TotalItem.HeaderText = "Total";
             this.TotalItem.Name = "TotalItem";
             this.TotalItem.Width = 108;
@@ -517,152 +527,6 @@
             this.IdItem.HeaderText = "Id";
             this.IdItem.Name = "IdItem";
             this.IdItem.Visible = false;
-            // 
-            // cpElements
-            // 
-            this.cpElements.Controls.Add(this.dtDateBegin);
-            this.cpElements.Controls.Add(this.dtDateEnd);
-            this.cpElements.Controls.Add(this.btnFiscal);
-            this.cpElements.Controls.Add(this.btnDelete_v1);
-            this.cpElements.Controls.Add(this.btnCopy_v1);
-            this.cpElements.Controls.Add(this.btnPayment_v1);
-            this.cpElements.Controls.Add(this.btnGENXML_v1);
-            this.cpElements.Controls.Add(this.lblMsnStandBy);
-            this.cpElements.Controls.Add(this.btnBuscarDocument);
-            this.cpElements.Controls.Add(this.txtDocument);
-            this.cpElements.Location = new System.Drawing.Point(8, 21);
-            this.cpElements.Name = "cpElements";
-            this.cpElements.Size = new System.Drawing.Size(1011, 31);
-            this.cpElements.TabIndex = 25;
-            // 
-            // dtDateBegin
-            // 
-            this.dtDateBegin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtDateBegin.Location = new System.Drawing.Point(4, 4);
-            this.dtDateBegin.Name = "dtDateBegin";
-            this.dtDateBegin.Size = new System.Drawing.Size(101, 22);
-            this.dtDateBegin.TabIndex = 26;
-            // 
-            // dtDateEnd
-            // 
-            this.dtDateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtDateEnd.Location = new System.Drawing.Point(109, 4);
-            this.dtDateEnd.Name = "dtDateEnd";
-            this.dtDateEnd.Size = new System.Drawing.Size(101, 22);
-            this.dtDateEnd.TabIndex = 26;
-            // 
-            // btnFiscal
-            // 
-            this.btnFiscal.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnFiscal.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnFiscal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFiscal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFiscal.Image = ((System.Drawing.Image)(resources.GetObject("btnFiscal.Image")));
-            this.btnFiscal.Location = new System.Drawing.Point(980, 4);
-            this.btnFiscal.Name = "btnFiscal";
-            this.btnFiscal.Size = new System.Drawing.Size(24, 22);
-            this.btnFiscal.TabIndex = 25;
-            this.btnFiscal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnFiscal.UseVisualStyleBackColor = false;
-            this.btnFiscal.Click += new System.EventHandler(this.btnFiscal_Click);
-            // 
-            // btnDelete_v1
-            // 
-            this.btnDelete_v1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnDelete_v1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnDelete_v1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete_v1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete_v1.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete_v1.Image")));
-            this.btnDelete_v1.Location = new System.Drawing.Point(952, 4);
-            this.btnDelete_v1.Name = "btnDelete_v1";
-            this.btnDelete_v1.Size = new System.Drawing.Size(26, 22);
-            this.btnDelete_v1.TabIndex = 25;
-            this.btnDelete_v1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDelete_v1.UseVisualStyleBackColor = false;
-            this.btnDelete_v1.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnCopy_v1
-            // 
-            this.btnCopy_v1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnCopy_v1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnCopy_v1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCopy_v1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCopy_v1.Image = ((System.Drawing.Image)(resources.GetObject("btnCopy_v1.Image")));
-            this.btnCopy_v1.Location = new System.Drawing.Point(924, 4);
-            this.btnCopy_v1.Name = "btnCopy_v1";
-            this.btnCopy_v1.Size = new System.Drawing.Size(26, 22);
-            this.btnCopy_v1.TabIndex = 25;
-            this.btnCopy_v1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCopy_v1.UseVisualStyleBackColor = false;
-            this.btnCopy_v1.Click += new System.EventHandler(this.btnCopy_Click);
-            // 
-            // btnPayment_v1
-            // 
-            this.btnPayment_v1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnPayment_v1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPayment_v1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPayment_v1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPayment_v1.Image = ((System.Drawing.Image)(resources.GetObject("btnPayment_v1.Image")));
-            this.btnPayment_v1.Location = new System.Drawing.Point(896, 4);
-            this.btnPayment_v1.Name = "btnPayment_v1";
-            this.btnPayment_v1.Size = new System.Drawing.Size(26, 22);
-            this.btnPayment_v1.TabIndex = 25;
-            this.btnPayment_v1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnPayment_v1.UseVisualStyleBackColor = false;
-            this.btnPayment_v1.Click += new System.EventHandler(this.btnPayment_Click);
-            // 
-            // btnGENXML_v1
-            // 
-            this.btnGENXML_v1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnGENXML_v1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnGENXML_v1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGENXML_v1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGENXML_v1.Image = ((System.Drawing.Image)(resources.GetObject("btnGENXML_v1.Image")));
-            this.btnGENXML_v1.Location = new System.Drawing.Point(868, 4);
-            this.btnGENXML_v1.Name = "btnGENXML_v1";
-            this.btnGENXML_v1.Size = new System.Drawing.Size(26, 22);
-            this.btnGENXML_v1.TabIndex = 25;
-            this.btnGENXML_v1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnGENXML_v1.UseVisualStyleBackColor = false;
-            this.btnGENXML_v1.Click += new System.EventHandler(this.btnGENXML_Click);
-            // 
-            // lblMsnStandBy
-            // 
-            this.lblMsnStandBy.AutoSize = true;
-            this.lblMsnStandBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
-            this.lblMsnStandBy.ForeColor = System.Drawing.Color.Red;
-            this.lblMsnStandBy.Location = new System.Drawing.Point(414, 6);
-            this.lblMsnStandBy.Name = "lblMsnStandBy";
-            this.lblMsnStandBy.Size = new System.Drawing.Size(271, 17);
-            this.lblMsnStandBy.TabIndex = 22;
-            this.lblMsnStandBy.Text = "[ Espere mientras se carga el documento]";
-            this.lblMsnStandBy.Visible = false;
-            // 
-            // btnBuscarDocument
-            // 
-            this.btnBuscarDocument.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnBuscarDocument.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnBuscarDocument.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBuscarDocument.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBuscarDocument.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarDocument.Image")));
-            this.btnBuscarDocument.Location = new System.Drawing.Point(387, 4);
-            this.btnBuscarDocument.Name = "btnBuscarDocument";
-            this.btnBuscarDocument.Size = new System.Drawing.Size(26, 22);
-            this.btnBuscarDocument.TabIndex = 21;
-            this.btnBuscarDocument.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnBuscarDocument.UseVisualStyleBackColor = false;
-            this.btnBuscarDocument.Click += new System.EventHandler(this.btnBuscarDocument_Click);
-            // 
-            // txtDocument
-            // 
-            this.txtDocument.Location = new System.Drawing.Point(216, 4);
-            this.txtDocument.Margin = new System.Windows.Forms.Padding(4);
-            this.txtDocument.MaxLength = 255;
-            this.txtDocument.Name = "txtDocument";
-            this.txtDocument.Size = new System.Drawing.Size(169, 22);
-            this.txtDocument.TabIndex = 19;
-            this.txtDocument.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDocument_KeyDown);
-            this.txtDocument.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDocument_KeyPress);
             // 
             // dgvDocuments
             // 
@@ -679,6 +543,7 @@
             this.MetodoPago,
             this.Total,
             this.Pagos,
+            this.Saldo,
             this.EstadoBool,
             this.Estado,
             this.Estatus,
@@ -687,9 +552,169 @@
             this.dgvDocuments.Location = new System.Drawing.Point(7, 53);
             this.dgvDocuments.Name = "dgvDocuments";
             this.dgvDocuments.RowHeadersVisible = false;
-            this.dgvDocuments.Size = new System.Drawing.Size(1012, 229);
+            this.dgvDocuments.Size = new System.Drawing.Size(1077, 226);
             this.dgvDocuments.TabIndex = 0;
             this.dgvDocuments.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDocuments_CellClick);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnDelete.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnDelete.FlatAppearance.BorderSize = 2;
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.Location = new System.Drawing.Point(215, 488);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(23, 20);
+            this.btnDelete.TabIndex = 17;
+            this.btnDelete.Text = "Eliminar";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Visible = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnCopy.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnCopy.FlatAppearance.BorderSize = 2;
+            this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopy.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCopy.Location = new System.Drawing.Point(182, 488);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(27, 20);
+            this.btnCopy.TabIndex = 17;
+            this.btnCopy.Text = "Copia";
+            this.btnCopy.UseVisualStyleBackColor = false;
+            this.btnCopy.Visible = false;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // btnSigned
+            // 
+            this.btnSigned.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnSigned.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnSigned.FlatAppearance.BorderSize = 2;
+            this.btnSigned.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSigned.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSigned.Location = new System.Drawing.Point(170, 514);
+            this.btnSigned.Name = "btnSigned";
+            this.btnSigned.Size = new System.Drawing.Size(18, 17);
+            this.btnSigned.TabIndex = 17;
+            this.btnSigned.Text = "Firmar";
+            this.btnSigned.UseVisualStyleBackColor = false;
+            this.btnSigned.Visible = false;
+            this.btnSigned.Click += new System.EventHandler(this.btnSigned_Click);
+            // 
+            // btnGenNC
+            // 
+            this.btnGenNC.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnGenNC.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnGenNC.FlatAppearance.BorderSize = 2;
+            this.btnGenNC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGenNC.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGenNC.Location = new System.Drawing.Point(215, 540);
+            this.btnGenNC.Name = "btnGenNC";
+            this.btnGenNC.Size = new System.Drawing.Size(18, 20);
+            this.btnGenNC.TabIndex = 17;
+            this.btnGenNC.Text = "Nota CR";
+            this.btnGenNC.UseVisualStyleBackColor = false;
+            this.btnGenNC.Visible = false;
+            this.btnGenNC.Click += new System.EventHandler(this.btnGenNC_Click);
+            // 
+            // btnPayment
+            // 
+            this.btnPayment.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnPayment.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnPayment.FlatAppearance.BorderSize = 2;
+            this.btnPayment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPayment.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPayment.Location = new System.Drawing.Point(220, 514);
+            this.btnPayment.Name = "btnPayment";
+            this.btnPayment.Size = new System.Drawing.Size(18, 20);
+            this.btnPayment.TabIndex = 17;
+            this.btnPayment.Text = "Pagar";
+            this.btnPayment.UseVisualStyleBackColor = false;
+            this.btnPayment.Visible = false;
+            this.btnPayment.Click += new System.EventHandler(this.btnPayment_Click);
+            // 
+            // btnGENXML
+            // 
+            this.btnGENXML.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnGENXML.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnGENXML.FlatAppearance.BorderSize = 2;
+            this.btnGENXML.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGENXML.Font = new System.Drawing.Font("Segoe MDL2 Assets", 15.25F);
+            this.btnGENXML.Location = new System.Drawing.Point(194, 514);
+            this.btnGENXML.Name = "btnGENXML";
+            this.btnGENXML.Size = new System.Drawing.Size(15, 20);
+            this.btnGENXML.TabIndex = 17;
+            this.btnGENXML.Text = "XML";
+            this.btnGENXML.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnGENXML.UseVisualStyleBackColor = false;
+            this.btnGENXML.Visible = false;
+            this.btnGENXML.Click += new System.EventHandler(this.btnGENXML_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.txtSaldoCliente);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.txtTotalCartera);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.groupBox3.Location = new System.Drawing.Point(683, 583);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(401, 40);
+            this.groupBox3.TabIndex = 29;
+            this.groupBox3.TabStop = false;
+            // 
+            // txtTotalCartera
+            // 
+            this.txtTotalCartera.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Bold);
+            this.txtTotalCartera.Location = new System.Drawing.Point(296, 12);
+            this.txtTotalCartera.Margin = new System.Windows.Forms.Padding(4);
+            this.txtTotalCartera.MaxLength = 255;
+            this.txtTotalCartera.Name = "txtTotalCartera";
+            this.txtTotalCartera.ReadOnly = true;
+            this.txtTotalCartera.Size = new System.Drawing.Size(100, 22);
+            this.txtTotalCartera.TabIndex = 1;
+            this.txtTotalCartera.Text = "0";
+            this.txtTotalCartera.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label1.Location = new System.Drawing.Point(215, 15);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(79, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Total Cart.";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label2.Location = new System.Drawing.Point(4, 15);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 16);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Saldo Cliente";
+            // 
+            // txtSaldoCliente
+            // 
+            this.txtSaldoCliente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Bold);
+            this.txtSaldoCliente.Location = new System.Drawing.Point(106, 12);
+            this.txtSaldoCliente.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSaldoCliente.MaxLength = 255;
+            this.txtSaldoCliente.Name = "txtSaldoCliente";
+            this.txtSaldoCliente.ReadOnly = true;
+            this.txtSaldoCliente.Size = new System.Drawing.Size(100, 22);
+            this.txtSaldoCliente.TabIndex = 1;
+            this.txtSaldoCliente.Text = "0";
+            this.txtSaldoCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Id
             // 
@@ -736,31 +761,44 @@
             // MetodoPago
             // 
             this.MetodoPago.DataPropertyName = "MetPago";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.MetodoPago.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle49.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.MetodoPago.DefaultCellStyle = dataGridViewCellStyle49;
             this.MetodoPago.HeaderText = "M. Pago";
             this.MetodoPago.Name = "MetodoPago";
-            this.MetodoPago.Width = 85;
+            this.MetodoPago.Width = 82;
             // 
             // Total
             // 
             this.Total.DataPropertyName = "Neto";
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.Format = "N2";
-            dataGridViewCellStyle11.NullValue = null;
-            this.Total.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle50.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle50.Format = "N2";
+            dataGridViewCellStyle50.NullValue = null;
+            this.Total.DefaultCellStyle = dataGridViewCellStyle50;
             this.Total.HeaderText = "Neto";
             this.Total.Name = "Total";
+            this.Total.Width = 93;
             // 
             // Pagos
             // 
             this.Pagos.DataPropertyName = "Payment";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle12.Format = "N2";
-            dataGridViewCellStyle12.NullValue = null;
-            this.Pagos.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle51.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle51.Format = "N2";
+            dataGridViewCellStyle51.NullValue = null;
+            this.Pagos.DefaultCellStyle = dataGridViewCellStyle51;
             this.Pagos.HeaderText = "Pagos";
             this.Pagos.Name = "Pagos";
+            this.Pagos.Width = 93;
+            // 
+            // Saldo
+            // 
+            this.Saldo.DataPropertyName = "Balance";
+            dataGridViewCellStyle52.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle52.Format = "N2";
+            dataGridViewCellStyle52.NullValue = null;
+            this.Saldo.DefaultCellStyle = dataGridViewCellStyle52;
+            this.Saldo.HeaderText = "Saldo";
+            this.Saldo.Name = "Saldo";
+            this.Saldo.Width = 93;
             // 
             // EstadoBool
             // 
@@ -781,6 +819,7 @@
             this.Estatus.DataPropertyName = "Status";
             this.Estatus.HeaderText = "Estatus";
             this.Estatus.Name = "Estatus";
+            this.Estatus.Width = 93;
             // 
             // Cancelled
             // 
@@ -789,102 +828,164 @@
             this.Cancelled.Name = "Cancelled";
             this.Cancelled.Visible = false;
             // 
-            // btnDelete
+            // cpElements
             // 
-            this.btnDelete.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnDelete.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnDelete.FlatAppearance.BorderSize = 2;
-            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDelete.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(153, 518);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(23, 20);
-            this.btnDelete.TabIndex = 17;
-            this.btnDelete.Text = "Eliminar";
-            this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Visible = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.cpElements.Controls.Add(this.cbFilter);
+            this.cpElements.Controls.Add(this.dtDateBegin);
+            this.cpElements.Controls.Add(this.dtDateEnd);
+            this.cpElements.Controls.Add(this.btnFiscal);
+            this.cpElements.Controls.Add(this.btnDelete_v1);
+            this.cpElements.Controls.Add(this.btnCopy_v1);
+            this.cpElements.Controls.Add(this.btnPayment_v1);
+            this.cpElements.Controls.Add(this.btnGENXML_v1);
+            this.cpElements.Controls.Add(this.lblMsnStandBy);
+            this.cpElements.Controls.Add(this.btnBuscarDocument);
+            this.cpElements.Controls.Add(this.txtDocument);
+            this.cpElements.Location = new System.Drawing.Point(8, 21);
+            this.cpElements.Name = "cpElements";
+            this.cpElements.Size = new System.Drawing.Size(1073, 31);
+            this.cpElements.TabIndex = 25;
             // 
-            // btnCopy
+            // cbFilter
             // 
-            this.btnCopy.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnCopy.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnCopy.FlatAppearance.BorderSize = 2;
-            this.btnCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCopy.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCopy.Location = new System.Drawing.Point(120, 518);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(27, 20);
-            this.btnCopy.TabIndex = 17;
-            this.btnCopy.Text = "Copia";
-            this.btnCopy.UseVisualStyleBackColor = false;
-            this.btnCopy.Visible = false;
-            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            this.cbFilter.DisplayMember = "Nombre";
+            this.cbFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.7F);
+            this.cbFilter.FormattingEnabled = true;
+            this.cbFilter.Location = new System.Drawing.Point(4, 4);
+            this.cbFilter.Name = "cbFilter";
+            this.cbFilter.Size = new System.Drawing.Size(120, 23);
+            this.cbFilter.TabIndex = 27;
+            this.cbFilter.ValueMember = "Id";
             // 
-            // btnSigned
+            // dtDateBegin
             // 
-            this.btnSigned.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnSigned.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnSigned.FlatAppearance.BorderSize = 2;
-            this.btnSigned.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSigned.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSigned.Location = new System.Drawing.Point(108, 544);
-            this.btnSigned.Name = "btnSigned";
-            this.btnSigned.Size = new System.Drawing.Size(18, 17);
-            this.btnSigned.TabIndex = 17;
-            this.btnSigned.Text = "Firmar";
-            this.btnSigned.UseVisualStyleBackColor = false;
-            this.btnSigned.Visible = false;
-            this.btnSigned.Click += new System.EventHandler(this.btnSigned_Click);
+            this.dtDateBegin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtDateBegin.Location = new System.Drawing.Point(130, 4);
+            this.dtDateBegin.Name = "dtDateBegin";
+            this.dtDateBegin.Size = new System.Drawing.Size(101, 22);
+            this.dtDateBegin.TabIndex = 26;
             // 
-            // btnGenNC
+            // dtDateEnd
             // 
-            this.btnGenNC.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnGenNC.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnGenNC.FlatAppearance.BorderSize = 2;
-            this.btnGenNC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenNC.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenNC.Location = new System.Drawing.Point(153, 570);
-            this.btnGenNC.Name = "btnGenNC";
-            this.btnGenNC.Size = new System.Drawing.Size(18, 20);
-            this.btnGenNC.TabIndex = 17;
-            this.btnGenNC.Text = "Nota CR";
-            this.btnGenNC.UseVisualStyleBackColor = false;
-            this.btnGenNC.Visible = false;
-            this.btnGenNC.Click += new System.EventHandler(this.btnGenNC_Click);
+            this.dtDateEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtDateEnd.Location = new System.Drawing.Point(233, 4);
+            this.dtDateEnd.Name = "dtDateEnd";
+            this.dtDateEnd.Size = new System.Drawing.Size(101, 22);
+            this.dtDateEnd.TabIndex = 26;
             // 
-            // btnPayment
+            // btnFiscal
             // 
-            this.btnPayment.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnPayment.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPayment.FlatAppearance.BorderSize = 2;
-            this.btnPayment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPayment.Font = new System.Drawing.Font("Segoe MDL2 Assets", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPayment.Location = new System.Drawing.Point(158, 544);
-            this.btnPayment.Name = "btnPayment";
-            this.btnPayment.Size = new System.Drawing.Size(18, 20);
-            this.btnPayment.TabIndex = 17;
-            this.btnPayment.Text = "Pagar";
-            this.btnPayment.UseVisualStyleBackColor = false;
-            this.btnPayment.Visible = false;
-            this.btnPayment.Click += new System.EventHandler(this.btnPayment_Click);
+            this.btnFiscal.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnFiscal.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnFiscal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFiscal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFiscal.Image = ((System.Drawing.Image)(resources.GetObject("btnFiscal.Image")));
+            this.btnFiscal.Location = new System.Drawing.Point(1044, 4);
+            this.btnFiscal.Name = "btnFiscal";
+            this.btnFiscal.Size = new System.Drawing.Size(24, 22);
+            this.btnFiscal.TabIndex = 25;
+            this.btnFiscal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnFiscal.UseVisualStyleBackColor = false;
+            this.btnFiscal.Click += new System.EventHandler(this.btnFiscal_Click);
             // 
-            // btnGENXML
+            // btnDelete_v1
             // 
-            this.btnGENXML.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnGENXML.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnGENXML.FlatAppearance.BorderSize = 2;
-            this.btnGENXML.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGENXML.Font = new System.Drawing.Font("Segoe MDL2 Assets", 15.25F);
-            this.btnGENXML.Location = new System.Drawing.Point(132, 544);
-            this.btnGENXML.Name = "btnGENXML";
-            this.btnGENXML.Size = new System.Drawing.Size(15, 20);
-            this.btnGENXML.TabIndex = 17;
-            this.btnGENXML.Text = "XML";
-            this.btnGENXML.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnGENXML.UseVisualStyleBackColor = false;
-            this.btnGENXML.Visible = false;
-            this.btnGENXML.Click += new System.EventHandler(this.btnGENXML_Click);
+            this.btnDelete_v1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnDelete_v1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnDelete_v1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete_v1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete_v1.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete_v1.Image")));
+            this.btnDelete_v1.Location = new System.Drawing.Point(1016, 4);
+            this.btnDelete_v1.Name = "btnDelete_v1";
+            this.btnDelete_v1.Size = new System.Drawing.Size(26, 22);
+            this.btnDelete_v1.TabIndex = 25;
+            this.btnDelete_v1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnDelete_v1.UseVisualStyleBackColor = false;
+            this.btnDelete_v1.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // btnCopy_v1
+            // 
+            this.btnCopy_v1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnCopy_v1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnCopy_v1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCopy_v1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCopy_v1.Image = ((System.Drawing.Image)(resources.GetObject("btnCopy_v1.Image")));
+            this.btnCopy_v1.Location = new System.Drawing.Point(988, 4);
+            this.btnCopy_v1.Name = "btnCopy_v1";
+            this.btnCopy_v1.Size = new System.Drawing.Size(26, 22);
+            this.btnCopy_v1.TabIndex = 25;
+            this.btnCopy_v1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCopy_v1.UseVisualStyleBackColor = false;
+            this.btnCopy_v1.Click += new System.EventHandler(this.btnCopy_Click);
+            // 
+            // btnPayment_v1
+            // 
+            this.btnPayment_v1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnPayment_v1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnPayment_v1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPayment_v1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPayment_v1.Image = ((System.Drawing.Image)(resources.GetObject("btnPayment_v1.Image")));
+            this.btnPayment_v1.Location = new System.Drawing.Point(960, 4);
+            this.btnPayment_v1.Name = "btnPayment_v1";
+            this.btnPayment_v1.Size = new System.Drawing.Size(26, 22);
+            this.btnPayment_v1.TabIndex = 25;
+            this.btnPayment_v1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnPayment_v1.UseVisualStyleBackColor = false;
+            this.btnPayment_v1.Click += new System.EventHandler(this.btnPayment_Click);
+            // 
+            // btnGENXML_v1
+            // 
+            this.btnGENXML_v1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnGENXML_v1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnGENXML_v1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGENXML_v1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGENXML_v1.Image = ((System.Drawing.Image)(resources.GetObject("btnGENXML_v1.Image")));
+            this.btnGENXML_v1.Location = new System.Drawing.Point(932, 4);
+            this.btnGENXML_v1.Name = "btnGENXML_v1";
+            this.btnGENXML_v1.Size = new System.Drawing.Size(26, 22);
+            this.btnGENXML_v1.TabIndex = 25;
+            this.btnGENXML_v1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnGENXML_v1.UseVisualStyleBackColor = false;
+            this.btnGENXML_v1.Click += new System.EventHandler(this.btnGENXML_Click);
+            // 
+            // lblMsnStandBy
+            // 
+            this.lblMsnStandBy.AutoSize = true;
+            this.lblMsnStandBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F);
+            this.lblMsnStandBy.ForeColor = System.Drawing.Color.Red;
+            this.lblMsnStandBy.Location = new System.Drawing.Point(540, 6);
+            this.lblMsnStandBy.Name = "lblMsnStandBy";
+            this.lblMsnStandBy.Size = new System.Drawing.Size(271, 17);
+            this.lblMsnStandBy.TabIndex = 22;
+            this.lblMsnStandBy.Text = "[ Espere mientras se carga el documento]";
+            this.lblMsnStandBy.Visible = false;
+            // 
+            // btnBuscarDocument
+            // 
+            this.btnBuscarDocument.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnBuscarDocument.FlatAppearance.BorderColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnBuscarDocument.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscarDocument.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBuscarDocument.Image = ((System.Drawing.Image)(resources.GetObject("btnBuscarDocument.Image")));
+            this.btnBuscarDocument.Location = new System.Drawing.Point(511, 4);
+            this.btnBuscarDocument.Name = "btnBuscarDocument";
+            this.btnBuscarDocument.Size = new System.Drawing.Size(26, 22);
+            this.btnBuscarDocument.TabIndex = 21;
+            this.btnBuscarDocument.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnBuscarDocument.UseVisualStyleBackColor = false;
+            this.btnBuscarDocument.Click += new System.EventHandler(this.btnBuscarDocument_Click);
+            // 
+            // txtDocument
+            // 
+            this.txtDocument.Location = new System.Drawing.Point(338, 4);
+            this.txtDocument.Margin = new System.Windows.Forms.Padding(4);
+            this.txtDocument.MaxLength = 255;
+            this.txtDocument.Name = "txtDocument";
+            this.txtDocument.Size = new System.Drawing.Size(169, 22);
+            this.txtDocument.TabIndex = 19;
+            this.txtDocument.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDocument_KeyDown);
+            this.txtDocument.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDocument_KeyPress);
             // 
             // FrmListDE
             // 
@@ -892,7 +993,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1025, 646);
+            this.ClientSize = new System.Drawing.Size(1090, 627);
             this.Controls.Add(this.groupBox4);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -912,9 +1013,11 @@
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTaxRetenciones)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDocuments)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.cpElements.ResumeLayout(false);
             this.cpElements.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDocuments)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -932,19 +1035,6 @@
         private System.Windows.Forms.Button btnGENXML;
         private System.Windows.Forms.Button btnPayment;
         private System.Windows.Forms.Button btnSigned;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Numero;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NitCliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Fecha;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MetodoPago;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Total;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Pagos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoBool;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Estado;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Estatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Cancelled;
         private System.Windows.Forms.Label lblMsnStandBy;
         private System.Windows.Forms.DataGridView dgvItems;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -985,5 +1075,25 @@
         private System.Windows.Forms.Button btnFiscal;
         private System.Windows.Forms.DateTimePicker dtDateEnd;
         private System.Windows.Forms.DateTimePicker dtDateBegin;
+        private System.Windows.Forms.ComboBox cbFilter;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox txtTotalCartera;
+        private System.Windows.Forms.TextBox txtSaldoCliente;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Numero;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NitCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Fecha;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MetodoPago;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Total;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Pagos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Saldo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn EstadoBool;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Estado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Estatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cancelled;
     }
 }

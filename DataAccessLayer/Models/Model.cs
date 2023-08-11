@@ -229,6 +229,8 @@ namespace DataAccessLayer.Models
 
         public double Neto { set; get; }
 
+        public double Balance { set; get; }
+
         public string Estate
         {
             get
@@ -294,6 +296,7 @@ namespace DataAccessLayer.Models
             this.Retentions = new List<Tax>();
             this.Total = 0;
             this.Neto = 0;
+            Balance = 0;
         }
 
         public bool ValideBaseTaxRetentions(string CodeReteIVA)

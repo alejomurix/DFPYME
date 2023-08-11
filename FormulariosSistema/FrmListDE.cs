@@ -146,20 +146,28 @@ namespace FormulariosSistema
         {
             try
             {
+                cbFilter.DataSource = new List<DTO.Clases.Criterio>
+                {
+                    new DTO.Clases.Criterio { Id = 0, Nombre = "Todos" },
+                    new DTO.Clases.Criterio { Id = 1, Nombre = "Cartera" }
+                };
                 //this.btnDelete.Visible = true;
 
 
                 CompletaEventos.Completa += new CompletaEventos.CompletaAccion(CompletaEventos_Completo);
 
-                //this.btnBuscarDocument_Click(this.btnBuscarDocument, new EventArgs());
-                this.Documents = this.repositoryModel.Documents();
+                btnBuscarDocument_Click(btnBuscarDocument, new EventArgs());
+
+                ///this.Documents = this.repositoryModel.Documents();
+                /**
+                Documents = repositoryModel.Documents(0, "");
                 if (this.Documents.Count > 0)
                 {
-                    //this.dgvDocuments.DataSource = null;
                     this.dgvDocuments.DataSource = this.Documents;
                     this.dgvDocuments_CellClick(this.dgvDocuments, null);
                     LoadColorGrid();
                 }
+                */
             }
             catch (Exception ex)
             {
@@ -204,6 +212,7 @@ namespace FormulariosSistema
 
         private void txtDocument_KeyDown(object sender, KeyEventArgs e)
         {
+            /*
             try
             {
                 this.Documents = this.repositoryModel.Documents(this.txtDocument.Text);
@@ -214,6 +223,7 @@ namespace FormulariosSistema
             {
                 OptionPane.MessageError(ex.Message);
             }
+            */
         }
 
         private void txtDocument_KeyPress(object sender, KeyPressEventArgs e)
@@ -230,13 +240,15 @@ namespace FormulariosSistema
             }*/
         }
 
-        private void btnBuscarDocument_Click(object sender, EventArgs e)
+        private void btnBuscarDocument_Click_(object sender, EventArgs e)
         {
             try
             {
                 if (String.IsNullOrEmpty(this.txtDocument.Text))
                 {
-                    this.Documents = this.repositoryModel.Documents();
+                    ///this.Documents = this.repositoryModel.Documents();
+                    Documents = repositoryModel.Documents(0, "");
+
                     //this.dgvDocuments.DataSource = null;
                     //this.dgvDocuments.DataSource = this.Documents;
                 }
@@ -265,6 +277,29 @@ namespace FormulariosSistema
                        // var dcr = this.dgvDocuments.CurrentRow.Cells["Id"].Value;
                     }
                     this.dgvDocuments_CellClick(this.dgvDocuments, null);
+                }
+                else
+                {
+                    OptionPane.MessageInformation("No se encontró registros de la consulta.");
+                }
+            }
+            catch (Exception ex)
+            {
+                OptionPane.MessageError(ex.Message);
+            }
+        }
+
+        private void btnBuscarDocument_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Documents = repositoryModel.Documents(Convert.ToInt32(cbFilter.SelectedValue) , txtDocument.Text);
+                if (Documents.Count > 0)
+                {
+                    dgvDocuments.DataSource = null;
+                    dgvDocuments.DataSource = Documents;
+                    txtTotalCartera.Text = UseObject.InsertSeparatorMil(Documents.Sum(s => s.Balance).ToString());
+                    dgvDocuments_CellClick(dgvDocuments, null);
                 }
                 else
                 {
@@ -1797,6 +1832,11 @@ namespace FormulariosSistema
                     this.txtTotalPie.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.Total.ToString());
                     this.txtRetencion.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.Retention.ToString());
                     this.txtNeto.Text = UseObject.InsertSeparatorMil(this.TotalInvoice.Neto.ToString());
+
+                    txtSaldoCliente.Text = UseObject.InsertSeparatorMil(
+                        Documents
+                        .Where(d => d.NitCliente.Equals(document.NitCliente))
+                        .Sum(s => s.Balance).ToString());
                 }
                 catch (Exception ex)
                 {
