@@ -10772,19 +10772,21 @@ namespace DataAccessLayer.Clases
                 EliminarPago(factura.Id);
                 if (carga)
                 {
-                    //var productos = miDaoProducto.ProductoFacturaVenta(factura.Numero);   Edicion 01-01-2017
-                    var productos = miDaoProducto.ProductoFacturaVenta(factura.Id);
-                    foreach (DataRow row in productos.Rows)
+                    if (factura.EstadoFactura.Id.Equals(1) || factura.EstadoFactura.Id.Equals(2))
                     {
-                        miDaoInventario.ActualizarInventario(
-                            new Inventario
-                            {
-                                CodigoProducto = row["Codigo"].ToString(),
-                                IdMedida = Convert.ToInt32(row["IdMedida"]),
-                                IdColor = Convert.ToInt32(row["IdColor"]),
-                                Cantidad = Convert.ToDouble(row["Cantidad"])
-                            },
-                            false);
+                        var productos = miDaoProducto.ProductoFacturaVenta(factura.Id);
+                        foreach (DataRow row in productos.Rows)
+                        {
+                            miDaoInventario.ActualizarInventario(
+                                new Inventario
+                                {
+                                    CodigoProducto = row["Codigo"].ToString(),
+                                    IdMedida = Convert.ToInt32(row["IdMedida"]),
+                                    IdColor = Convert.ToInt32(row["IdColor"]),
+                                    Cantidad = Convert.ToDouble(row["Cantidad"])
+                                },
+                                false);
+                        }
                     }
                 }
             }

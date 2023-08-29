@@ -1327,11 +1327,15 @@ namespace Aplicacion.Ventas.Factura
             if (rta.Equals(DialogResult.Yes))
             {
                 var carga = false;
-                rta = MessageBox.Show("¿Desea cargar los productos de esta factura en inventario?", "Factura venta",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (rta.Equals(DialogResult.Yes))
+                int idEstado = Convert.ToInt32(dgvFactura.CurrentRow.Cells["IdEstado"].Value);
+                if (idEstado.Equals(1) || idEstado.Equals(2))
                 {
-                    carga = true;
+                    rta = MessageBox.Show("¿Desea cargar los productos de esta factura en inventario?", "Factura venta",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (rta.Equals(DialogResult.Yes))
+                    {
+                        carga = true;
+                    }
                 }
                 try
                 {
@@ -1339,6 +1343,7 @@ namespace Aplicacion.Ventas.Factura
                     var factura = new FacturaVenta();
                     factura.Caja.Id = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"));
                     factura.Usuario.Id = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_user"));
+                    factura.EstadoFactura.Id = Convert.ToInt32(rowFactura.Cells["IdEstado"].Value); 
                     factura.FechaIngreso = DateTime.Now;
                     factura.Id = Convert.ToInt32(rowFactura.Cells["IdFactura"].Value);
                     factura.Numero = rowFactura.Cells["Numero"].Value.ToString();

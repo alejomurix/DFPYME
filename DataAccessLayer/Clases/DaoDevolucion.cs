@@ -1325,6 +1325,7 @@ namespace DataAccessLayer.Clases
         {
             try
             {
+                /*
                 string sql = "select " +
                               "SUM" +
                               "(" +
@@ -1346,6 +1347,9 @@ namespace DataAccessLayer.Clases
                             "idcaja = @caja and  " +
                             "fecha + hora between @fecha and @fecha2;";
                 CargarComandoText(sql);
+                */
+
+                CargarComando("total_devolucion_remision");
                 miComando.Parameters.AddWithValue("caja", idCaja);
                 miComando.Parameters.AddWithValue("fecha", fecha);
                 miComando.Parameters.AddWithValue("fecha2", fecha2);
