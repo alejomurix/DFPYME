@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace DataAccessLayer.Standard
 {
@@ -12,9 +14,11 @@ namespace DataAccessLayer.Standard
     {
         public InvoiceType() { }
 
+        //[JsonPropertyName("invoice")]
         [System.Xml.Serialization.XmlElement("ENC")]
         public Heading Heading { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("EMI")]
         public Emisor Emisor { set; get; }
 
@@ -42,48 +46,106 @@ namespace DataAccessLayer.Standard
     [System.Xml.Serialization.XmlRoot("ENC")]
     public class Heading
     {
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_1")]
         public string Document { set; get; } // Tipo de documento
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_2")]
         public string NITEmisor { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_3")]
         public string NITCliente { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_4")]
         public string UBL { set; get; } // Universal Business Language - version
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_5")]
         public string Version { set; get; } // Version del documento: DIAN 2.1
 
+        [JsonPropertyName("order_reference")]
         [System.Xml.Serialization.XmlElement("ENC_6")]
         public string Numero { set; get; } // Número de documento (factura o factura cambiaria, nota crédito, nota débito).
         // Incluye prefijo + consecutivo de factura autorizados por la DIAN. 
 
+        [JsonPropertyName("issue_date")]
         [System.Xml.Serialization.XmlElement("ENC_7")]
         public string Fecha { set; get; } // Fecha de emisión de la factura, formato AAAA-MM-DD
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_8")]
         public string Hora { set; get; } // Hora de emisión de la factura, Formato: HH:MM:SSdhh:mm
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_9")]
         public string Tipo { set; get; } // Tipo de factura 01 FACTURA DE VENTA NACIONAL
 
+        [System.Xml.Serialization.XmlIgnore]
+        [JsonPropertyName("invoice_type_code")]
+        public string TipoDescripcion { set; get; }
+
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_10")]
         public string CodMoneda { set; get; } // Divisa consolidada aplicable a toda la factura
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_15")]
         public string NoItems { set; get; } // Número total de lineas (items - productos) en el documento
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_16")]
         public string DateEnd { set; get; }  // Fecha de vencimiento
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_20")]
         public string CodAmbiente { set; get; } // 1 = producción ; 2 = pruebas, demo
 
+        [JsonPropertyName("env")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string Ambiente { set; get; }
+
+        [JsonPropertyName("dataico_account_id")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string AcountId { set; get; }
+
+        [JsonPropertyName("number")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string Number { set; get; }
+
+        [JsonPropertyName("payment_date")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string PaymentDate { set; get; }
+
+        [JsonPropertyName("payment_means_type")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string PaymentType { set; get; }
+
+        [JsonPropertyName("payment_means")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string PaymentMean { set; get; }
+
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ENC_21")]
         public string TipoOperation { set; get; } // 10 = estándar.
+
+        [JsonPropertyName("operation")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string Opertation { set; get; }
+
+        [JsonPropertyName("numbering")]
+        [System.Xml.Serialization.XmlIgnore]
+        public Resolucion Resolucion { set; get; }
+
+        [JsonPropertyName("customer")]
+        [System.Xml.Serialization.XmlIgnore]
+        public Adquiriente Customer { set; get; }
+
+        [JsonPropertyName("items")]
+        [System.Xml.Serialization.XmlIgnore]
+        public List<ItemField> Items { set; get; }
     }
 
     [Serializable]
@@ -246,77 +308,130 @@ namespace DataAccessLayer.Standard
     [System.Xml.Serialization.XmlRoot("ADQ")]
     public class Adquiriente
     {
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_1")]
         public string Tipo { set; get; } // 1: Juridica, 2: Natural
 
+        [JsonPropertyName("party_identification")]
         [System.Xml.Serialization.XmlElement("ADQ_2")]
         public string NIT { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_3")]
         public int Identify { set; get; }   // Cedula, NIT, en colombia es NIT = 31
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_4")]
         public int Regimen { set; get; } // Regimen fiscal:  48 = Resp de IVA;  49 = No Resp de IVA
 
+        [JsonPropertyName("company_name")]
         [System.Xml.Serialization.XmlElement("ADQ_6")]
         public string RazonSocial { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_7")]
         public string NameComercial { set; get; }
 
+        [JsonPropertyName("first_name")]
         [System.Xml.Serialization.XmlElement("ADQ_8")]
         public string Name { set; get; }
 
+        [JsonPropertyName("family_name")]
         [System.Xml.Serialization.XmlElement("ADQ_9")]
         public string LastName { set; get; }
 
+        [JsonPropertyName("address_line")]
         [System.Xml.Serialization.XmlElement("ADQ_10")]
         public string Direccion { set; get; }
 
+        [JsonPropertyName("department")]
         [System.Xml.Serialization.XmlElement("ADQ_11")]
         public string CodDepartamento { set; get; } // Codigo del departamento de ubicacion del adquiriente.
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_13")]
         public string Ciudad { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_14")]
         public string CodPostal { set; get; }
 
+        [JsonPropertyName("country_code")]
         [System.Xml.Serialization.XmlElement("ADQ_15")]
         public string CodPais { set; get; } // Código para Colombia = CO
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_19")]
         public string Departamento { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_21")]
         public string Pais { set; get; }
 
         /// <summary>
         /// Digito de verificación del NIT.
         /// </summary>
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ADQ_22")]
         public int DV { set; get; }
 
+        [JsonPropertyName("city")]
         [System.Xml.Serialization.XmlElement("ADQ_23")]
         public string CodMunicipio { set; get; }
 
         //[System.Xml.Serialization.XmlElement("ADQ_24")]
         //public int TipoUser { set; get; } // 1
-
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("TCR")]
         public TributaryADQ TributaryADQ { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ILA")]
         public InformacionLegal InformacionLegal { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("DFA")]
         public AddressAdquiriente AddressAdquiriente { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("CDA")]
         public ContactoAdquiriente ContactoAdquiriente { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("GTA")]
         public GrupoTributoAdquiriente GrupoTributoAdquiriente { set; get; }
+
+        [JsonPropertyName("email")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string Email
+        {
+            set {  }
+            get { return ContactoAdquiriente.Email; }
+        }
+
+        [JsonPropertyName("phone")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string Phone
+        {
+            set { }
+            get { return ContactoAdquiriente.Telefono; }
+        }
+
+        [JsonPropertyName("party_identification_type")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string IdentifyType { set; get; }
+
+        [JsonPropertyName("party_type")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string PersonType { set; get; }
+
+        [JsonPropertyName("tax_level_code")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string TaxLevel { set; get; }
+
+        [JsonPropertyName("regimen")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string RegimenType { set; get; }
     }
 
     [Serializable]
@@ -486,23 +601,31 @@ namespace DataAccessLayer.Standard
     [System.Xml.Serialization.XmlRoot("DRF")]
     public class Resolucion
     {
+        [JsonPropertyName("resolution_number")]
         [System.Xml.Serialization.XmlElement("DRF_1")]
         public string Number { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("DRF_2")]
         public string DateBegin { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("DRF_3")]
         public string DateEnd { set; get; }
 
+        [JsonPropertyName("prefix")]
         [System.Xml.Serialization.XmlElement("DRF_4")]
         public string Prefijo { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("DRF_5")]
         public int NumberBegin { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("DRF_6")]
         public int NumberEnd { set; get; }
+
+        public bool flexible { get { return false; } }
     }
 
     [Serializable]
@@ -529,57 +652,77 @@ namespace DataAccessLayer.Standard
         /// <summary>
         /// The consecutive of the line, consecutive of item in the invoice.
         /// </summary>
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_1")]
         public int ID { set; get; }
 
+        [JsonPropertyName("quantity")]
         [System.Xml.Serialization.XmlElement("ITE_3")]
         public double Quantity { set; get; } // Cantidad de productos.
 
+        [JsonPropertyName("measuring-unit")]
         [System.Xml.Serialization.XmlElement("ITE_4")]
         public string CodeMedida { set; get; } // Codigo de la unidad de producto/servicio
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_5")]
         public double SubTotal { set; get; } // Valor total de la línea. Cantidad x Precio Unidad
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_6")]
         public string MonedaSubTotal { set; get; } // Moneda del valor total de la línea.
 
+        [JsonPropertyName("price")]
         [System.Xml.Serialization.XmlElement("ITE_7")]
         public double Price { set; get; } // Costo unitario del producto
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_8")]
         public string MonedaPrice { set; get; } // Moneda del precio(costo) unitario
 
+        [JsonPropertyName("description")]
         [System.Xml.Serialization.XmlElement("ITE_11")]
         public string Description { set; get; } // Descripción del producto o servicio
 
+        [JsonPropertyName("sku")]
         [System.Xml.Serialization.XmlElement("ITE_18")]
         public string Code { set; get; } // Código (del vendedor) correspondiente al artículo
 
-
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_19")]
         public double TotalItem { set; get; }  // Total del ítem (incluyendo Descuentos y cargos)
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_20")]
         public string MonedaTotalItem { set; get; } // Moneda del Total del ítem (incluyendo Descuentos y cargos)
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_21")]
         public double Total { set; get; } // Valor a pagar del ítem
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_22")]
         public string MonedaTotal { set; get; } // Moneda del Valor a pagar del ítem
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_27")]
         public double CantidadReal { set; get; } // La cantidad real sobre la cual el precio aplica. 
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_28")]
         public string CodMedidaCant { set; get; } // Codigo de la unidad de medida de la cantidad
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IAE")]
         public IdentifyStandard Standard { set; get; }
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("TII")]
         public List<TotalImpuestoItem> TotalImpuestos { set; get; }
+
+        [JsonPropertyName("taxes")]
+        [XmlIgnore]
+        public List<ImpuestoItem> Taxes { set; get; }
     }
 
     [Serializable]
@@ -615,33 +758,46 @@ namespace DataAccessLayer.Standard
     [System.Xml.Serialization.XmlRoot("IIM")]
     public class ImpuestoItem
     {
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IIM_1")]
         public string ID { set; get; } // Identificador del tributo
 
-        [System.Xml.Serialization.XmlElement("IIM_2")]
-        public double Valor { set; get; }  // Valor del tributo.  producto del porcentaje aplicado sobre la base imponible
+        [JsonPropertyName("tax-category")]
+        public string Category { set; get; }
 
+        [JsonPropertyName("tax-rate")]
+        [System.Xml.Serialization.XmlElement("IIM_2")]
+        public double? Valor { set; get; }  // Valor del tributo.  producto del porcentaje aplicado sobre la base imponible
+
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IIM_3")]
         public string MonedaValor { set; get; } // Moneda del valor del tributo
 
+        [JsonPropertyName("tax_amount")]
         [System.Xml.Serialization.XmlElement("IIM_4")]
-        public double BaseImponible { set; get; } // Base Imponible sobre la que se calcula el valor del tributo
+        public double? BaseImponible { set; get; } // Base Imponible sobre la que se calcula el valor del tributo
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IIM_5")]
         public string MonedaBaseImponible { set; get; } // moneda de la base imponible
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IIM_6")]
         public string Tarifa { set; get; } // Tarifa del tributo(Impuesto)
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IIM_7")]
         public string Quantity { set; get; } // Cant, Unidad de medida del impuesto nominal
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IIM_8")]
         public string UnitMedida { set; get; } // codigo de la unidad de medida.
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IIM_9")]
         public string ValorUnit { set; get; }  // Valor unitario del tributo
 
+        [JsonIgnore]
         [System.Xml.Serialization.XmlElement("IIM_10")]
         public string MonedaValorUnit { set; get; }
     }

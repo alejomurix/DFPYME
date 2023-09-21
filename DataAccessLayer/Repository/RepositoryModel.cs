@@ -525,6 +525,36 @@ namespace DataAccessLayer.Repository
                 miAdapter.SelectCommand.Parameters.AddWithValue("nit", nit);
                 miAdapter.Fill(c.DetailsRUT);
 
+                sql = @"select 
+                          documento_identidad.descripcion as doc_type,
+                          tipo_persona.descripcion as pers_type ,
+                          regimen.nombreregimen as tax_level 
+                        from 
+                          cliente,
+                          documento_identidad ,
+                          tipo_persona ,
+                          regimen 
+                        where 
+                          cliente.type_document = documento_identidad.codigo and
+                          cliente.type_person = tipo_persona.codigo and 
+                          cliente.idregimen = regimen.idregimen and 
+                          cliente.nitcliente = @nit;";
+                CargarComando(sql);
+                miComando.Parameters.AddWithValue("nit", nit);
+                miConexion.MiConexion.Open();
+                NpgsqlDataReader reader = miComando.ExecuteReader();
+                while (reader.Read())
+                {
+                    c.CustomerDetail = new CustomerDetail
+                    {
+                        DocumentType = reader.GetString(0),
+                        PersonType = reader.GetString(1),
+                        TaxLevel = reader.GetString(2)
+                    };
+                }
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+
                 return c;
             }
             catch (Exception ex)
@@ -1206,6 +1236,7 @@ namespace DataAccessLayer.Repository
                     {
                         State = false,
                         ID = "01",
+                        Description = "IVA",
                         Base = Math.Round(item.UnitPrice * item.Quantity, 2),
                         Tarifa = item.IVA,
                         Value = Math.Round(Math.Round(item.UnitPrice * item.Quantity, 2) * item.IVA / 100, 2)
@@ -1217,6 +1248,7 @@ namespace DataAccessLayer.Repository
                     {
                         State = false,
                         ID = "02",
+                        Description = "IMP_CONSUMO_LICOR",
                         Nominal = true,
                         Base = item.IC,
                         Quantity = item.Quantity,
@@ -1230,6 +1262,7 @@ namespace DataAccessLayer.Repository
                     {
                         State = false,
                         ID = "04",
+                        Description = "IMP_CONSUMO",
                         Base = Math.Round(item.UnitPrice * item.Quantity, 2),
                         Tarifa = item.INC,
                         Value = Math.Round(Math.Round(item.UnitPrice * item.Quantity, 2) * item.INC / 100, 2)
@@ -1906,7 +1939,42 @@ namespace DataAccessLayer.Repository
             try
             {
                 ElectronicDocument ed = new ElectronicDocument();
-                string sql = "select * from documento_electronico where id = @id;";
+                string sql = @"SELECT 
+                          documento_electronico.id, 
+                          documento_electronico.nit_cliente, 
+                          documento_electronico.estado, 
+                          documento_electronico.tipo, 
+                          documento_electronico.tipo_factura, 
+                          documento_electronico.tipo_operacion, 
+                          documento_electronico.tipo_ambiente, 
+                          documento_electronico.id_status, 
+                          documento_electronico.numero, 
+                          documento_electronico.fecha, 
+                          documento_electronico.hora, 
+                          documento_electronico.fecha_limite, 
+                          documento_electronico.numero_items, 
+                          documento_electronico.total, 
+                          documento_electronico.neto, 
+                          documento_electronico.moneda, 
+                          documento_electronico.id_resolucion, 
+                          documento_electronico.metodo_pago, 
+                          documento_electronico.medio_pago, 
+                          documento_electronico.fecha_pago, 
+                          documento_electronico.version_ubl, 
+                          documento_electronico.version_dian, 
+                          documento_electronico.transaccion_id, 
+                          documento_electronico.id_caja, 
+                          documento_electronico.cancelled, 
+                          tipo_factura_electronica.descripcion,
+                          medio_pago.nombre 
+                        FROM 
+                          documento_electronico, 
+                          tipo_factura_electronica,
+                          medio_pago
+                        WHERE 
+                          documento_electronico.tipo_factura = tipo_factura_electronica.valor AND 
+                          documento_electronico.medio_pago = medio_pago.codigo AND 
+                          documento_electronico.id = @id;";
                 CargarComando(sql);
                 miComando.Parameters.AddWithValue("id", id);
                 miConexion.MiConexion.Open();
@@ -1939,6 +2007,8 @@ namespace DataAccessLayer.Repository
                     ed.TransaccionID = reader.GetString(22);
                     ed.IdCaja = reader.GetInt32(23);
                     ed.Cancelled = reader.GetBoolean(24);
+                    ed.TipoDescripcion = reader.GetString(25);
+                    ed.MetPayment = new Payment { Code = ed.MetodoPago.ToString(), Medio = reader.GetString(26) };
                 }
                 miConexion.MiConexion.Close();
                 miComando.Dispose();
@@ -3091,7 +3161,7 @@ namespace DataAccessLayer.Repository
             finally { miConexion.MiConexion.Close(); }
         }
 
-
+        /*
         public EnvironmentDE GetEnvironment()
         {
             try
@@ -3117,6 +3187,7 @@ namespace DataAccessLayer.Repository
             }
             finally { miConexion.MiConexion.Close(); }
         }
+        */
 
         /// <summary>
         /// Inicializa una nueva instancia de NpgsqlCommand de tipo StoredProcedure.

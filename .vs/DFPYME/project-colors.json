@@ -40,7 +40,22 @@
       "ProjectGuid": "c09c485c-6780-4fce-911e-d011226abcf5",
       "DisplayName": "CustomControl",
       "ColorIndex": 6
+    },
+    "7da0aebc-3867-43e9-bcf9-e9878cd3dcc4": {
+      "ProjectGuid": "7da0aebc-3867-43e9-bcf9-e9878cd3dcc4",
+      "DisplayName": "RawDataPrint",
+      "ColorIndex": 7
+    },
+    "c4a605ec-9b79-410a-bbd6-59abf2d8d47a": {
+      "ProjectGuid": "c4a605ec-9b79-410a-bbd6-59abf2d8d47a",
+      "DisplayName": "WSFTechSoapDemo",
+      "ColorIndex": 8
+    },
+    "7ba6165e-43aa-4b81-b98a-11a43d113b50": {
+      "ProjectGuid": "7ba6165e-43aa-4b81-b98a-11a43d113b50",
+      "DisplayName": "WSFTechSoapPro",
+      "ColorIndex": 9
     }
   },
-  "NextColorIndex": 7
+  "NextColorIndex": 10
 }

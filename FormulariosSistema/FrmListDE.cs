@@ -15,7 +15,7 @@ using Utilities;
 using WSFTechSoapDemo;
 using WSFTechSoapPro;
 using System.Threading;
-
+using System.Net.Http;
 
 namespace FormulariosSistema
 {
@@ -313,7 +313,7 @@ namespace FormulariosSistema
         }
 
 
-        private void btnGENXML_Click(object sender, EventArgs e)
+        private async void btnGENXML_Click(object sender, EventArgs e)
         {
             try
             {
@@ -340,10 +340,35 @@ namespace FormulariosSistema
                             this.Document.Neto = this.Document.Total - Math.Round(this.Document.Retentions.Sum(s => s.Value), 2);
                             //this.TotalInvoice.Retention = Math.Round(this.Document.Retentions.Sum(s => s.Value), 2);
 
+                            
 
                             //this.repositoryModel.UpdateConsecutiveResolution();
                             //this.repositoryModel.EditElectronicDocumentAll(Document);
                         }
+
+                        //*************************************
+                        
+                        DELoad.Document = Document;
+                        string json = DELoad.CreateJson();
+
+                        string url = "https://api.dataico.com/direct/dataico_api/v2/invoices";
+                        var client = new HttpClient();
+                        client.DefaultRequestHeaders.Add("auth-token", "4facc5070884f0e15d9dc05c3ee4fb6b");
+
+                        var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                        var httpResponse = await client.PostAsync(url, content);
+
+                        Console.WriteLine("{0} {1}", httpResponse.IsSuccessStatusCode, httpResponse.StatusCode);
+                        DELoad.StreamToJson(httpResponse);
+                        //var jsonReader = new JsonTextReader(streamReader);
+                        
+
+                        
+                        //Console.WriteLine(httpResponse.Content.ReadAsStringAsync());
+                        
+
+                        //*************************************
+
                         if (ValidateElectronicDocument(this.Document))
                         {
                             DialogResult rta = MessageBox.Show("¿Desea generar el documento electrónico?", "Factura electrónica",
