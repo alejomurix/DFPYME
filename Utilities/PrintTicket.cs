@@ -691,18 +691,20 @@ namespace Utilities
             try
             {
 
-                if (this.Puntos || this.Ahorro > 0)
+                /*if (this.Puntos || this.Ahorro > 0)
                 {
                     if (this.DataPuntos[0] > 0 || this.DataPuntos[1] > 0)
                     {
                         this.miTicket.AddHeaderLine("-----------------------------------");
                         this.miTicket.AddHeaderLine("");
                     }
-                }
+                }*/
                 if (this.Puntos)
                 {
                     if (this.DataPuntos[0] > 0 || this.DataPuntos[1] > 0)
                     {
+                        this.miTicket.AddHeaderLine("-----------------------------------");
+                        this.miTicket.AddHeaderLine("");
                         if (this.Copia)
                         {
                             this.miTicket.AddHeaderLine
@@ -718,17 +720,16 @@ namespace Utilities
                         this.miTicket.AddHeaderLine("");
                     }
                 }
+                /*
                 if (this.DescuentoMarca)
                 {
                     if (this.Ahorro > 0)
                     {
-                        //this.miTicket.AddHeaderLine("");
                         this.miTicket.AddHeaderLine("Su ahorro fue de   : $" + UseObject.InsertSeparatorMil(this.Ahorro.ToString()));
                         this.miTicket.AddHeaderLine("");
-                        //this.miTicket.AddHeaderLine("");
                     }
                 }
-
+                */
             }
             catch (Exception ex)
             {
@@ -932,7 +933,7 @@ namespace Utilities
                 this.EncabezadoDescripcionDetalle();
                 this.DetalleArticulos();
                 this.DetalleTotalEfectivoCambio();
-                //this.DetallePuntosDescuento();
+                this.DetallePuntosDescuento();
                 this.DetalleIvaINCBolsas();
                 this.PieImpresion();
                 this.EnviarImpresion();

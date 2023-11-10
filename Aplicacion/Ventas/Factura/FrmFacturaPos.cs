@@ -371,6 +371,8 @@ namespace Aplicacion.Ventas.Factura
 
         int CodeBarBasculaStart;
 
+        Punto punto;
+
         public FrmFacturaPos()
         {
             InitializeComponent();
@@ -468,6 +470,8 @@ namespace Aplicacion.Ventas.Factura
                 Operando = expresCodeBascula[0];
                 FirstCharValue = expresCodeBascula[1];
                 IndexChar = expresCodeBascula[2];*/
+
+                punto = miBussinesPunto.CargarPunto();
 
                 factura = new FacturaVenta();
                 facturas = new List<FacturaVenta>();
@@ -7027,9 +7031,19 @@ namespace Aplicacion.Ventas.Factura
 
                     if (option.Equals("0"))  // no hay segmentación
                     {
-                        facturas.ForEach(f => 
-                            PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                        if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("print_termal_80mm")))
+                        {
+                            facturas.ForEach(f =>
+                                PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
+                                Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto, 
+                                  CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
+                        }
+                        else
+                        {
+                            facturas.ForEach(f =>
+                                PrintPos50mm(f.Id, f.AplicaDescuento, f.EstadoFactura.Id,
+                                f.Proveedor.NitProveedor, Convert.ToInt32(f.FormasDePago.Sum(s => s.Pago))));
+                        }
 
                         /**
                         if (facturas.Last().EstadoFactura.Id.Equals(2)) // crédito
@@ -7053,7 +7067,8 @@ namespace Aplicacion.Ventas.Factura
                                 if (facturas.Count > 1) PrintFacts();
                                 facturas.ForEach(f =>
                                     PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto,
+                                          CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
                                 break;
 
                             case "2":   // print solo orden de pedido (facturas)
@@ -7064,7 +7079,8 @@ namespace Aplicacion.Ventas.Factura
                                 print.PrintOrder(miFactura);
                                 facturas.ForEach(f =>
                                     PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto,
+                                          CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
                                 break;
                         }
                     }
@@ -7174,6 +7190,49 @@ namespace Aplicacion.Ventas.Factura
                 data[0] = 0;
                 data[1] = 0;
                 OptionPane.MessageError(ex.Message);
+            }
+            return data;
+        }
+
+        private double[] CargarPuntos(string nitCliente, int id, bool descto)
+        {
+            double[] data = new double[2];
+            if (punto.EstadoPunto)
+            {
+                if (nitCliente != "1000" ||
+                    nitCliente != "10" ||
+                    nitCliente != "22222222" ||
+                    nitCliente != "222222222222")
+                {
+                    try
+                    {
+                        int total =
+                            miBussinesFactura.PrintProducto(id, descto).Tables[0].AsEnumerable().Sum(d => d.Field<int>("Total_"));
+                        double p = miBussinesCliente.Puntos(nitCliente);
+                        int puntos = 0;
+                        if (punto.ValorVentaMinPunto > 0 && total > punto.ValorVentaMinPunto)
+                        {
+                            //puntos = Convert.ToInt32(total / punto.ValorPunto);
+                            puntos = UseObject.RetiraDecima(total / punto.ValorPunto);
+                            puntos *= Convert.ToInt32(punto.NumeroPuntos);
+                            p += puntos;
+                            miBussinesCliente.EditarPuntos(nitCliente, p);
+                            data[0] = puntos;
+                            data[1] = p;
+                        }
+                        else
+                        {
+                            data[0] = 0;
+                            data[1] = p;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        data[0] = 0;
+                        data[1] = 0;
+                        OptionPane.MessageError(ex.Message);
+                    }
+                }
             }
             return data;
         }
@@ -8181,8 +8240,9 @@ namespace Aplicacion.Ventas.Factura
                     printTicket.DescuentoMarca = this.DescuentoMarca;
 
                     printTicket.empresaRow = this.miBussinesEmpresa.PrintEmpresa().Tables[0].AsEnumerable().First();
+                //SELECT * FROM view_print_empresa
 
-                    printTicket.IdEstado = idEstado;
+                printTicket.IdEstado = idEstado;
                     printTicket.Numero = facturaRow["Numero"].ToString();
                     printTicket.Fecha = Convert.ToDateTime(facturaRow["Fecha"]);
                     printTicket.Hora = Convert.ToDateTime(facturaRow["Hora"]);
@@ -8199,12 +8259,12 @@ namespace Aplicacion.Ventas.Factura
                     printTicket.tDetalle = this.miBussinesFactura.PrintProducto(id, descto).Tables[0];
                     printTicket.Pago = pago;
 
-                    if (cliente != "10" && cliente != "1000")
-                    {
+                    //if (cliente != "10" && cliente != "1000")
+                    //{
                         //printTicket.Puntos = true;
                         printTicket.DataPuntos = data;
-                    }
-                    var lstProducto = new List<ProductoFacturaProveedor>();
+                    //}
+                    ///var lstProducto = new List<ProductoFacturaProveedor>();
                     /*foreach (DataRow dRow in printTicket.tDetalle.Rows)
                     {
                         //var c = dRow["Cantidad"].ToString();
@@ -8218,6 +8278,7 @@ namespace Aplicacion.Ventas.Factura
                             });
                         }
                     }*/
+                    /*
                     if (this.DescuentoMarca)
                     {
                         int precio2 = 0;
@@ -8240,10 +8301,12 @@ namespace Aplicacion.Ventas.Factura
                             });
                         }
                     }
+                    */
 
                     //var t = printTicket.tDetalle.AsEnumerable().Sum(d => d.Field<int>("Total_"));
-                    printTicket.Ahorro = Convert.ToInt32(lstProducto.Sum(s => s.Valor * s.Cantidad)) -
+                   /* printTicket.Ahorro = Convert.ToInt32(lstProducto.Sum(s => s.Valor * s.Cantidad)) -
                         printTicket.tDetalle.AsEnumerable().Sum(d => d.Field<int>("Total_"));
+                */
 
                     printTicket.DetalleIva = this.miBussinesFactura.IvaFacturado(id);
                     printTicket.impuesto = miBussinesImpstoBolsa.ImpuestoBolsaDeVenta(id);
@@ -8495,6 +8558,7 @@ namespace Aplicacion.Ventas.Factura
                 int maxCharacters = 27;
                 //var miBussinesIcoBolsas = new BussinesImpuestoBolsa();
 
+                /*
                 DialogResult rta = DialogResult.Yes;
                 if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("preguntaPrintVenta")))
                 {
@@ -8504,27 +8568,34 @@ namespace Aplicacion.Ventas.Factura
 
                 if (rta.Equals(DialogResult.Yes))
                 {
+*/
                     var empresaRow = this.miBussinesEmpresa.PrintEmpresa().Tables[0].AsEnumerable().First();
                     var facturaRow = miBussinesFactura.PrintFacturaVenta(id).Tables[0].AsEnumerable().First();
                     var tProductos = this.miBussinesFactura.PrintProducto(id, descto).Tables[0];
                     DataRow rowCliente = this.miBussinesCliente.ConsultaClienteNit(cliente).AsEnumerable().First();
                     //printTicket.clienteRow = this.miBussinesCliente.ConsultaClienteNit(cliente).AsEnumerable().First();
 
+                    var taxes = miBussinesFactura.IvaFacturado(id);
+
+                    short regimen = Convert.ToInt16(empresaRow["idregimen"]);
 
                     Ticket miTicket = new Ticket();
                     miTicket.UseItem = false;
                     miTicket.Printer80mm = false;
 
                     miTicket.AddHeaderLine(empresaRow["Nombre"].ToString().ToUpper());
-                    miTicket.AddHeaderLine(empresaRow["Juridico"].ToString().ToUpper());
-                    miTicket.AddHeaderLine(empresaRow["Nit"].ToString().ToUpper());
+                    //miTicket.AddHeaderLine(empresaRow["Juridico"].ToString().ToUpper());
+                    miTicket.AddHeaderLine("NIT. " + empresaRow["Nit"].ToString().ToUpper());
                     miTicket.AddHeaderLine(empresaRow["direccion_"].ToString().ToUpper());
                     miTicket.AddHeaderLine(empresaRow["ciudad"].ToString().ToUpper() + " " +
                         empresaRow["departamento"].ToString().ToUpper());
                     miTicket.AddHeaderLine(empresaRow["celularempresa"].ToString().ToUpper());
+                    miTicket.AddHeaderLine(empresaRow["Regimen"].ToString().ToUpper());
 
                     miTicket.AddHeaderLine("---------------------------");
-                    miTicket.AddHeaderLine("Ticket Venta No. " + facturaRow["Numero"].ToString());
+                    if (regimen.Equals(1)) miTicket.AddHeaderLine("Venta POS No. " + facturaRow["Numero"].ToString());  // 1 responsable
+                    else miTicket.AddHeaderLine("Ticket Venta No. " + facturaRow["Numero"].ToString());
+
                     DateTime hora = Convert.ToDateTime(facturaRow["Hora"]);
                     miTicket.AddHeaderLine("Fecha: " + Convert.ToDateTime(facturaRow["Fecha"]).ToShortDateString() + " " +
                         hora.TimeOfDay.Hours + ":" + hora.TimeOfDay.Minutes.ToString());
@@ -8557,26 +8628,80 @@ namespace Aplicacion.Ventas.Factura
                             UseObject.FuncionEspacio(10 - total.Length) + total);
                     }
                     miTicket.AddHeaderLine("");
-                    miTicket.AddHeaderLine("");
+
+                    int totalValue = tProductos.AsEnumerable().Sum(s => s.Field<int>("Total_"));
+                    int ico = Convert.ToInt32(tProductos.AsEnumerable().Sum(s => s.Field<double>("Cantidad") * s.Field<double>("Ico")));
+                    int subTotal = totalValue - Convert.ToInt32(taxes.Sum(t => t.ValorIva)) - ico;
                     miTicket.AddHeaderLine("---------------------------");
-                    miTicket.AddHeaderLine("TOTAL: $          " + UseObject.InsertSeparatorMil(tProductos.AsEnumerable().Sum(s => s.Field<int>("Total_")).ToString()));
-                    miTicket.AddHeaderLine("---------------------------");
+                    if (regimen.Equals(1))
+                    {
+                        miTicket.AddHeaderLine("SUBTOTAL:" + UseObject.FuncionEspacio(maxCharacters - 9 - subTotal.ToString().Length - 1) +
+                            UseObject.InsertSeparatorMil(subTotal.ToString()));
+                        bool first = false;
+                        for (short i = 0; i < taxes.Count; i++)
+                        {
+                            if (taxes[i].PorcentajeIva > 0)
+                            {
+                                if (!first)
+                                {
+                                    miTicket.AddHeaderLine("     IVA:" +
+                                        UseObject.FuncionEspacio(maxCharacters - 9 - taxes[i].ValorIva.ToString().Length - 6) +
+                                        taxes[i].PorcentajeIva + "%  " +
+                                        UseObject.InsertSeparatorMil(taxes[i].ValorIva.ToString()));
+                                    first = true;
+                                }
+                                else
+                                {
+                                    miTicket.AddHeaderLine(
+                                        UseObject.FuncionEspacio(taxes[i].ValorIva.ToString().Length - 5) +
+                                        taxes[i].PorcentajeIva + "% " +
+                                        UseObject.InsertSeparatorMil(taxes[i].ValorIva.ToString()));
+                                }
+                            }
+                        }
+                        if (ico > 0) miTicket.AddHeaderLine("      IC:" + 
+                            UseObject.FuncionEspacio(maxCharacters - 9 - ico.ToString().Length - 1) + 
+                            UseObject.InsertSeparatorMil(ico.ToString()));
+                    }
+                    miTicket.AddHeaderLine("   TOTAL:" +
+                        UseObject.FuncionEspacio(maxCharacters - 9 - totalValue.ToString().Length - 1) +
+                        UseObject.InsertSeparatorMil(totalValue.ToString()));
+
                     if (idEstado.Equals(1))  // Contado
                     {
-                        miTicket.AddHeaderLine("Efectivo: $       " + UseObject.InsertSeparatorMil(pago.ToString()));
-                        miTicket.AddHeaderLine("Cambio  : $       " + UseObject.InsertSeparatorMil((pago - tProductos.AsEnumerable().Sum(s => s.Field<int>("Total_"))).ToString()));
+                        miTicket.AddHeaderLine("");
+                        miTicket.AddHeaderLine("Efectivo:" + UseObject.FuncionEspacio(maxCharacters - 9 - pago.ToString().Length - 1) +
+                            UseObject.InsertSeparatorMil(pago.ToString()));
+                        miTicket.AddHeaderLine("Cambio  :" + UseObject.FuncionEspacio(maxCharacters - 9 - (pago - totalValue).ToString().Length - 1) +
+                            UseObject.InsertSeparatorMil((pago - totalValue).ToString()));
                     }
+                    miTicket.AddHeaderLine("---------------------------");
+
+                    if (regimen.Equals(1))
+                    {
+                        var number = miBussinesDian.ConsultaDian(Convert.ToInt32(facturaRow["id_resolucion_dian"]));
+                        UseObject.StringBuilderDetalleDIAN(number.TextoInicial + number.NumeroResolucion, maxCharacters)
+                            .ForEach(n => miTicket.AddHeaderLine(n));
+                        UseObject.StringBuilderDetalleDIAN(number.TextoFinal + " " + number.SerieInicial + number.RangoInicial +
+                            " al " + number.SerieFinal + number.RangoFinal, maxCharacters)
+                            .ForEach(n => miTicket.AddHeaderLine(n));
+                        miTicket.AddHeaderLine("Vigencia: " + number.VigenciaMes + " meses");
+                    }
+                    
+                    miTicket.AddHeaderLine("Software DFPYME - INTREDETE");
+                    miTicket.AddHeaderLine("comercial@intredete.com");
                     miTicket.AddHeaderLine("");
-                    miTicket.AddHeaderLine("Atendido por: " + this.miBussinesUsuario.PrintUsuarioVenta(id).Tables[0].AsEnumerable().First()["Nombre"].ToString().Substring(0, 13));
                     miTicket.AddHeaderLine("");
 
                     miTicket.PrintTicket("");
 
+/*
                 }
                 else
                 {
                     this.ExpulsarCajonMonedero();
                 }
+                */
             }
             catch (Exception ex)
             {

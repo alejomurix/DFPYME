@@ -1325,11 +1325,13 @@ namespace DataAccessLayer.Clases
                         resumen.Fecha = fecha;
                         code = resumen.CodigoProducto = Irow["codigointernoproducto"].ToString();
 
+                        /*
                         code = resumen.CodigoProducto;
-                        if (code == "1238")
+                        if (code == "2540" || code == "1826")
                         {
                             var j = code;
                         }
+                        */
 
                         resumen.IdMedida = Convert.ToInt32(Irow["idvalor_unidad_medida"]);
                         resumen.IdColor = Convert.ToInt32(Irow["idcolor"]);
@@ -1342,7 +1344,7 @@ namespace DataAccessLayer.Clases
                         if (IQrow.ToArray().Length != 0/*inventarioFisico.Rows.Count != 0*/)
                         {
                             var fRow = IQrow.AsEnumerable().First();
-                            if (!inventarioSistema)
+                            if (inventarioSistema)     //if (!inventarioSistema)  // edit 25-09-23
                             {
                                 ActualizarInventario(Convert.ToInt32(Irow["id_inventario"]),
                                                      Convert.ToDouble(fRow["cantidad_inventario_fisico"]));

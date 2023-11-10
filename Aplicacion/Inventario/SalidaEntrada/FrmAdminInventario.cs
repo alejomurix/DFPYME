@@ -122,8 +122,8 @@ namespace Aplicacion.Inventario.SalidaEntrada
                 var kardex = new DTO.Clases.Kardex();
                 //this.txtCantSalida_Validating(this.txtCantSalida, new CancelEventArgs());
                 //this.txtCantEntrada_Validating(this.txtCantEntrada, new CancelEventArgs());
-                if (CantidadSalida && ProductoRepet)// && CantSalida && CantEntrada)
-                {
+                //if (CantidadSalida && ProductoRepet)// && CantSalida && CantEntrada)
+                //{
                     try
                     {
                         if (!txtCantSalida.Text.Equals(""))
@@ -141,7 +141,7 @@ namespace Aplicacion.Inventario.SalidaEntrada
                             kardex.Total = kardex.Valor * kardex.Cantidad;
                             bussinesKardex.Insertar(kardex);
                         }
-                        if (!txtInventarioEntrada.Text.Equals(""))
+                        if (!txtCantEntrada.Text.Equals(""))  //if (!txtInventarioEntrada.Text.Equals(""))
                         {
                             ProductoEntrada.Cantidad = Convert.ToDouble(txtCantEntrada.Text.Replace('.', ',')) +
                                                        UseObject.RemoveSeparatorMil(this.txtInventarioEntrada.Text); //Convert.ToDouble(txtInventarioEntrada.Text.Replace('.', ','));
@@ -159,11 +159,12 @@ namespace Aplicacion.Inventario.SalidaEntrada
 
                        // miBussinesInventario.ActualizarCantidadInventario(ProductoSalida);
                         //miBussinesInventario.ActualizarCantidadInventario(ProductoEntrada);
-                        if (!txtCantSalida.Text.Equals("") || !txtInventarioEntrada.Text.Equals(""))
+                        if (!txtCantSalida.Text.Equals("") || !txtCantEntrada.Text.Equals(""))
                         {
                             OptionPane.MessageInformation("Los datos del Inventario se actualizaron correctamente.");
 
-                            txtCodigoSalida.Focus();
+                            txtCodigoEntrada.Focus();
+                            //txtCodigoSalida.Focus();
                             MiProducto = null;
                             ProductoSalida = null;
                             ProductoEntrada = null;
@@ -182,7 +183,7 @@ namespace Aplicacion.Inventario.SalidaEntrada
                     {
                         OptionPane.MessageError(ex.Message);
                     }
-                }
+                //}
             }
         }
 
@@ -239,7 +240,7 @@ namespace Aplicacion.Inventario.SalidaEntrada
         {
             if (e.KeyChar.Equals((char)Keys.Enter))
             {
-                txtCodigoEntrada.Focus();
+                //txtCodigoEntrada.Focus();
             }
         }
 

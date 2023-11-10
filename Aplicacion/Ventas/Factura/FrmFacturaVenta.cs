@@ -346,6 +346,8 @@ namespace Aplicacion.Ventas.Factura
 
         int CodeBarBasculaStart;
 
+        Punto punto;
+
         public FrmFacturaVenta()
         {
             InitializeComponent();
@@ -441,6 +443,8 @@ namespace Aplicacion.Ventas.Factura
                     };
                     serialPort.DataReceived += new SerialDataReceivedEventHandler(spDataReceived);
                 }
+
+                punto = miBussinesPunto.CargarPunto();
             }
             catch (Exception ex)
             {
@@ -5888,9 +5892,19 @@ namespace Aplicacion.Ventas.Factura
 
                     if (option.Equals("0")) 
                     {
-                        facturas.ForEach(f =>
+                        if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("print_termal_80mm")))
+                        {
+                            facturas.ForEach(f =>
                             PrintPos(f.Id, f.Numero, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                                Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto,
+                                  CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
+                        }
+                        else
+                        {
+                            facturas.ForEach(f =>
+                                PrintPos50mm(f.Id, f.AplicaDescuento, f.EstadoFactura.Id,
+                                f.Proveedor.NitProveedor, Convert.ToInt32(f.FormasDePago.Sum(s => s.Pago))));
+                        }
 
                         /**
                         if (facturas.Last().EstadoFactura.Id.Equals(2)) // crédito
@@ -5914,7 +5928,8 @@ namespace Aplicacion.Ventas.Factura
                                 if (facturas.Count > 1) PrintFacts();
                                 facturas.ForEach(f =>
                                     PrintPos(f.Id, f.Numero, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto,
+                                          CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
                                 break;
 
                             case "2":   // print solo orden de pedido (facturas)
@@ -5925,7 +5940,8 @@ namespace Aplicacion.Ventas.Factura
                                 print.PrintOrder(miFactura);
                                 facturas.ForEach(f =>
                                     PrintPos(f.Id, f.Numero, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), false, new double[0]));
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto,
+                                          CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
                                 break;
                         }
                     }
@@ -6030,6 +6046,49 @@ namespace Aplicacion.Ventas.Factura
                 data[0] = 0;
                 data[1] = 0;
                 OptionPane.MessageError(ex.Message);
+            }
+            return data;
+        }
+
+        private double[] CargarPuntos(string nitCliente, int id, bool descto)
+        {
+            double[] data = new double[2];
+            if (punto.EstadoPunto)
+            {
+                if (nitCliente != "1000" ||
+                    nitCliente != "10" ||
+                    nitCliente != "22222222" ||
+                    nitCliente != "222222222222")
+                {
+                    try
+                    {
+                        int total =
+                            miBussinesFactura.PrintProducto(id, descto).Tables[0].AsEnumerable().Sum(d => d.Field<int>("Total_"));
+                        double p = miBussinesCliente.Puntos(nitCliente);
+                        int puntos = 0;
+                        if (punto.ValorVentaMinPunto > 0 && total > punto.ValorVentaMinPunto)
+                        {
+                            //puntos = Convert.ToInt32(total / punto.ValorPunto);
+                            puntos = UseObject.RetiraDecima(total / punto.ValorPunto);
+                            puntos *= Convert.ToInt32(punto.NumeroPuntos);
+                            p += puntos;
+                            miBussinesCliente.EditarPuntos(nitCliente, p);
+                            data[0] = puntos;
+                            data[1] = p;
+                        }
+                        else
+                        {
+                            data[0] = 0;
+                            data[1] = p;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        data[0] = 0;
+                        data[1] = 0;
+                        OptionPane.MessageError(ex.Message);
+                    }
+                }
             }
             return data;
         }
@@ -7122,12 +7181,12 @@ namespace Aplicacion.Ventas.Factura
                     printTicket.tDetalle = this.miBussinesFactura.PrintProducto(id, descto).Tables[0];
                     printTicket.Pago = pago;
 
-                    if (cliente != "10" && cliente != "1000")
-                    {
+                    //if (cliente != "10" && cliente != "1000")
+                    //{
                         //printTicket.Puntos = true;
                         printTicket.DataPuntos = data;
-                    }
-                    var lstProducto = new List<ProductoFacturaProveedor>();
+                    //}
+                   /// var lstProducto = new List<ProductoFacturaProveedor>();
                     /*foreach (DataRow dRow in printTicket.tDetalle.Rows)
                     {
                         if (this.DescuentoMarca)
@@ -7139,6 +7198,7 @@ namespace Aplicacion.Ventas.Factura
                             });
                         }
                     }*/
+                    /*
                     if (this.DescuentoMarca)
                     {
                         int precio2 = 0;
@@ -7163,6 +7223,7 @@ namespace Aplicacion.Ventas.Factura
                     }
                     printTicket.Ahorro = Convert.ToInt32(lstProducto.Sum(s => s.Valor * s.Cantidad)) -
                         printTicket.tDetalle.AsEnumerable().Sum(d => d.Field<int>("Total_"));
+                */
 
                     printTicket.DetalleIva = this.miBussinesFactura.IvaFacturado(id);
                     printTicket.impuesto = miBussinesIcoBolsas.ImpuestoBolsaDeVenta(id);

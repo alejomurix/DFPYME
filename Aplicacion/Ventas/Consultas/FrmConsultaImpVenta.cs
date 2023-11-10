@@ -212,13 +212,14 @@ namespace Aplicacion.Ventas.Consultas
                 {
                     this.Tercero = this.txtTercero.Text;
                 }
-                else
+                /** else
                 {
                     if (this.CriterioTercero.Equals(3))  // usuario
                     {
                         this.IdUsuario = Convert.ToInt32(this.txtTercero.Text);
                     }
                 }
+                */
             }
 
             this.miOption = new OptionPane();

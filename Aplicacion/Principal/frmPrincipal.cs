@@ -123,6 +123,9 @@ namespace Aplicacion.Principal
                 CargaCliente = Convert.ToBoolean(AppConfiguracion.ValorSeccion("cargarCliente"));
                 _ConsultaInventario = Convert.ToBoolean(AppConfiguracion.ValorSeccion("frm_consulta_inventario"));
 
+                if (!Convert.ToBoolean(AppConfiguracion.ValorSeccion("electronic_invoice"))) 
+                    this.documentoElectronicoToolStripMenuItem.Visible = false;
+
                 /*if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("electronic_invoice"))) // true; habilita menu fact. electronica.
                 {
                     this.empresaToolStripMenuItem.Visible = false;
@@ -1815,8 +1818,8 @@ namespace Aplicacion.Principal
 
         private void reporteCajaDiarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("print_termal_80mm")))
-            {
+            //if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("print_termal_80mm")))
+            //{
                 if (cD)
                     cajaD = null;
                 try
@@ -1845,7 +1848,8 @@ namespace Aplicacion.Principal
                     else
                         cD = false;
                 }
-            }
+           
+        /*}
             else
             {
                 if (ccj)
@@ -1877,6 +1881,8 @@ namespace Aplicacion.Principal
                         ccj = false;
                 }
             }
+*/
+
             /*
             if (cD)
                 cajaD = null;

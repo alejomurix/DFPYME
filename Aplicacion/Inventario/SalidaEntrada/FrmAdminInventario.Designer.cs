@@ -67,10 +67,10 @@
             this.gbArticuloSalida.Controls.Add(this.lblArticulo);
             this.gbArticuloSalida.Controls.Add(this.txtCodigoSalida);
             this.gbArticuloSalida.Controls.Add(this.pArticulo);
-            this.gbArticuloSalida.Location = new System.Drawing.Point(12, 40);
+            this.gbArticuloSalida.Location = new System.Drawing.Point(12, 167);
             this.gbArticuloSalida.Name = "gbArticuloSalida";
             this.gbArticuloSalida.Size = new System.Drawing.Size(610, 140);
-            this.gbArticuloSalida.TabIndex = 3;
+            this.gbArticuloSalida.TabIndex = 1;
             this.gbArticuloSalida.TabStop = false;
             this.gbArticuloSalida.Text = "Articulo de salida";
             // 
@@ -80,7 +80,7 @@
             this.lblCantidadInventario.Location = new System.Drawing.Point(381, 23);
             this.lblCantidadInventario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCantidadInventario.Name = "lblCantidadInventario";
-            this.lblCantidadInventario.Size = new System.Drawing.Size(66, 16);
+            this.lblCantidadInventario.Size = new System.Drawing.Size(65, 16);
             this.lblCantidadInventario.TabIndex = 13;
             this.lblCantidadInventario.Text = "Inventario";
             // 
@@ -91,7 +91,7 @@
             this.txtInventarioSalida.Margin = new System.Windows.Forms.Padding(4);
             this.txtInventarioSalida.Name = "txtInventarioSalida";
             this.txtInventarioSalida.Size = new System.Drawing.Size(100, 22);
-            this.txtInventarioSalida.TabIndex = 11;
+            this.txtInventarioSalida.TabIndex = 1;
             // 
             // lblCantidadAgrupar
             // 
@@ -99,7 +99,7 @@
             this.lblCantidadAgrupar.Location = new System.Drawing.Point(491, 23);
             this.lblCantidadAgrupar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCantidadAgrupar.Name = "lblCantidadAgrupar";
-            this.lblCantidadAgrupar.Size = new System.Drawing.Size(47, 16);
+            this.lblCantidadAgrupar.Size = new System.Drawing.Size(46, 16);
             this.lblCantidadAgrupar.TabIndex = 14;
             this.lblCantidadAgrupar.Text = "Salida";
             // 
@@ -110,7 +110,7 @@
             this.txtCantSalida.MaxLength = 20;
             this.txtCantSalida.Name = "txtCantSalida";
             this.txtCantSalida.Size = new System.Drawing.Size(100, 22);
-            this.txtCantSalida.TabIndex = 12;
+            this.txtCantSalida.TabIndex = 2;
             this.txtCantSalida.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCantSalida_KeyPress);
             this.txtCantSalida.Validating += new System.ComponentModel.CancelEventHandler(this.txtCantSalida_Validating);
             // 
@@ -120,7 +120,7 @@
             this.lblArticulo.Location = new System.Drawing.Point(10, 49);
             this.lblArticulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblArticulo.Name = "lblArticulo";
-            this.lblArticulo.Size = new System.Drawing.Size(52, 16);
+            this.lblArticulo.Size = new System.Drawing.Size(51, 16);
             this.lblArticulo.TabIndex = 10;
             this.lblArticulo.Text = "Articulo";
             // 
@@ -131,7 +131,7 @@
             this.txtCodigoSalida.MaxLength = 20;
             this.txtCodigoSalida.Name = "txtCodigoSalida";
             this.txtCodigoSalida.Size = new System.Drawing.Size(307, 22);
-            this.txtCodigoSalida.TabIndex = 8;
+            this.txtCodigoSalida.TabIndex = 0;
             this.txtCodigoSalida.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoSalida_KeyPress);
             // 
             // pArticulo
@@ -164,10 +164,10 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtCodigoEntrada);
             this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 186);
+            this.groupBox1.Location = new System.Drawing.Point(12, 28);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(610, 133);
-            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Articulo de entrada";
             // 
@@ -177,7 +177,7 @@
             this.label1.Location = new System.Drawing.Point(381, 24);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 16);
+            this.label1.Size = new System.Drawing.Size(65, 16);
             this.label1.TabIndex = 13;
             this.label1.Text = "Inventario";
             // 
@@ -188,7 +188,7 @@
             this.txtInventarioEntrada.Margin = new System.Windows.Forms.Padding(4);
             this.txtInventarioEntrada.Name = "txtInventarioEntrada";
             this.txtInventarioEntrada.Size = new System.Drawing.Size(100, 22);
-            this.txtInventarioEntrada.TabIndex = 11;
+            this.txtInventarioEntrada.TabIndex = 1;
             // 
             // label2
             // 
@@ -196,7 +196,7 @@
             this.label2.Location = new System.Drawing.Point(491, 24);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 16);
+            this.label2.Size = new System.Drawing.Size(54, 16);
             this.label2.TabIndex = 14;
             this.label2.Text = "Entrada";
             // 
@@ -207,7 +207,7 @@
             this.txtCantEntrada.MaxLength = 20;
             this.txtCantEntrada.Name = "txtCantEntrada";
             this.txtCantEntrada.Size = new System.Drawing.Size(100, 22);
-            this.txtCantEntrada.TabIndex = 12;
+            this.txtCantEntrada.TabIndex = 2;
             this.txtCantEntrada.Validating += new System.ComponentModel.CancelEventHandler(this.txtCantEntrada_Validating);
             // 
             // label3
@@ -216,7 +216,7 @@
             this.label3.Location = new System.Drawing.Point(10, 50);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 16);
+            this.label3.Size = new System.Drawing.Size(51, 16);
             this.label3.TabIndex = 10;
             this.label3.Text = "Articulo";
             // 
@@ -227,7 +227,7 @@
             this.txtCodigoEntrada.MaxLength = 20;
             this.txtCodigoEntrada.Name = "txtCodigoEntrada";
             this.txtCodigoEntrada.Size = new System.Drawing.Size(307, 22);
-            this.txtCodigoEntrada.TabIndex = 8;
+            this.txtCodigoEntrada.TabIndex = 0;
             this.txtCodigoEntrada.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtCodigoEntrada_KeyPress);
             // 
             // panel1
@@ -285,7 +285,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(638, 334);
+            this.ClientSize = new System.Drawing.Size(638, 322);
             this.Controls.Add(this.tsmenu);
             this.Controls.Add(this.gbArticuloSalida);
             this.Controls.Add(this.groupBox1);
