@@ -6923,6 +6923,7 @@ namespace Aplicacion.Ventas.Factura
             }
         }
 
+       // string[] puntos;
         // Functional update
         private void LoadPayments()
         {
@@ -6989,8 +6990,12 @@ namespace Aplicacion.Ventas.Factura
 
                 //var j = facturas;
 
-                facturas.ForEach(f => 
-                    f.Id = miBussinesFactura.IngresarFactura(f, Edicion, chkAntigua.Checked, ConsecutivoCaja));
+                facturas.ForEach(f =>
+                    {
+                        f.Punto = punto;
+                        f.Id = miBussinesFactura.IngresarFactura(f, Edicion, chkAntigua.Checked, ConsecutivoCaja);
+                    });
+                //if (punto.EstadoPunto) puntos = CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento);
 
                 /*
                 if (IdEstado.Equals(1))
@@ -7035,8 +7040,7 @@ namespace Aplicacion.Ventas.Factura
                         {
                             facturas.ForEach(f =>
                                 PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto, 
-                                  CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
+                                Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto, f.Puntos));
                         }
                         else
                         {
@@ -7067,8 +7071,7 @@ namespace Aplicacion.Ventas.Factura
                                 if (facturas.Count > 1) PrintFacts();
                                 facturas.ForEach(f =>
                                     PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto,
-                                          CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto, f.Puntos));
                                 break;
 
                             case "2":   // print solo orden de pedido (facturas)
@@ -7079,8 +7082,7 @@ namespace Aplicacion.Ventas.Factura
                                 print.PrintOrder(miFactura);
                                 facturas.ForEach(f =>
                                     PrintPos(f.Id, f.AplicaDescuento, f.Proveedor.NitProveedor, false, f.EstadoFactura.Id,
-                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto,
-                                          CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento)));
+                                        Convert.ToInt32(f.FormasDePago.Sum(p => p.Pago)), punto.EstadoPunto, f.Puntos));
                                 break;
                         }
                     }
@@ -8653,7 +8655,7 @@ namespace Aplicacion.Ventas.Factura
                                 else
                                 {
                                     miTicket.AddHeaderLine(
-                                        UseObject.FuncionEspacio(taxes[i].ValorIva.ToString().Length - 5) +
+                                        UseObject.FuncionEspacio(maxCharacters - taxes[i].ValorIva.ToString().Length - 5) +
                                         taxes[i].PorcentajeIva + "% " +
                                         UseObject.InsertSeparatorMil(taxes[i].ValorIva.ToString()));
                                 }

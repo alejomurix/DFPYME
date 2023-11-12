@@ -3770,6 +3770,7 @@ namespace Aplicacion.Ventas.Factura
                 //printTicket.clienteRow = this.miBussinesCliente.ConsultaClienteNit(cliente).AsEnumerable().First();
 
                 var taxes = miBussinesFactura.IvaFacturado(id);
+
                 short regimen = Convert.ToInt16(empresaRow["idregimen"]);
 
                 Ticket miTicket = new Ticket();
@@ -3778,7 +3779,7 @@ namespace Aplicacion.Ventas.Factura
 
                 miTicket.AddHeaderLine(empresaRow["Nombre"].ToString().ToUpper());
                 //miTicket.AddHeaderLine(empresaRow["Juridico"].ToString().ToUpper());
-                miTicket.AddHeaderLine(empresaRow["Nit"].ToString().ToUpper());
+                miTicket.AddHeaderLine("NIT. " + empresaRow["Nit"].ToString().ToUpper());
                 miTicket.AddHeaderLine(empresaRow["direccion_"].ToString().ToUpper());
                 miTicket.AddHeaderLine(empresaRow["ciudad"].ToString().ToUpper() + " " +
                     empresaRow["departamento"].ToString().ToUpper());
@@ -3826,7 +3827,6 @@ namespace Aplicacion.Ventas.Factura
                 int ico = Convert.ToInt32(tProductos.AsEnumerable().Sum(s => s.Field<double>("Cantidad") * s.Field<double>("Ico")));
                 int subTotal = totalValue - Convert.ToInt32(taxes.Sum(t => t.ValorIva)) - ico;
                 miTicket.AddHeaderLine("---------------------------");
-
                 if (regimen.Equals(1))
                 {
                     miTicket.AddHeaderLine("SUBTOTAL:" + UseObject.FuncionEspacio(maxCharacters - 9 - subTotal.ToString().Length - 1) +
@@ -3847,7 +3847,7 @@ namespace Aplicacion.Ventas.Factura
                             else
                             {
                                 miTicket.AddHeaderLine(
-                                    UseObject.FuncionEspacio(taxes[i].ValorIva.ToString().Length - 5) +
+                                    UseObject.FuncionEspacio(maxCharacters - taxes[i].ValorIva.ToString().Length - 5) +
                                     taxes[i].PorcentajeIva + "% " +
                                     UseObject.InsertSeparatorMil(taxes[i].ValorIva.ToString()));
                             }

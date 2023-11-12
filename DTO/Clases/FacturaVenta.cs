@@ -56,6 +56,10 @@ namespace DTO.Clases
 
         public string Name { set; get; }
 
+        public double[] Puntos { set; get; }
+
+        public Punto Punto { set; get; }
+
         /// <summary>
         /// Inicializa una nueva instancia de la clase FacturaProveedor.
         /// </summary>
@@ -77,6 +81,8 @@ namespace DTO.Clases
             this.NameStation = "";
 
             NoDocument = "";
+            Puntos = new double[0];
+            Punto = new Punto();
         }
     }
 }

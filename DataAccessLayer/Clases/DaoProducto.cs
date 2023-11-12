@@ -3183,7 +3183,7 @@ namespace DataAccessLayer.Clases
             {
                 string sql =
                     "select idvalor_unidad_medida as id, descripcionvalor_unidad_medida || '- ' ||codigo as descripcion " +
-                    "from valor_unidad_medida order by descripcionvalor_unidad_medida ";
+                    "from valor_unidad_medida where state order by idvalor_unidad_medida;";
                 var tMedida = new DataTable();
                 CargarAdapter(sql);
                 miAdapter.Fill(tMedida);

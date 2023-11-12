@@ -23,6 +23,8 @@ namespace BussinesLayer.Clases
         /// </summary>
         private DaoProductoFacturaVenta miDaoProducto;
 
+        private DaoCliente daoCliente;
+
         private DataTable Tabla { set; get; }
 
         private bool RedondearPrecio2 { set; get; }
@@ -36,6 +38,8 @@ namespace BussinesLayer.Clases
             {
                 this.miDaoFacturaVenta = new DaoFacturaVenta();
                 this.miDaoProducto = new DaoProductoFacturaVenta();
+                daoCliente = new DaoCliente();
+
                 TablaResumen();
                 this.RedondearPrecio2 = Convert.ToBoolean(AppConfiguracion.ValorSeccion("redondeo_precio_dos"));
             }catch(Exception ex)
@@ -62,6 +66,8 @@ namespace BussinesLayer.Clases
             return miDaoFacturaVenta.ObtenerRangoFinal(contado);
         }
 
+        int Id;
+
         /// <summary>
         /// Ingresa el registro de una Factura a base de datos.
         /// </summary>
@@ -69,8 +75,54 @@ namespace BussinesLayer.Clases
         /// <param name="edicion">Indica si la factura proviene de una edición de la misma.</param>
         public int IngresarFactura(FacturaVenta factura, bool edicion, bool anutigua, bool consecutivoCaja)
         {
+            Id = 0;
             factura.Total = factura.Productos.Sum(s => s.Total);
-            return this.miDaoFacturaVenta.IngresarFactura(factura, edicion, anutigua, consecutivoCaja);
+            Id = miDaoFacturaVenta.IngresarFactura(factura, edicion, anutigua, consecutivoCaja);
+            factura.Puntos = CargarPuntos(factura.Punto, factura.Proveedor.NitProveedor, Id, factura.AplicaDescuento);
+            return Id;
+        }
+
+        private double[] CargarPuntos(Punto punto, string nitCliente, int id, bool descto)
+        {
+            double[] data = new double[2];
+            if (punto.EstadoPunto)
+            {
+                if (nitCliente != "1000" ||
+                    nitCliente != "10" ||
+                    nitCliente != "22222222" ||
+                    nitCliente != "222222222222")
+                {
+                    try
+                    {
+                        int total =
+                            PrintProducto(id, descto).Tables[0].AsEnumerable().Sum(d => d.Field<int>("Total_"));
+                        double p = daoCliente.Puntos(nitCliente);
+                        int puntos = 0;
+                        if (punto.ValorVentaMinPunto > 0 && total > punto.ValorVentaMinPunto)
+                        {
+                            //puntos = Convert.ToInt32(total / punto.ValorPunto);
+                            puntos = UseObject.RetiraDecima(total / punto.ValorPunto);
+                            puntos *= Convert.ToInt32(punto.NumeroPuntos);
+                            p += puntos;
+                        daoCliente.EditarPuntos(nitCliente, p);
+                            data[0] = puntos;
+                            data[1] = p;
+                        }
+                        else
+                        {
+                            data[0] = 0;
+                            data[1] = p;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        data[0] = 0;
+                        data[1] = 0;
+                        //OptionPane.MessageError(ex.Message);
+                    }
+                }
+            }
+            return data;
         }
 
         public FacturaVenta FacturaDeVenta(string numero)
