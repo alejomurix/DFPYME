@@ -7506,15 +7506,16 @@ namespace Aplicacion.Ventas.Factura
                 int maxCharacters = 27;
                 //var miBussinesIcoBolsas = new BussinesImpuestoBolsa();
 
+                /*
                 DialogResult rta = DialogResult.Yes;
                 if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("preguntaPrintVenta")))
                 {
                     rta = MessageBox.Show("¿Desea imprimir la factura?", "Factura venta",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 }
+                */
 
-                if (rta.Equals(DialogResult.Yes))
-                {
+                
                     var empresaRow = this.miBussinesEmpresa.PrintEmpresa().Tables[0].AsEnumerable().First();
                     var facturaRow = miBussinesFactura.PrintFacturaVenta(id).Tables[0].AsEnumerable().First();
                     var tProductos = this.miBussinesFactura.PrintProducto(id, descto).Tables[0];
@@ -7641,11 +7642,7 @@ namespace Aplicacion.Ventas.Factura
 
                     miTicket.PrintTicket("");
 
-                }
-                else
-                {
-                    this.ExpulsarCajonMonedero();
-                }
+                
             }
             catch (Exception ex)
             {

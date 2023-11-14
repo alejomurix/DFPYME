@@ -5248,7 +5248,7 @@ namespace Aplicacion.Ventas.Factura
                             */
 
                             // pasa el flujo a completa_eventos -> donde se captura formas de pago y guarda la factura
-                        }
+                            }
                             else   //  factura crédito
                             {
                                 DialogResult rta = MessageBox.Show("¿Desea realizar la venta?", "Factura Venta",
