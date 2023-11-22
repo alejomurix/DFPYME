@@ -5,7 +5,27 @@
       "ProjectGuid": "7a2fbcc9-0c56-4a41-8f19-8434087c712a",
       "DisplayName": "Aplicacion",
       "ColorIndex": 0
+    },
+    "32c4e445-4a1b-462d-85a6-8f371c6f84e6": {
+      "ProjectGuid": "32c4e445-4a1b-462d-85a6-8f371c6f84e6",
+      "DisplayName": "DataAccessLayer",
+      "ColorIndex": 1
+    },
+    "2b98ca73-f710-4c5c-ae64-c369cd9981c6": {
+      "ProjectGuid": "2b98ca73-f710-4c5c-ae64-c369cd9981c6",
+      "DisplayName": "BussinesLayer",
+      "ColorIndex": 2
+    },
+    "7de51ff0-d3aa-47e9-9142-ba6704af59b2": {
+      "ProjectGuid": "7de51ff0-d3aa-47e9-9142-ba6704af59b2",
+      "DisplayName": "Utilities",
+      "ColorIndex": 3
+    },
+    "43e4321e-8ab8-4346-82c9-04d62648c754": {
+      "ProjectGuid": "43e4321e-8ab8-4346-82c9-04d62648c754",
+      "DisplayName": "FormulariosSistema",
+      "ColorIndex": 4
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 5
 }

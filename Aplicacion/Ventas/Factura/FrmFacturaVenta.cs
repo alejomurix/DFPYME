@@ -1167,7 +1167,7 @@ namespace Aplicacion.Ventas.Factura
             }
         }
 
-        private void txtCodigoArticulo_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtCodigoArticulo_KeyPress_old(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
@@ -1366,6 +1366,207 @@ namespace Aplicacion.Ventas.Factura
                                 }
                             }
                         }
+                    }
+                    else
+                    {
+                        if (!ExtendForms)
+                        {
+                            //derechos de administrador.
+                            /*var formProducto = new Inventario.Producto.FrmIngresarProducto();
+                            formProducto.MdiParent = this.MdiParent;
+                            formProducto.Extencion = true;
+                            formProducto.Fact = true;
+                            formProducto.tabControlProducto.SelectedIndex = 1;
+                            formProducto.txtConsulta.Text = txtCodigoArticulo.Text;
+                            formProducto.SearchFactura = true;
+                            ExtendForms = true;
+                            formProducto.Show();*/
+                            var formInventario = new Inventario.Consulta.FrmConsultaInventario();
+                            formInventario.MdiParent = this.MdiParent;
+                            formInventario.ExtendVenta = true;
+
+                            formInventario.IdTipoInventarioNoFabricado = IdTipoInventarioProductoNoFabricado;
+                            formInventario.IdTipoInventarioFabricado = IdTipoInventarioProductoFabricado;
+
+                            formInventario.txtCodigoNombre.Text = txtCodigoArticulo.Text;
+                            ExtendForms = true;
+                            this.Transfer = true;
+                            formInventario.Show();
+                            formInventario.dgvInventario.Focus();
+                            formInventario.ColorearGrid();
+                        }
+                    }
+                }
+            }
+        }
+
+        String[] codeWeight = new String[2];
+
+        private void txtCodigoArticulo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (!String.IsNullOrEmpty(this.txtCodigoArticulo.Text))
+                {
+                    if (CodigoOrString())
+                    {
+                        CodeWeight(txtCodigoArticulo.Text, codeWeight, CodeBarBasculaStart, CodBarrasCantPeso);
+                        if (!codeWeight[1].Equals("0")) { txtCantidad.Text = codeWeight[1]; }
+                        if (ExisteProducto(codeWeight[0]))
+                        {
+                            miError.SetError(txtCodigoArticulo, null);
+                            if (CargarProducto(codeWeight[0]))
+                            {
+                                if (RequiereCantidad)
+                                {
+                                    txtCantidad.Focus();
+                                }
+                                else
+                                {
+                                    CargarColorOconsulta();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            miError.SetError(txtCodigoArticulo, "El código del producto no existe.");
+                        }
+
+
+                        /**
+                        if (CodBarrasCantPeso)
+                        {
+                            if (Convert.ToInt64(txtCodigoArticulo.Text) < 0) 
+                                txtCodigoArticulo.Text = (Convert.ToInt64(txtCodigoArticulo.Text) * -1).ToString();
+                            if (txtCodigoArticulo.Text.Length.Equals(13))
+                            {
+                                String[] subString = new String[2];
+                                _ = CodeWeight(txtCodigoArticulo.Text, subString, Operando, FirstCharValue, IndexChar);
+                            }
+                            else
+                            {
+                                // loadProduct
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                        */
+
+                        /// if (Convert.ToInt64(this.txtCodigoArticulo.Text) < 0)  // orgin
+                        /** if (true) // (txtCodigoArticulo.Text.Length.Equals(13))                               // longitud de codigo 13
+                        {
+                            if (this.CodigoValido((Convert.ToInt64(this.txtCodigoArticulo.Text) * -1).ToString(), 13))  // origin
+                            /// if (true) // (txtCodigoArticulo.Text[0].Equals('1'))                              // primer caracter del codigo es 1
+                            {
+                                String[] subString = new String[2];
+                                if (this.CodBarrasCantPeso)
+                                {
+                                    //subString = UseObject.MiSubString(this.txtCodigoArticulo.Text, CodeBarBasculaStart, (7 - 1) );  // ojo.. refactorizar, date=28-06-2023
+                                    subString = UseObject.MiSubString(this.txtCodigoArticulo.Text, CodeBarBasculaStart, (7));  // ojo.. refactorizar, date=28-06-2023
+                                    this.txtCantidad.Text = subString[1];
+                                }
+                                else
+                                {
+                                    subString = UseObject.MiSubStringPrice(this.txtCodigoArticulo.Text, 1, 7);
+                                }
+                                if (this.ExisteProducto(subString[0]))
+                                {
+                                    if (this.CodBarrasCantPeso)
+                                    {
+                                        if (this.CargarProducto(subString[0]))
+                                        {
+                                            if (this.RequiereCantidad)
+                                            {
+                                                this.txtCantidad.Focus();
+                                            }
+                                            else
+                                            {
+                                                this.CargarColorOconsulta();
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (this.CargarProducto(subString[0], Convert.ToInt32(subString[1])))
+                                        {
+                                            if (this.RequiereCantidad)
+                                            {
+                                                this.txtCantidad.Focus();
+                                            }
+                                            else
+                                            {
+                                                this.CargarColorOconsulta();
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    OptionPane.MessageInformation("El producto no existe.");
+                                }
+                            }
+                            else
+                            {
+                                /// OptionPane.MessageInformation("El código no es valido.");
+                                if (ExisteProducto(txtCodigoArticulo.Text))
+                                {
+                                    if (CargarProducto())
+                                    {
+                                        if (RequiereCantidad)
+                                        {
+                                            txtCantidad.Focus();
+                                        }
+                                        else
+                                        {
+                                            CargarColorOconsulta();
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    OptionPane.MessageInformation("El producto no existe.");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (ExisteProducto(txtCodigoArticulo.Text))
+                            {
+                                if (CargarProducto())
+                                {
+                                    if (RequiereCantidad)
+                                    {
+                                        txtCantidad.Focus();
+                                    }
+                                    else
+                                    {
+                                        CargarColorOconsulta();
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                DialogResult rta = MessageBox.Show("El Producto no existe.\n¿Desea Crearlo?",
+                                        "Factura Venta", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                if (rta.Equals(DialogResult.Yes))
+                                {
+                                    if (!ExtendForms)
+                                    {
+                                        //derechos de administrador.
+                                        var formProducto = new Inventario.Producto.FrmIngresarProducto();
+                                        formProducto.MdiParent = this.MdiParent;
+                                        formProducto.Extencion = true;
+                                        formProducto.Fact = true;
+                                        ExtendForms = true;
+                                        formProducto.Show();
+                                    }
+                                }
+                            }
+                        }
+                        */
                     }
                     else
                     {
@@ -1746,6 +1947,43 @@ namespace Aplicacion.Ventas.Factura
         }
 
         //metodos...
+
+        private void CodeWeight(string code, string[] codeWeight, int indexStart, bool codeBar)
+        {
+            codeWeight[0] = code;
+            codeWeight[1] = "0";
+            if (codeBar)
+            {
+                if (Convert.ToInt64(code) < 0)  // negaitvo
+                {
+                    if ((Convert.ToInt64(code) * -1).ToString().Length.Equals(13))
+                    {
+                        /*codeWeight[0] = code.Substring(indexStart, 7);
+                        codeWeight[1] = code.Substring(9, 11);
+                        */
+
+                        codeWeight[0] = code.Substring(indexStart, 5);
+                        var kg = code.Substring(8, 2);
+                        var gr = code.Substring(10, 4);
+                        codeWeight[1] = code.Substring(8, 2) + "." + code.Substring(10, 4);
+                    }
+                }
+                else
+                {
+                    if (code.Length.Equals(13))
+                    {
+                        if (code[0].Equals('1'))
+                        {
+                            codeWeight[0] = code.Substring(indexStart, 7);
+                            var kg = code.Substring(7, 9);
+                            var gr = code.Substring(9, 12);
+                            codeWeight[1] = code.Substring(7, 9) + "." + code.Substring(9, 12);
+                            //codeWeight[1] = code.Substring(8, 11);
+                        }
+                    }
+                }
+            }
+        }
 
         void ReadPortCOM()
         {

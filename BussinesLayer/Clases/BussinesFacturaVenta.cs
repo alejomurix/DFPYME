@@ -87,9 +87,9 @@ namespace BussinesLayer.Clases
             double[] data = new double[2];
             if (punto.EstadoPunto)
             {
-                if (nitCliente != "1000" ||
-                    nitCliente != "10" ||
-                    nitCliente != "22222222" ||
+                if (nitCliente != "1000" &&
+                    nitCliente != "10" &&
+                    nitCliente != "22222222" &&
                     nitCliente != "222222222222")
                 {
                     try

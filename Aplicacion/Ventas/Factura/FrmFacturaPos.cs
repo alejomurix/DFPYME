@@ -2442,8 +2442,14 @@ namespace Aplicacion.Ventas.Factura
                 {
                     if ((Convert.ToInt64(code) * -1).ToString().Length.Equals(13))
                     {
-                        codeWeight[0] = code.Substring(indexStart, 7);
+                        /*codeWeight[0] = code.Substring(indexStart, 7);
                         codeWeight[1] = code.Substring(9, 11);
+                        */
+
+                        codeWeight[0] = code.Substring(indexStart, 5);
+                        var kg = code.Substring(8, 2);
+                        var gr = code.Substring(10, 4);
+                        codeWeight[1] = code.Substring(8, 2) + "." + code.Substring(10, 4);
                     }
                 }
                 else
