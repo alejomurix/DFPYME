@@ -11,6 +11,7 @@ using DataAccessLayer.Models;
 using CustomControl;
 using DTO;
 using Utilities;
+using BussinesLayer.Clases;
 
 
 namespace FormulariosSistema
@@ -39,6 +40,8 @@ namespace FormulariosSistema
 
         private RepositoryModel repositoryModel;
 
+        private BussinesConsecutivo miBussinesConsecutivo;
+
 
         private CustomerModel customerModel;
 
@@ -55,6 +58,10 @@ namespace FormulariosSistema
 
         private bool RequiereCantidad;
 
+        bool CodBarrasCantPeso;
+
+        int CodeBarBasculaStart;
+
 
         //private List<Item> items;
 
@@ -68,6 +75,7 @@ namespace FormulariosSistema
                 this.error = new ErrorProvider();
                 this.repositoryData = new RepositoryDataFiscal();
                 this.repositoryModel = new RepositoryModel();
+                miBussinesConsecutivo = new BussinesConsecutivo();
 
                 this.customerModel = new CustomerModel();
                 //this.DocumentModel = new DocumentEModel();
@@ -83,7 +91,8 @@ namespace FormulariosSistema
                 this.TypeEnviroment = Convert.ToString(AppConfiguracion.ValorSeccion("type_enviroment"));
                 this.IdCaja = Convert.ToInt32(AppConfiguracion.ValorSeccion("id_caja"));
                 RequiereCantidad = Convert.ToBoolean(AppConfiguracion.ValorSeccion("reqCantidad"));
-
+                CodBarrasCantPeso = Convert.ToBoolean(AppConfiguracion.ValorSeccion("cod_barras_cant_peso"));
+                CodeBarBasculaStart = Convert.ToInt32(miBussinesConsecutivo.Consecutivo("codeBarBasculaStart"));
 
                 LoadDatos();
                 /**
@@ -280,149 +289,42 @@ namespace FormulariosSistema
             }
         }
 
+        String[] codeWeight = new String[2];
+
         private void txtProductCode_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar.Equals((char)Keys.Enter))
             {
                 try
                 {
-                    if (CodigoOrString(this.txtProductCode.Text))
+                    if (CodigoOrString(txtProductCode.Text))
                     {
-                        //item = this.repositoryModel.GetItem(this.txtProductCode.Text);
-                        if (this.dgvListItems.Visible)
+                        if (dgvListItems.Visible)
                         {
-                            this.dgvListItems.DataSource = null;
-                            this.dgvListItems.DataSource = this.repositoryModel.Productos(this.txtProductCode.Text);
+                            dgvListItems.DataSource = null;
+                            dgvListItems.DataSource = repositoryModel.Productos(txtProductCode.Text);
                         }
                         else
                         {
-                            this.ValidateDEEdit();
-                            this.LoadItem(this.txtProductCode.Text, 0);
+                            ValidateDEEdit();
+                            // add barcode bread with weight
+                            UseObject.CodeWeight(txtProductCode.Text, codeWeight, CodeBarBasculaStart, CodBarrasCantPeso);
+                            if (!codeWeight[1].Equals("0"))
+                                txtCantidad.Text = codeWeight[1];
+                            LoadItem(codeWeight[0], 0);
                         }
-
-                        /*
-                        if (!item.Code.Equals(""))
-                        {
-                            this.txtProduct.Text = item.Description;
-                            this.txtPrice.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(item.Neto).ToString());
-
-                            if (this.RequiereCantidad)
-                            {
-                                this.txtCantidad.Focus();
-                            }
-                            else
-                            {
-                                if (!String.IsNullOrEmpty(this.txtCantidad.Text))
-                                {
-                                    error.SetError(this.txtCantidad, null);
-                                    this.LoadItemDE();
-                                }
-                                else
-                                {
-                                    error.SetError(this.txtCantidad, "La cantidad no debe ser vacio.");
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            OptionPane.MessageInformation("El código no existe.");
-                        }
-                        */
                     }
                     else
                     {
-                        //this.dgvListItems.Show();
-                        this.dgvListItems.Visible = true;
-                        this.dgvListItems.DataSource = this.repositoryModel.Productos(this.txtProductCode.Text.Split(' '));
-                        
+                        dgvListItems.DataSource = repositoryModel.Productos(txtProductCode.Text.Split(' '));
+                        dgvListItems.Visible = true;
                     }
-
-
-                    /*
-                    item = this.repositoryModel.GetItem(this.txtProductCode.Text);
-
-                    if (!item.Code.Equals(""))
-                    {
-                        this.txtProduct.Text = item.Description;
-                        this.txtPrice.Text = UseObject.InsertSeparatorMil(Convert.ToInt32(item.Neto).ToString());
-
-                        if (this.RequiereCantidad)
-                        {
-                            this.txtCantidad.Focus();
-                        }
-                        else
-                        {
-                            if (!String.IsNullOrEmpty(this.txtCantidad.Text))
-                            {
-                                error.SetError(this.txtCantidad, null);
-                                this.LoadItemDE();
-                            }
-                            else
-                            {
-                                error.SetError(this.txtCantidad, "La cantidad no debe ser vacio.");
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        OptionPane.MessageInformation("El código no existe.");
-                    }
-                    */
-
                 }
                 catch (Exception ex)
                 {
                     OptionPane.MessageError(ex.Message);
                 }
-
-                /*
-                        //item.ID = this.Document.Items.Count + 1;
-                        item.Quantity = Convert.ToDouble(this.txtCantidad.Text.Replace('.', ','));
-                        item.SubTotal = item.UnitPrice * item.Quantity;
-
-                        item.Neto = Math.Round((Convert.ToDouble(item.UnitPrice) * (1 + (item.IVA / 100))), 2)
-                            + item.IC;
-                        item.Total = Math.Round(item.Neto * item.Quantity, 2);
-
-                        if (item.TypeStandar.CodeStandard.Equals(this.DefaultCodeStandard))
-                        {
-                            item.TypeStandar.CodeItem = item.Code;
-                        }
-
-                        if (this.Document.ID.Equals(0))
-                        {
-                            //insert doc
-                            this.DataDocument();
-                            this.Document = this.repositoryModel.AddElectronicDocument(this.Document);
-                            this.txtNoDE.Text = this.Document.Numero;
-                            item.IDDE = this.Document.ID;
-                            item.ID = this.repositoryModel.AddItem(item);
-                            this.Document.Items.Add(item);
-                        }
-                        else
-                        {
-                            item.IDDE = this.Document.ID;
-                            item.ID = this.repositoryModel.AddItem(item);
-                            this.Document.Items.Add(item);
-                        }
-
-                        LoadGridView();
-                        this.txtCantidad.Text = "1";
-                        this.txtProductCode.Focus();
-                        this.txtProductCode.Text = "";
-                        */
             }
-           /* else
-            {
-                try
-                {
-                    this.dgvListItems.Show();
-                    var bProduct = new BussinesLayer.Clases.BussinesProducto();
-                    this.dgvListItems.DataSource = bProduct.Productos(this.txtProductCode.Text.Split(' '));
-                }catch{}
-            }*/
         }
 
         private void txtProductCode_KeyPress_(object sender, KeyPressEventArgs e)
@@ -625,7 +527,7 @@ namespace FormulariosSistema
             try
             {
                 item = this.repositoryModel.GetItem(code);
-                if (!item.Code.Equals(""))
+                if (item != null && !item.Code.Equals(""))
                 {
                     // calculo base del producto
                     

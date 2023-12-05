@@ -22,6 +22,8 @@ namespace Aplicacion.Administracion.Dian
         /// </summary>
         private BussinesDian miBussinesDian;
 
+        private BussinesCaja miBussinesCaja;
+
         private Validacion miValidacion;
 
         /// <summary>
@@ -52,8 +54,11 @@ namespace Aplicacion.Administracion.Dian
             try
             {
                 miBussinesDian = new BussinesDian();
+                miBussinesCaja = new BussinesCaja();
                 miValidacion = new Validacion();
                 miError = new ErrorProvider();
+
+                cbCaja.DataSource = miBussinesCaja.CajasOrder();
 
                 this.txtNumerosRestantes.Text = AppConfiguracion.ValorSeccion("numero_restantes_alert");
                 if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("bloquear_facturacion")))
@@ -107,6 +112,14 @@ namespace Aplicacion.Administracion.Dian
             {
                 try
                 {
+                    CargarDianMemoria();
+                    miBussinesDian.InsetarDian(dian, chbActualizaConsecutivo.Checked);
+                    OptionPane.MessageInformation("El registro se a guardado exitosamente.");
+                    Limpiacampos();
+                    ConsultarRegistroDian();
+                    CargarConfiguracionImpresion();
+
+                    /*
                     if (!Comprobacion)
                     {
                         CargarDianMemoria();
@@ -120,14 +133,6 @@ namespace Aplicacion.Administracion.Dian
                         if (ComprobarDatosDian())
                         {
                             miBussinesDian.InsetarDian(dian, true);
-                            /*if (((Inventario.Producto.Criterio)tsCbDescto.SelectedItem).Id.Equals(1))
-                            {
-                                miBussinesDian.InsetarDian(dian, true);
-                            }
-                            else
-                            {
-                                miBussinesDian.InsetarDian(dian, false);
-                            }*/
                             OptionPane.MessageInformation("El registro se a guardado exitosamente.");
                             Limpiacampos();
                             ConsultarRegistroDian();
@@ -141,6 +146,7 @@ namespace Aplicacion.Administracion.Dian
                             Comprobacion = false;
                         }
                     }
+                    */
                 }
                 catch (Exception ex)
                 {
@@ -339,11 +345,14 @@ namespace Aplicacion.Administracion.Dian
                 dian.FechaExpedicion = FechaSinHora(dtpFechaExpedicion.Value);
                 dian.SerieInicial = txtSerieInicio.Text;
                 dian.RangoInicial = Convert.ToInt64(txtNumeroInicio.Text);
-                dian.SerieFinal = txtSerieFinal.Text;
+                dian.SerieFinal = txtSerieInicio.Text;
                 dian.RangoFinal = Convert.ToInt64(txtNumeroFin.Text);
-                dian.TextoInicial = this.txtTextoInicialSave.Text;
-                dian.TextoFinal = this.txtTextoFinalSave.Text;
-                dian.IdModalidad = Convert.ToInt32(this.cbModalidad.SelectedValue);
+                dian.TextoInicial = txtTextoInicialSave.Text;
+                dian.TextoFinal = txtTextoFinalSave.Text;
+                dian.IdModalidad = Convert.ToInt32(cbModalidad.SelectedValue);
+                dian.VigenciaMes = Convert.ToInt32(numericVigencia.Value);
+                dian.IdCaja = Convert.ToInt32(cbCaja.SelectedValue);
+                dian.Update = chbActualizaNumero.Checked;
             }
             catch
             { }
@@ -493,6 +502,18 @@ namespace Aplicacion.Administracion.Dian
             catch (Exception ex)
             {
                 OptionPane.MessageError(ex.Message);
+            }
+        }
+
+        private void chbActualizaNumero_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chbActualizaNumero.Checked)
+            {
+                chbActualizaConsecutivo.Enabled = true;
+            }
+            else
+            {
+                chbActualizaConsecutivo.Enabled = false;
             }
         }
 

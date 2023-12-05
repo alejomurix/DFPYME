@@ -475,6 +475,55 @@ namespace Utilities
             return nit_;
         }
 
+        public static void CodeWeight(string code, string[] codeWeight, int indexStart, bool codeBar)
+        {
+            codeWeight[0] = code;
+            codeWeight[1] = "0";
+            if (codeBar)
+            {
+                if (Convert.ToInt64(code) < 0 && code.Length.Equals(14))  // negaitvo & longitud = 14
+                {
+                    codeWeight[0] = code.Substring(indexStart, 5);
+                    codeWeight[1] = code.Substring(8, 2) + "." + code.Substring(10, 4);
+                }
+                else if (code.Length.Equals(13) && code[0].Equals('1')) // longitud = 13 & primer caracter es 1
+                {
+                    codeWeight[0] = code.Substring(indexStart, 7);
+                    codeWeight[1] = code.Substring(7, 2) + "." + code.Substring(9, 4);
+                }
+            }
+        }
+
+        static DateTime DateNow = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+        /// DateTime validity : formato 'yyyymmdd';
+        public static string MessageValidateNumbering(int currentNumber, int endNumber, int numberAlert, DateTime validity)
+        {
+            string msnValidateNumber = "Le restan # números de facturación.";
+            string msnValidateDate = "Le restan # días de vigencia de autorización de facturación.";
+            string msnValidateAll = "";
+
+            if ((endNumber - currentNumber) <= numberAlert)
+            {
+                msnValidateNumber = msnValidateNumber.Replace("#", (endNumber - currentNumber).ToString());
+                msnValidateAll = msnValidateNumber;
+            }
+            if ((validity - DateNow).Days <= 2)
+            {
+                //var d = (validity - DateTime.Now).Days;
+                msnValidateDate = msnValidateDate.Replace("#", (validity - DateNow).Days.ToString());
+                if (msnValidateNumber.Contains("#"))
+                {
+                    msnValidateAll = msnValidateDate;
+                }
+                else
+                {
+                    msnValidateAll = msnValidateNumber + "\n" + msnValidateDate;
+                }
+            }
+            return msnValidateAll;
+        }
+
         public static string AjusteDeCaracteres(string data, int tamanio)
         {
             try

@@ -77,14 +77,15 @@ namespace DataAccessLayer.Clases
             //var miDaoFactura = new DaoFacturaVenta();
             try
             {
-                if (contado)
+                /*if (contado)
                 {
                     CargarComandoStoreProsedure(sqlInsertarDian);
                 }
                 else
                 {
                     CargarComandoStoreProsedure(IngresaDianCredito);
-                }
+                }*/
+                CargarComandoStoreProsedure(sqlInsertarDian);
                 miComando.Parameters.AddWithValue("", dian.NumeroResolucion);
                 miComando.Parameters.AddWithValue("", dian.FechaExpedicion);
                 miComando.Parameters.AddWithValue("", dian.RangoInicial);
@@ -94,12 +95,38 @@ namespace DataAccessLayer.Clases
                 miComando.Parameters.AddWithValue("", dian.TextoInicial);
                 miComando.Parameters.AddWithValue("", dian.TextoFinal);
                 miComando.Parameters.AddWithValue("", dian.IdModalidad);
-                miComando.Parameters.AddWithValue("", dian.FechaExpedicion.AddMonths(6));  //  Vigencia 6 meses
-                miComando.Parameters.AddWithValue("", 1);                                  //  Id_caja = 1, codigo quemado.
+                miComando.Parameters.AddWithValue("", dian.FechaExpedicion.AddMonths(dian.VigenciaMes));  //  Vigencia 6 meses
+                miComando.Parameters.AddWithValue("", dian.IdCaja);                         
+                miComando.Parameters.AddWithValue("", dian.VigenciaMes);
                 miConexion.MiConexion.Open();
-                miComando.ExecuteNonQuery();
+                dian.Id = Convert.ToInt32(miComando.ExecuteScalar());
                 miConexion.MiConexion.Close();
                 miComando.Dispose();
+
+                if(dian.Update)
+                {
+                    if (dian.IdCaja.Equals(0))
+                    {
+                        ActualizarConsecutivo("IdRegistroDian", dian.Id.ToString());
+                    }
+                    else
+                    {
+                        UpdateIndexCaja(dian.IdCaja, dian.Id, dian.SerieInicial);
+                    }
+                }
+
+                if (contado) // se cambio por si actualiza consecutive
+                {
+                    if(dian.IdCaja.Equals(0))
+                    {
+                        ActualizarConsecutivo("FacturaPrefijo", dian.SerieInicial);
+                        ActualizarConsecutivo("Factura", dian.RangoInicial.ToString());
+                    }
+                    else
+                    {
+                        UpdateNumberCaja(dian.IdCaja, Convert.ToInt32(dian.RangoInicial));
+                    }
+                }
 
                 //ActualizarConsecutivo("FacturaPrefijo", dian.SerieInicial);
                 
@@ -113,6 +140,47 @@ namespace DataAccessLayer.Clases
             finally { miConexion.MiConexion.Close(); }
         }
 
+        private void UpdateIndexCaja(int idCaja, int idDian, string prefijo)
+        {
+            try
+            {
+                string sql = "update caja set id_dian_act = @idDian, prefijo_numeracion = @prefijo where idcaja = @id;";
+                CargarComandoStore(sql);
+                miComando.Parameters.AddWithValue("id", idCaja);
+                miComando.Parameters.AddWithValue("idDian", idDian);
+                miComando.Parameters.AddWithValue("prefijo", prefijo);
+                miConexion.MiConexion.Open();
+                miComando.ExecuteNonQuery();
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al actualizar el index en caja.\n" + ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
+        private void UpdateNumberCaja(int idCaja, int number)
+        {
+            try
+            {
+                string sql = "update caja set numero_factura = @number where idcaja = @id;";
+                CargarComandoStore(sql);
+                miComando.Parameters.AddWithValue("id", idCaja);
+                miComando.Parameters.AddWithValue("number", number);
+                miConexion.MiConexion.Open();
+                miComando.ExecuteNonQuery();
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al actualizar el index en caja.\n" + ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
         private void ActualizarConsecutivo(string nombre, string numero)
         {
             try
@@ -120,6 +188,25 @@ namespace DataAccessLayer.Clases
                 CargarComandoStoreProsedure("actualizar_consecutivo");
                 miComando.Parameters.AddWithValue("", nombre);
                 miComando.Parameters.AddWithValue("", numero);
+                miConexion.MiConexion.Open();
+                miComando.ExecuteNonQuery();
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al actualizar el consecutivo.\n" + ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
+        private void ActualizarConsecutivo(int idCaja, int consecutive)
+        {
+            try
+            {
+                CargarComandoStoreProsedure("actualizar_consecutivo_caja");
+                miComando.Parameters.AddWithValue("", idCaja);
+                miComando.Parameters.AddWithValue("", consecutive);
                 miConexion.MiConexion.Open();
                 miComando.ExecuteNonQuery();
                 miConexion.MiConexion.Close();
@@ -623,6 +710,16 @@ namespace DataAccessLayer.Clases
                 throw new Exception(ex.Message);
             }
             finally { this.miConexion.MiConexion.Close(); }
+        }
+
+        private void CargarComandoStore(string cmd)
+        {
+            miComando = new NpgsqlCommand
+            {
+                Connection = miConexion.MiConexion,
+                CommandType = CommandType.Text,
+                CommandText = cmd
+            };
         }
 
         /// <summary>

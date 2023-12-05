@@ -2713,7 +2713,10 @@ else
 
                 printTicket.tDetalle = this.miBussinesRemision.PrintProducto(Convert.ToInt32(numero), descto).Tables[0];
 
-                if (cliente != "10" && cliente != "1000")
+                if (cliente != "1000" &&
+                    cliente != "10" &&
+                    cliente != "22222222" &&
+                    cliente != "222222222222")
                 {
                     printTicket.Puntos = true;
                     printTicket.DataPuntos = new double[] { Convert.ToDouble(printTicket.clienteRow["punto"]) };

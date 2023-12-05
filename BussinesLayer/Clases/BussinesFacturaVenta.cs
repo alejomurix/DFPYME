@@ -42,7 +42,8 @@ namespace BussinesLayer.Clases
 
                 TablaResumen();
                 this.RedondearPrecio2 = Convert.ToBoolean(AppConfiguracion.ValorSeccion("redondeo_precio_dos"));
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -104,7 +105,7 @@ namespace BussinesLayer.Clases
                             puntos = UseObject.RetiraDecima(total / punto.ValorPunto);
                             puntos *= Convert.ToInt32(punto.NumeroPuntos);
                             p += puntos;
-                        daoCliente.EditarPuntos(nitCliente, p);
+                            daoCliente.EditarPuntos(nitCliente, p);
                             data[0] = puntos;
                             data[1] = p;
                         }
@@ -269,7 +270,7 @@ namespace BussinesLayer.Clases
         {
             return miDaoFacturaVenta.GetRowsConsultaTodas(fecha, fecha2);
         }
-        
+
         /// <summary>
         /// Obtiene el resultado de la consulta de Factura de Venta por número.
         /// </summary>
@@ -457,7 +458,7 @@ namespace BussinesLayer.Clases
         public DataTable ConsultaPorEstadoClienteIngreso
             (int estado, string cliente, DateTime fecha, int rowBase, int rowMax)
         {
-            return 
+            return
                 miDaoFacturaVenta.ConsultaPorEstadoClienteIngreso(estado, cliente, fecha, rowBase, rowMax);
         }
 
@@ -887,8 +888,8 @@ namespace BussinesLayer.Clases
                 DataTable tProductos = ProductoFacturaVenta(Convert.ToInt32(cRow["id"]), true);
                 subTotal = tProductos.AsEnumerable().Sum(t => (t.Field<double>("ValorUnitario") * t.Field<double>("Cantidad")));
 
-               // v_iva = Convert.ToInt32(tProductos.
-                       // AsEnumerable().Sum(t => (t.Field<double>("Valor_1") / (1 + (UseObject.RemoveCharacter(t.Field<string>("Iva"), '%') / 100)))));
+                // v_iva = Convert.ToInt32(tProductos.
+                // AsEnumerable().Sum(t => (t.Field<double>("Valor_1") / (1 + (UseObject.RemoveCharacter(t.Field<string>("Iva"), '%') / 100)))));
 
                 valorFactura = tProductos.AsEnumerable().Sum(t => t.Field<double>("Valor"));
 
@@ -1013,7 +1014,7 @@ namespace BussinesLayer.Clases
 
             var miDaoCliente = new DaoCliente();
             //var miDaoDevolucion = new DaoDevolucion();
-            
+
             var tClientes = miDaoCliente.ListadoDeClientes();
             foreach (DataRow rCliente in tClientes.Rows)
             {
@@ -1321,15 +1322,15 @@ namespace BussinesLayer.Clases
 
         private DataTable TablaResumen(DataTable tResumen)
         {
-           /* var tabla = new DataTable();
-            tabla.Columns.Add(new DataColumn("Fecha", typeof(DateTime)));
-            tabla.Columns.Add(new DataColumn("Nit", typeof(string)));
-            tabla.Columns.Add(new DataColumn("Cliente", typeof(string)));
-            tabla.Columns.Add(new DataColumn("Factura", typeof(string)));
-            tabla.Columns.Add(new DataColumn("Estado", typeof(string)));
-            tabla.Columns.Add(new DataColumn("Base", typeof(int)));
-            tabla.Columns.Add(new DataColumn("Iva", typeof(int)));
-            tabla.Columns.Add(new DataColumn("Total", typeof(int)));*/
+            /* var tabla = new DataTable();
+             tabla.Columns.Add(new DataColumn("Fecha", typeof(DateTime)));
+             tabla.Columns.Add(new DataColumn("Nit", typeof(string)));
+             tabla.Columns.Add(new DataColumn("Cliente", typeof(string)));
+             tabla.Columns.Add(new DataColumn("Factura", typeof(string)));
+             tabla.Columns.Add(new DataColumn("Estado", typeof(string)));
+             tabla.Columns.Add(new DataColumn("Base", typeof(int)));
+             tabla.Columns.Add(new DataColumn("Iva", typeof(int)));
+             tabla.Columns.Add(new DataColumn("Total", typeof(int)));*/
             this.Tabla.Rows.Clear();
 
             foreach (DataRow rRow in tResumen.Rows)
@@ -1362,7 +1363,7 @@ namespace BussinesLayer.Clases
         }
 
 
-        
+
         // Resumen Tributario de ventas
 
         // 1. 
@@ -1595,7 +1596,7 @@ namespace BussinesLayer.Clases
         {
             return this.miDaoFacturaVenta.ResumenVentas3(fecha, fecha2);
         }
-        
+
         public List<ProductoFacturaProveedor> ResumenVentas3(string nit, DateTime fecha)
         {
             return this.miDaoFacturaVenta.ResumenVentas3(nit, fecha);
@@ -1705,7 +1706,7 @@ namespace BussinesLayer.Clases
                 rw["ValorMenosDescto"] = Math.Round(
                          (Convert.ToDouble(row["Valor"]) -
                          (Convert.ToDouble(row["Valor"]) * Convert.ToDouble(row["Descuento"]) / 100)), 1);
-                
+
                 double vIva = Math.Round(
                     (Convert.ToDouble(rw["ValorMenosDescto"]) * Convert.ToDouble(row["Iva"]) / 100), 1);
                 rw["TotalMasIva"] = Math.Round((Convert.ToDouble(rw["ValorMenosDescto"]) + vIva + Convert.ToInt32(row["impoconsumo"])), 0);
@@ -1777,7 +1778,7 @@ namespace BussinesLayer.Clases
                          (Convert.ToDouble(row["Valor"]) +
                          (Convert.ToDouble(row["Valor"]) * Convert.ToDouble(row["Recargo"]) / 100)), 1);
                 }
-               // v = row_["ValorMenosDescto"].ToString();
+                // v = row_["ValorMenosDescto"].ToString();
 
                 row_["Iva"] = row["Iva"].ToString() + "%";
 
@@ -1792,7 +1793,7 @@ namespace BussinesLayer.Clases
 
 
 
-               // antes row_["TotalMasIva"] = Convert.ToInt32(Convert.ToDouble(row_["ValorMenosDescto"]) + vIva);
+                // antes row_["TotalMasIva"] = Convert.ToInt32(Convert.ToDouble(row_["ValorMenosDescto"]) + vIva);
                 row_["TotalMasIva"] = Math.Round((Convert.ToDouble(row_["ValorMenosDescto"]) + vIva), 2);
 
 
@@ -1806,14 +1807,14 @@ namespace BussinesLayer.Clases
                 /*/row_["TotalMasIva"] = Convert.ToInt32(
                      Convert.ToDouble(row_["ValorMenosDescto"]) +
                     (Convert.ToDouble(row_["ValorMenosDescto"]) * Convert.ToDouble(row["Iva"]) / 100));*/
-               // v = row_["TotalMasIva"].ToString();
+                // v = row_["TotalMasIva"].ToString();
 
 
                 //************
                 row_["Valor"] = //Convert.ToInt32(
                                 Convert.ToInt32(
                                 Convert.ToDouble(row_["TotalMasIva"]) * Convert.ToDouble(row["Cantidad"]));//despues
-               // v = row_["Valor"].ToString();
+                                                                                                           // v = row_["Valor"].ToString();
 
                 row_["Retorno"] = row["retorno"];
                 row_["Valor_"] = row["valor"];
@@ -1840,7 +1841,7 @@ namespace BussinesLayer.Clases
                 row_["Unidad"] = row["Unidad"];
                 row_["IdMedida"] = row["IdMedida"];
                 row_["Medida"] = row["Medida"];
-                row_["IdMarca"] = row["idmarca"]; 
+                row_["IdMarca"] = row["idmarca"];
                 row_["Color"] = color.ImagenBit;
                 row_["IdColor"] = row["IdColor"];
                 row_["Cantidad"] = row["Cantidad"];
@@ -1848,9 +1849,9 @@ namespace BussinesLayer.Clases
 
                 var v_ = row["Codigo"].ToString();
 
-             //   v = row["Valor"].ToString();
+                //   v = row["Valor"].ToString();
 
-              //  var doubleV = Convert.ToDouble(row["Valor"]);
+                //  var doubleV = Convert.ToDouble(row["Valor"]);
 
                 if (descuento)
                 {
@@ -1868,7 +1869,7 @@ namespace BussinesLayer.Clases
                 }
 
                 row_["Ico"] = Convert.ToInt32(row["impoconsumo"]);
-              //   v = row_["ValorMenosDescto"].ToString();
+                //   v = row_["ValorMenosDescto"].ToString();
 
                 row_["ValorReal"] = row["valor_venta_real"];
 
@@ -1882,29 +1883,29 @@ namespace BussinesLayer.Clases
 
 
                 //***
-                
-               /* double vIvaUsoIco = Math.Round((Convert.ToDouble(row["Valor"]) * Convert.ToDouble(row["Iva"]) / 100), 1);
-                int valorMasIco = Convert.ToInt32(Convert.ToDouble(row["Valor"]) + vIvaUsoIco + Convert.ToDouble(row["impoconsumo"]));
-                int valorMenosDescto_ = Convert.ToInt32(valorMasIco - (valorMasIco * Convert.ToDouble(row["Descuento"]) / 100));
-                comentado el 12/03/2019
-                */
+
+                /* double vIvaUsoIco = Math.Round((Convert.ToDouble(row["Valor"]) * Convert.ToDouble(row["Iva"]) / 100), 1);
+                 int valorMasIco = Convert.ToInt32(Convert.ToDouble(row["Valor"]) + vIvaUsoIco + Convert.ToDouble(row["impoconsumo"]));
+                 int valorMenosDescto_ = Convert.ToInt32(valorMasIco - (valorMasIco * Convert.ToDouble(row["Descuento"]) / 100));
+                 comentado el 12/03/2019
+                 */
 
                 //**
 
 
                 // Edición ajuste redondeo de TotalMasIva  16-04-2017
                 //row_["TotalMasIva"] = UseObject.Aproximar(Convert.ToInt32(Convert.ToDouble(row_["ValorMenosDescto"]) + vIva), 
-                                                          //Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio")));
+                //Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio")));
 
                 // Codigo antes del ajuste redondeo de TotalMasIva 16-04-2017
-                 
+
                 //row_["TotalMasIva"] = Convert.ToDouble(row_["ValorMenosDescto"]) + vIva;
 
                 // antes row_["TotalMasIva"] = Convert.ToInt32(Convert.ToDouble(row_["ValorMenosDescto"]) + vIva);
-               /* if (row["Codigo"].ToString() == "1307" || row["Codigo"].ToString() == "1297" || row["Codigo"].ToString() == "1304")
-                {
-                    var impoconsumo_ = Convert.ToInt32(row["impoconsumo"]);
-                }*/
+                /* if (row["Codigo"].ToString() == "1307" || row["Codigo"].ToString() == "1297" || row["Codigo"].ToString() == "1304")
+                 {
+                     var impoconsumo_ = Convert.ToInt32(row["impoconsumo"]);
+                 }*/
                 //var round_ = Math.Round((Convert.ToDouble(row_["ValorMenosDescto"]) + vIva), 0);
                 if (this.RedondearPrecio2)
                 {
@@ -1917,9 +1918,9 @@ namespace BussinesLayer.Clases
                     }
                     else
                     {*/
-                        //row_["TotalMasIva"] = Math.Round((Convert.ToDouble(row_["ValorMenosDescto"]) + vIva), 2);
-                        row_["TotalMasIva"] = UseObject.Aproximar(Convert.ToInt32(Convert.ToDouble(row_["ValorMenosDescto"]) + vIva + Convert.ToInt32(row["impoconsumo"])),
-                            Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio")));
+                    //row_["TotalMasIva"] = Math.Round((Convert.ToDouble(row_["ValorMenosDescto"]) + vIva), 2);
+                    row_["TotalMasIva"] = UseObject.Aproximar(Convert.ToInt32(Convert.ToDouble(row_["ValorMenosDescto"]) + vIva + Convert.ToInt32(row["impoconsumo"])),
+                        Convert.ToBoolean(AppConfiguracion.ValorSeccion("tipo_aprox_precio")));
                     //}
                 }
                 else
@@ -1952,12 +1953,12 @@ namespace BussinesLayer.Clases
 
                 //************
 
-               /* var doubleTotalMasIva = Convert.ToDouble(row_["TotalMasIva"]);
-                var doubleCantidad = Convert.ToDouble(row["Cantidad"]);
-                var t = doubleTotalMasIva * doubleCantidad;
-                Console.WriteLine("{0,20:R}", t);
-                int intT = Convert.ToInt32(t);
-                double intTD = Math.Round(t, 0, MidpointRounding.AwayFromZero);*/
+                /* var doubleTotalMasIva = Convert.ToDouble(row_["TotalMasIva"]);
+                 var doubleCantidad = Convert.ToDouble(row["Cantidad"]);
+                 var t = doubleTotalMasIva * doubleCantidad;
+                 Console.WriteLine("{0,20:R}", t);
+                 int intT = Convert.ToInt32(t);
+                 double intTD = Math.Round(t, 0, MidpointRounding.AwayFromZero);*/
                 //int intParse = int.Parse(t.ToString());
 
                 // valor sin impoconsumo
@@ -2169,10 +2170,10 @@ namespace BussinesLayer.Clases
             return miDaoFacturaVenta.TotalFacturasCredito(idEstado, idCaja, fecha, caja);
         }
 
-       /* public DataSet TotalFacturasCredito(int idEstado, int idCaja, DateTime fecha, DateTime fecha2, bool caja)
-        {
-            return miDaoFacturaVenta.TotalFacturasCredito(idEstado, idCaja, fecha, fecha2, caja);
-        }*/
+        /* public DataSet TotalFacturasCredito(int idEstado, int idCaja, DateTime fecha, DateTime fecha2, bool caja)
+         {
+             return miDaoFacturaVenta.TotalFacturasCredito(idEstado, idCaja, fecha, fecha2, caja);
+         }*/
 
 
         public DataTable TotalFacturasCredito(int idEstado, int idCaja, DateTime fecha, DateTime fecha2)
@@ -2312,13 +2313,13 @@ namespace BussinesLayer.Clases
                             PorcentajeIva = data.PorcentajeIva,
                         }
                             into grupo
-                            orderby grupo.Key.PorcentajeIva ascending
-                            select new
-                            {
-                                PorcentajeIva = grupo.Key.PorcentajeIva,
-                                Total = grupo.Sum(s => s.Total),
-                                TotalSinIco = grupo.Sum(s => s.TotalSinIco)
-                            };
+                        orderby grupo.Key.PorcentajeIva ascending
+                        select new
+                        {
+                            PorcentajeIva = grupo.Key.PorcentajeIva,
+                            Total = grupo.Sum(s => s.Total),
+                            TotalSinIco = grupo.Sum(s => s.TotalSinIco)
+                        };
             List<Iva> ivaFacturado = new List<Iva>();
             foreach (var iva_ in query)
             {
@@ -2421,7 +2422,7 @@ namespace BussinesLayer.Clases
         /// 
         public List<Impuesto> TotalesImpuesto(int idCaja, DateTime fecha, DateTime fecha2)
         {
-            return miDaoFacturaVenta.TotalesImpuesto(idCaja, fecha,fecha2);
+            return miDaoFacturaVenta.TotalesImpuesto(idCaja, fecha, fecha2);
         }
 
         // Fin Funciones actualización, nuevo calculo de impuestos                  ***
@@ -2450,15 +2451,15 @@ namespace BussinesLayer.Clases
         //  Fin funciones de actualización 12/07/2018, Mejora al calculo de Iva.
 
 
-        public DataTable  ResumenDeUtilidad(DateTime fecha, DateTime fecha2)
+        public DataTable ResumenDeUtilidad(DateTime fecha, DateTime fecha2)
         {
             return null;
         }
 
-       /* public DataTable TotalIvaFacturado(int idCaja, DateTime fecha, bool caja, string no)
-        {
+        /* public DataTable TotalIvaFacturado(int idCaja, DateTime fecha, bool caja, string no)
+         {
 
-        }*/
+         }*/
 
         public long SaldoDeCliente(string cliente)
         {
@@ -2482,7 +2483,7 @@ namespace BussinesLayer.Clases
         }
 
         // Funciones de actualización 23/05/2018
-        
+
         public List<IvaAnulado> VentasAnuladas(int idCaja, DateTime fecha)
         {
             return this.miDaoFacturaVenta.VentasAnuladas(idCaja, fecha);
@@ -2541,7 +2542,7 @@ namespace BussinesLayer.Clases
             }
             return tabla;
         }
-        
+
         // Fin funciones de actualización 23/05/2018
 
         public string IngresarPagoGeneral(string cliente, FormaPago pago, Ingreso ingreso)
@@ -2772,7 +2773,7 @@ namespace BussinesLayer.Clases
             this.miDaoFacturaVenta.VistaFaltante();
         }
 
-         // codigo para verificar
+        // codigo para verificar
         public DataTable PagosDeFactura(int idEstado, DateTime fecha, DateTime fecha2)
         {
             return this.miDaoFacturaVenta.PagosDeFactura(idEstado, fecha, fecha2);
@@ -2967,7 +2968,7 @@ namespace BussinesLayer.Clases
                         pRow["id_factura"] = fPagos["id_factura"];
                         tPagos.Rows.Add(pRow);
                     }
-                   // var tFormasPagos = miDaoPago.FormasDePagoDeFacturaVentaId(f.Id);
+                    // var tFormasPagos = miDaoPago.FormasDePagoDeFacturaVentaId(f.Id);
                 }
                 return tPagos;
             }

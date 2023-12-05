@@ -30,24 +30,30 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDian));
             this.gbxResolicion = new System.Windows.Forms.GroupBox();
+            this.chbActualizaNumero = new System.Windows.Forms.CheckBox();
+            this.chbActualizaConsecutivo = new System.Windows.Forms.CheckBox();
+            this.txtSerieFinal = new System.Windows.Forms.TextBox();
+            this.txtTextoInicialSave = new System.Windows.Forms.TextBox();
+            this.txtTextoFinalSave = new System.Windows.Forms.TextBox();
+            this.numericVigencia = new System.Windows.Forms.NumericUpDown();
+            this.cbCaja = new System.Windows.Forms.ComboBox();
+            this.txtNumeroFin = new System.Windows.Forms.TextBox();
+            this.txtNumeroInicio = new System.Windows.Forms.TextBox();
             this.cbModalidad = new System.Windows.Forms.ComboBox();
+            this.lblNumeroInicio = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblNumeroFin = new System.Windows.Forms.Label();
+            this.txtSerieInicio = new System.Windows.Forms.TextBox();
             this.dtpFechaExpedicion = new System.Windows.Forms.DateTimePicker();
+            this.lblSerieInicio = new System.Windows.Forms.Label();
             this.txtNumeroResolucion = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.lblfecha = new System.Windows.Forms.Label();
             this.lblNumeroResolucion = new System.Windows.Forms.Label();
-            this.txtTextoInicialSave = new System.Windows.Forms.TextBox();
-            this.txtTextoFinalSave = new System.Windows.Forms.TextBox();
-            this.lblSerieInicio = new System.Windows.Forms.Label();
-            this.lblNumeroInicio = new System.Windows.Forms.Label();
-            this.lblSerieFin = new System.Windows.Forms.Label();
-            this.lblNumeroFin = new System.Windows.Forms.Label();
-            this.txtSerieInicio = new System.Windows.Forms.TextBox();
-            this.gbxdesde = new System.Windows.Forms.GroupBox();
-            this.txtNumeroInicio = new System.Windows.Forms.TextBox();
-            this.gbxhasta = new System.Windows.Forms.GroupBox();
-            this.txtNumeroFin = new System.Windows.Forms.TextBox();
-            this.txtSerieFinal = new System.Windows.Forms.TextBox();
             this.tcConsultar = new System.Windows.Forms.TabControl();
             this.tpInsertarResolucion = new System.Windows.Forms.TabPage();
             this.tsMenu = new System.Windows.Forms.ToolStrip();
@@ -80,8 +86,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsBtnGuardarConfImpresion = new System.Windows.Forms.ToolStripButton();
             this.gbxResolicion.SuspendLayout();
-            this.gbxdesde.SuspendLayout();
-            this.gbxhasta.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericVigencia)).BeginInit();
             this.tcConsultar.SuspendLayout();
             this.tpInsertarResolucion.SuspendLayout();
             this.tsMenu.SuspendLayout();
@@ -96,77 +101,72 @@
             // 
             // gbxResolicion
             // 
+            this.gbxResolicion.Controls.Add(this.chbActualizaNumero);
+            this.gbxResolicion.Controls.Add(this.chbActualizaConsecutivo);
+            this.gbxResolicion.Controls.Add(this.txtSerieFinal);
+            this.gbxResolicion.Controls.Add(this.txtTextoInicialSave);
+            this.gbxResolicion.Controls.Add(this.txtTextoFinalSave);
+            this.gbxResolicion.Controls.Add(this.numericVigencia);
+            this.gbxResolicion.Controls.Add(this.cbCaja);
+            this.gbxResolicion.Controls.Add(this.txtNumeroFin);
+            this.gbxResolicion.Controls.Add(this.txtNumeroInicio);
             this.gbxResolicion.Controls.Add(this.cbModalidad);
+            this.gbxResolicion.Controls.Add(this.lblNumeroInicio);
+            this.gbxResolicion.Controls.Add(this.label5);
+            this.gbxResolicion.Controls.Add(this.label9);
+            this.gbxResolicion.Controls.Add(this.label8);
+            this.gbxResolicion.Controls.Add(this.label7);
+            this.gbxResolicion.Controls.Add(this.label6);
+            this.gbxResolicion.Controls.Add(this.lblNumeroFin);
+            this.gbxResolicion.Controls.Add(this.txtSerieInicio);
             this.gbxResolicion.Controls.Add(this.dtpFechaExpedicion);
+            this.gbxResolicion.Controls.Add(this.lblSerieInicio);
             this.gbxResolicion.Controls.Add(this.txtNumeroResolucion);
             this.gbxResolicion.Controls.Add(this.label4);
             this.gbxResolicion.Controls.Add(this.lblfecha);
             this.gbxResolicion.Controls.Add(this.lblNumeroResolucion);
-            this.gbxResolicion.Location = new System.Drawing.Point(6, 41);
+            this.gbxResolicion.Location = new System.Drawing.Point(11, 34);
             this.gbxResolicion.Name = "gbxResolicion";
-            this.gbxResolicion.Size = new System.Drawing.Size(675, 62);
+            this.gbxResolicion.Size = new System.Drawing.Size(685, 173);
             this.gbxResolicion.TabIndex = 1;
             this.gbxResolicion.TabStop = false;
-            this.gbxResolicion.Text = "Resolución";
             // 
-            // cbModalidad
+            // chbActualizaNumero
             // 
-            this.cbModalidad.DisplayMember = "Nombre";
-            this.cbModalidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbModalidad.FormattingEnabled = true;
-            this.cbModalidad.Location = new System.Drawing.Point(538, 22);
-            this.cbModalidad.Name = "cbModalidad";
-            this.cbModalidad.Size = new System.Drawing.Size(121, 24);
-            this.cbModalidad.TabIndex = 4;
-            this.cbModalidad.ValueMember = "Id";
+            this.chbActualizaNumero.AutoSize = true;
+            this.chbActualizaNumero.Checked = true;
+            this.chbActualizaNumero.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chbActualizaNumero.Location = new System.Drawing.Point(16, 106);
+            this.chbActualizaNumero.Name = "chbActualizaNumero";
+            this.chbActualizaNumero.Size = new System.Drawing.Size(226, 20);
+            this.chbActualizaNumero.TabIndex = 7;
+            this.chbActualizaNumero.Text = "Actualizar número de autorización";
+            this.chbActualizaNumero.UseVisualStyleBackColor = true;
+            this.chbActualizaNumero.CheckedChanged += new System.EventHandler(this.chbActualizaNumero_CheckedChanged);
             // 
-            // dtpFechaExpedicion
+            // chbActualizaConsecutivo
             // 
-            this.dtpFechaExpedicion.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaExpedicion.Location = new System.Drawing.Point(305, 23);
-            this.dtpFechaExpedicion.Name = "dtpFechaExpedicion";
-            this.dtpFechaExpedicion.Size = new System.Drawing.Size(136, 22);
-            this.dtpFechaExpedicion.TabIndex = 1;
+            this.chbActualizaConsecutivo.AutoSize = true;
+            this.chbActualizaConsecutivo.Location = new System.Drawing.Point(16, 136);
+            this.chbActualizaConsecutivo.Name = "chbActualizaConsecutivo";
+            this.chbActualizaConsecutivo.Size = new System.Drawing.Size(251, 20);
+            this.chbActualizaConsecutivo.TabIndex = 8;
+            this.chbActualizaConsecutivo.Text = "Actualizar consecutivo de numeración";
+            this.chbActualizaConsecutivo.UseVisualStyleBackColor = true;
             // 
-            // txtNumeroResolucion
+            // txtSerieFinal
             // 
-            this.txtNumeroResolucion.Location = new System.Drawing.Point(69, 23);
-            this.txtNumeroResolucion.MaxLength = 50;
-            this.txtNumeroResolucion.Name = "txtNumeroResolucion";
-            this.txtNumeroResolucion.Size = new System.Drawing.Size(169, 22);
-            this.txtNumeroResolucion.TabIndex = 0;
-            this.txtNumeroResolucion.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumeroResolucion_Validating);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(457, 27);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 16);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Modalidad";
-            // 
-            // lblfecha
-            // 
-            this.lblfecha.AutoSize = true;
-            this.lblfecha.Location = new System.Drawing.Point(247, 26);
-            this.lblfecha.Name = "lblfecha";
-            this.lblfecha.Size = new System.Drawing.Size(46, 16);
-            this.lblfecha.TabIndex = 3;
-            this.lblfecha.Text = "Fecha";
-            // 
-            // lblNumeroResolucion
-            // 
-            this.lblNumeroResolucion.AutoSize = true;
-            this.lblNumeroResolucion.Location = new System.Drawing.Point(13, 26);
-            this.lblNumeroResolucion.Name = "lblNumeroResolucion";
-            this.lblNumeroResolucion.Size = new System.Drawing.Size(56, 16);
-            this.lblNumeroResolucion.TabIndex = 2;
-            this.lblNumeroResolucion.Text = "Número";
+            this.txtSerieFinal.Location = new System.Drawing.Point(472, 68);
+            this.txtSerieFinal.MaxLength = 50;
+            this.txtSerieFinal.Name = "txtSerieFinal";
+            this.txtSerieFinal.Size = new System.Drawing.Size(10, 22);
+            this.txtSerieFinal.TabIndex = 0;
+            this.txtSerieFinal.Visible = false;
+            this.txtSerieFinal.Validating += new System.ComponentModel.CancelEventHandler(this.txtSerieFinal_Validating);
             // 
             // txtTextoInicialSave
             // 
-            this.txtTextoInicialSave.Location = new System.Drawing.Point(656, 24);
+            this.txtTextoInicialSave.Location = new System.Drawing.Point(464, 68);
             this.txtTextoInicialSave.MaxLength = 50;
             this.txtTextoInicialSave.Name = "txtTextoInicialSave";
             this.txtTextoInicialSave.Size = new System.Drawing.Size(10, 22);
@@ -177,7 +177,7 @@
             // 
             // txtTextoFinalSave
             // 
-            this.txtTextoFinalSave.Location = new System.Drawing.Point(656, 24);
+            this.txtTextoFinalSave.Location = new System.Drawing.Point(452, 68);
             this.txtTextoFinalSave.MaxLength = 50;
             this.txtTextoFinalSave.Name = "txtTextoFinalSave";
             this.txtTextoFinalSave.Size = new System.Drawing.Size(13, 22);
@@ -186,105 +186,187 @@
             this.txtTextoFinalSave.Visible = false;
             this.txtTextoFinalSave.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumeroInicio_Validating);
             // 
-            // lblSerieInicio
+            // numericVigencia
             // 
-            this.lblSerieInicio.AutoSize = true;
-            this.lblSerieInicio.Location = new System.Drawing.Point(13, 27);
-            this.lblSerieInicio.Name = "lblSerieInicio";
-            this.lblSerieInicio.Size = new System.Drawing.Size(40, 16);
-            this.lblSerieInicio.TabIndex = 2;
-            this.lblSerieInicio.Text = "Serie";
+            this.numericVigencia.Location = new System.Drawing.Point(487, 28);
+            this.numericVigencia.Name = "numericVigencia";
+            this.numericVigencia.Size = new System.Drawing.Size(40, 22);
+            this.numericVigencia.TabIndex = 2;
+            this.numericVigencia.Value = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            // 
+            // cbCaja
+            // 
+            this.cbCaja.DisplayMember = "numerocaja";
+            this.cbCaja.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCaja.FormattingEnabled = true;
+            this.cbCaja.Location = new System.Drawing.Point(602, 27);
+            this.cbCaja.Name = "cbCaja";
+            this.cbCaja.Size = new System.Drawing.Size(65, 24);
+            this.cbCaja.TabIndex = 3;
+            this.cbCaja.ValueMember = "idcaja";
+            // 
+            // txtNumeroFin
+            // 
+            this.txtNumeroFin.Location = new System.Drawing.Point(533, 68);
+            this.txtNumeroFin.MaxLength = 50;
+            this.txtNumeroFin.Name = "txtNumeroFin";
+            this.txtNumeroFin.Size = new System.Drawing.Size(134, 22);
+            this.txtNumeroFin.TabIndex = 6;
+            this.txtNumeroFin.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumeroFin_Validating);
+            // 
+            // txtNumeroInicio
+            // 
+            this.txtNumeroInicio.Location = new System.Drawing.Point(291, 68);
+            this.txtNumeroInicio.MaxLength = 50;
+            this.txtNumeroInicio.Name = "txtNumeroInicio";
+            this.txtNumeroInicio.Size = new System.Drawing.Size(136, 22);
+            this.txtNumeroInicio.TabIndex = 5;
+            this.txtNumeroInicio.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumeroInicio_Validating);
+            // 
+            // cbModalidad
+            // 
+            this.cbModalidad.DisplayMember = "Nombre";
+            this.cbModalidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbModalidad.FormattingEnabled = true;
+            this.cbModalidad.Location = new System.Drawing.Point(444, 66);
+            this.cbModalidad.Name = "cbModalidad";
+            this.cbModalidad.Size = new System.Drawing.Size(13, 24);
+            this.cbModalidad.TabIndex = 4;
+            this.cbModalidad.ValueMember = "Id";
+            this.cbModalidad.Visible = false;
             // 
             // lblNumeroInicio
             // 
             this.lblNumeroInicio.AutoSize = true;
-            this.lblNumeroInicio.Location = new System.Drawing.Point(175, 27);
+            this.lblNumeroInicio.Location = new System.Drawing.Point(240, 71);
             this.lblNumeroInicio.Name = "lblNumeroInicio";
-            this.lblNumeroInicio.Size = new System.Drawing.Size(56, 16);
+            this.lblNumeroInicio.Size = new System.Drawing.Size(48, 16);
             this.lblNumeroInicio.TabIndex = 3;
-            this.lblNumeroInicio.Text = "Numero";
+            this.lblNumeroInicio.Text = "Desde";
             // 
-            // lblSerieFin
+            // label5
             // 
-            this.lblSerieFin.AutoSize = true;
-            this.lblSerieFin.Location = new System.Drawing.Point(13, 27);
-            this.lblSerieFin.Name = "lblSerieFin";
-            this.lblSerieFin.Size = new System.Drawing.Size(40, 16);
-            this.lblSerieFin.TabIndex = 2;
-            this.lblSerieFin.Text = "Serie";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(424, 31);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(60, 16);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Vigencia";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.Red;
+            this.label9.Location = new System.Drawing.Point(266, 141);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(12, 16);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "*";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.ForeColor = System.Drawing.Color.Red;
+            this.label8.Location = new System.Drawing.Point(239, 110);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(12, 16);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "*";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.Red;
+            this.label7.Location = new System.Drawing.Point(428, 71);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(12, 16);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "*";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.Red;
+            this.label6.Location = new System.Drawing.Point(227, 31);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(12, 16);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "*";
             // 
             // lblNumeroFin
             // 
             this.lblNumeroFin.AutoSize = true;
-            this.lblNumeroFin.Location = new System.Drawing.Point(175, 27);
+            this.lblNumeroFin.Location = new System.Drawing.Point(484, 71);
             this.lblNumeroFin.Name = "lblNumeroFin";
-            this.lblNumeroFin.Size = new System.Drawing.Size(56, 16);
+            this.lblNumeroFin.Size = new System.Drawing.Size(43, 16);
             this.lblNumeroFin.TabIndex = 3;
-            this.lblNumeroFin.Text = "Numero";
+            this.lblNumeroFin.Text = "Hasta";
             // 
             // txtSerieInicio
             // 
-            this.txtSerieInicio.Location = new System.Drawing.Point(59, 24);
+            this.txtSerieInicio.Location = new System.Drawing.Point(69, 68);
             this.txtSerieInicio.MaxLength = 50;
             this.txtSerieInicio.Name = "txtSerieInicio";
-            this.txtSerieInicio.Size = new System.Drawing.Size(94, 22);
-            this.txtSerieInicio.TabIndex = 0;
+            this.txtSerieInicio.Size = new System.Drawing.Size(157, 22);
+            this.txtSerieInicio.TabIndex = 4;
             this.txtSerieInicio.Validating += new System.ComponentModel.CancelEventHandler(this.txtSerieInicio_Validating);
             // 
-            // gbxdesde
+            // dtpFechaExpedicion
             // 
-            this.gbxdesde.Controls.Add(this.txtNumeroInicio);
-            this.gbxdesde.Controls.Add(this.txtSerieInicio);
-            this.gbxdesde.Controls.Add(this.txtTextoFinalSave);
-            this.gbxdesde.Controls.Add(this.lblSerieInicio);
-            this.gbxdesde.Controls.Add(this.lblNumeroInicio);
-            this.gbxdesde.Location = new System.Drawing.Point(6, 109);
-            this.gbxdesde.Name = "gbxdesde";
-            this.gbxdesde.Size = new System.Drawing.Size(675, 60);
-            this.gbxdesde.TabIndex = 2;
-            this.gbxdesde.TabStop = false;
-            this.gbxdesde.Text = "Desde";
+            this.dtpFechaExpedicion.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaExpedicion.Location = new System.Drawing.Point(291, 28);
+            this.dtpFechaExpedicion.Name = "dtpFechaExpedicion";
+            this.dtpFechaExpedicion.Size = new System.Drawing.Size(107, 22);
+            this.dtpFechaExpedicion.TabIndex = 1;
             // 
-            // txtNumeroInicio
+            // lblSerieInicio
             // 
-            this.txtNumeroInicio.Location = new System.Drawing.Point(237, 24);
-            this.txtNumeroInicio.MaxLength = 50;
-            this.txtNumeroInicio.Name = "txtNumeroInicio";
-            this.txtNumeroInicio.Size = new System.Drawing.Size(410, 22);
-            this.txtNumeroInicio.TabIndex = 1;
-            this.txtNumeroInicio.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumeroInicio_Validating);
+            this.lblSerieInicio.AutoSize = true;
+            this.lblSerieInicio.Location = new System.Drawing.Point(14, 71);
+            this.lblSerieInicio.Name = "lblSerieInicio";
+            this.lblSerieInicio.Size = new System.Drawing.Size(45, 16);
+            this.lblSerieInicio.TabIndex = 2;
+            this.lblSerieInicio.Text = "Prefijo";
             // 
-            // gbxhasta
+            // txtNumeroResolucion
             // 
-            this.gbxhasta.Controls.Add(this.txtNumeroFin);
-            this.gbxhasta.Controls.Add(this.txtTextoInicialSave);
-            this.gbxhasta.Controls.Add(this.txtSerieFinal);
-            this.gbxhasta.Controls.Add(this.lblSerieFin);
-            this.gbxhasta.Controls.Add(this.lblNumeroFin);
-            this.gbxhasta.Location = new System.Drawing.Point(6, 175);
-            this.gbxhasta.Name = "gbxhasta";
-            this.gbxhasta.Size = new System.Drawing.Size(675, 60);
-            this.gbxhasta.TabIndex = 3;
-            this.gbxhasta.TabStop = false;
-            this.gbxhasta.Text = "Hasta";
+            this.txtNumeroResolucion.Location = new System.Drawing.Point(69, 28);
+            this.txtNumeroResolucion.MaxLength = 50;
+            this.txtNumeroResolucion.Name = "txtNumeroResolucion";
+            this.txtNumeroResolucion.Size = new System.Drawing.Size(157, 22);
+            this.txtNumeroResolucion.TabIndex = 0;
+            this.txtNumeroResolucion.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumeroResolucion_Validating);
             // 
-            // txtNumeroFin
+            // label4
             // 
-            this.txtNumeroFin.Location = new System.Drawing.Point(237, 24);
-            this.txtNumeroFin.MaxLength = 50;
-            this.txtNumeroFin.Name = "txtNumeroFin";
-            this.txtNumeroFin.Size = new System.Drawing.Size(410, 22);
-            this.txtNumeroFin.TabIndex = 1;
-            this.txtNumeroFin.Validating += new System.ComponentModel.CancelEventHandler(this.txtNumeroFin_Validating);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(540, 31);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 16);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "No. Caja";
             // 
-            // txtSerieFinal
+            // lblfecha
             // 
-            this.txtSerieFinal.Location = new System.Drawing.Point(59, 24);
-            this.txtSerieFinal.MaxLength = 50;
-            this.txtSerieFinal.Name = "txtSerieFinal";
-            this.txtSerieFinal.Size = new System.Drawing.Size(94, 22);
-            this.txtSerieFinal.TabIndex = 0;
-            this.txtSerieFinal.Validating += new System.ComponentModel.CancelEventHandler(this.txtSerieFinal_Validating);
+            this.lblfecha.AutoSize = true;
+            this.lblfecha.Location = new System.Drawing.Point(242, 31);
+            this.lblfecha.Name = "lblfecha";
+            this.lblfecha.Size = new System.Drawing.Size(45, 16);
+            this.lblfecha.TabIndex = 3;
+            this.lblfecha.Text = "Fecha";
+            // 
+            // lblNumeroResolucion
+            // 
+            this.lblNumeroResolucion.AutoSize = true;
+            this.lblNumeroResolucion.Location = new System.Drawing.Point(13, 31);
+            this.lblNumeroResolucion.Name = "lblNumeroResolucion";
+            this.lblNumeroResolucion.Size = new System.Drawing.Size(55, 16);
+            this.lblNumeroResolucion.TabIndex = 2;
+            this.lblNumeroResolucion.Text = "Número";
             // 
             // tcConsultar
             // 
@@ -294,19 +376,17 @@
             this.tcConsultar.Location = new System.Drawing.Point(0, 1);
             this.tcConsultar.Name = "tcConsultar";
             this.tcConsultar.SelectedIndex = 0;
-            this.tcConsultar.Size = new System.Drawing.Size(698, 275);
+            this.tcConsultar.Size = new System.Drawing.Size(727, 283);
             this.tcConsultar.TabIndex = 0;
             // 
             // tpInsertarResolucion
             // 
             this.tpInsertarResolucion.Controls.Add(this.tsMenu);
-            this.tpInsertarResolucion.Controls.Add(this.gbxhasta);
             this.tpInsertarResolucion.Controls.Add(this.gbxResolicion);
-            this.tpInsertarResolucion.Controls.Add(this.gbxdesde);
             this.tpInsertarResolucion.Location = new System.Drawing.Point(4, 25);
             this.tpInsertarResolucion.Name = "tpInsertarResolucion";
             this.tpInsertarResolucion.Padding = new System.Windows.Forms.Padding(3);
-            this.tpInsertarResolucion.Size = new System.Drawing.Size(690, 246);
+            this.tpInsertarResolucion.Size = new System.Drawing.Size(719, 254);
             this.tpInsertarResolucion.TabIndex = 0;
             this.tpInsertarResolucion.Text = "Configuración Dian";
             this.tpInsertarResolucion.UseVisualStyleBackColor = true;
@@ -319,7 +399,7 @@
             this.tsbtnSalir});
             this.tsMenu.Location = new System.Drawing.Point(3, 3);
             this.tsMenu.Name = "tsMenu";
-            this.tsMenu.Size = new System.Drawing.Size(684, 25);
+            this.tsMenu.Size = new System.Drawing.Size(713, 25);
             this.tsMenu.TabIndex = 0;
             this.tsMenu.Text = "Menu";
             // 
@@ -359,7 +439,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(690, 246);
+            this.tabPage2.Size = new System.Drawing.Size(719, 254);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Consultar";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -380,7 +460,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(71, 188);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(269, 16);
+            this.label3.Size = new System.Drawing.Size(268, 16);
             this.label3.TabIndex = 2;
             this.label3.Text = "Cantidad de números restantes para alertar.";
             // 
@@ -389,10 +469,10 @@
             this.chkBloquearFacturacion.AutoSize = true;
             this.chkBloquearFacturacion.Location = new System.Drawing.Point(13, 216);
             this.chkBloquearFacturacion.Name = "chkBloquearFacturacion";
-            this.chkBloquearFacturacion.Size = new System.Drawing.Size(530, 20);
+            this.chkBloquearFacturacion.Size = new System.Drawing.Size(529, 20);
             this.chkBloquearFacturacion.TabIndex = 1;
             this.chkBloquearFacturacion.Text = "Bloquear facturación si no hay registros siguientes y una vez se agote la numerac" +
-                "ión.";
+    "ión.";
             this.chkBloquearFacturacion.UseVisualStyleBackColor = true;
             this.chkBloquearFacturacion.Visible = false;
             // 
@@ -466,7 +546,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(690, 246);
+            this.tabPage1.Size = new System.Drawing.Size(719, 254);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Configuración de impresión";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -542,7 +622,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 19);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 16);
+            this.label2.Size = new System.Drawing.Size(78, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "Texto incial:";
             // 
@@ -559,7 +639,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(323, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 16);
+            this.label1.Size = new System.Drawing.Size(71, 16);
             this.label1.TabIndex = 1;
             this.label1.Text = "Texto final:";
             // 
@@ -577,7 +657,7 @@
             this.tsBtnGuardarConfImpresion});
             this.toolStrip1.Location = new System.Drawing.Point(3, 3);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(684, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(713, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "Menu";
             // 
@@ -594,7 +674,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(698, 275);
+            this.ClientSize = new System.Drawing.Size(729, 284);
             this.Controls.Add(this.tcConsultar);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -604,15 +684,12 @@
             this.MinimizeBox = false;
             this.Name = "frmDian";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Dian";
+            this.Text = "Numeración de Facturación";
             this.Load += new System.EventHandler(this.frmDian_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmDian_KeyDown);
             this.gbxResolicion.ResumeLayout(false);
             this.gbxResolicion.PerformLayout();
-            this.gbxdesde.ResumeLayout(false);
-            this.gbxdesde.PerformLayout();
-            this.gbxhasta.ResumeLayout(false);
-            this.gbxhasta.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericVigencia)).EndInit();
             this.tcConsultar.ResumeLayout(false);
             this.tpInsertarResolucion.ResumeLayout(false);
             this.tpInsertarResolucion.PerformLayout();
@@ -644,12 +721,9 @@
         private System.Windows.Forms.Label lblNumeroResolucion;
         private System.Windows.Forms.Label lblSerieInicio;
         private System.Windows.Forms.Label lblNumeroInicio;
-        private System.Windows.Forms.Label lblSerieFin;
         private System.Windows.Forms.Label lblNumeroFin;
         private System.Windows.Forms.TextBox txtSerieInicio;
-        private System.Windows.Forms.GroupBox gbxdesde;
         private System.Windows.Forms.TextBox txtNumeroInicio;
-        private System.Windows.Forms.GroupBox gbxhasta;
         private System.Windows.Forms.TextBox txtNumeroFin;
         private System.Windows.Forms.TextBox txtSerieFinal;
         private System.Windows.Forms.TabControl tcConsultar;
@@ -687,5 +761,14 @@
         private System.Windows.Forms.Button btnGuardarConfigDian;
         private System.Windows.Forms.ComboBox cbModalidad;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cbCaja;
+        private System.Windows.Forms.NumericUpDown numericVigencia;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chbActualizaConsecutivo;
+        private System.Windows.Forms.CheckBox chbActualizaNumero;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
     }
 }

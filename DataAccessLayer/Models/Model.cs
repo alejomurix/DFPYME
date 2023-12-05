@@ -386,6 +386,7 @@ namespace DataAccessLayer.Models
 
         public Item()
         {
+            this.Code = "";
             this.TypeStandar = new TypeStandar();
             this.Taxes = new List<Tax>();
         }

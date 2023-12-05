@@ -64,6 +64,9 @@ namespace DataAccessLayer.Clases
 
         public void ActualizarNumeroFacturaDeVenta(string nameRegDian, string namePrefijo, string nameFactura)
         {
+            ActualizarConsecutivo(nameFactura, UseObject.SoloNumberIncrement(Consecutivo(nameFactura)));
+
+            /*
             int idDian = Convert.ToInt32(Consecutivo(nameRegDian));
             var dian = this.miDaoDian.ConsultaDian(idDian);
             var numero = UseObject.SoloNumberIncrement(this.Consecutivo(nameFactura));
@@ -104,16 +107,8 @@ namespace DataAccessLayer.Clases
                     //Realizar pruebas
                     this.ActualizarConsecutivo(nameFactura, numero);
                 }
-
-
-              /*  while (dian.Id == idDian || dian.Id != 0)
-                {
-                    idDian++;
-                    dian = this.miDaoDian.ConsultaDian(idDian);
-                }*/
-                
-
             }
+            */
         }
 
         public void ActualizarConsecutivo(string nombre, string numero)

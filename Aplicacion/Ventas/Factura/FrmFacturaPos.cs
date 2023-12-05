@@ -121,6 +121,8 @@ namespace Aplicacion.Ventas.Factura
         /// </summary>
         private FacturaVenta miFactura;
 
+        private Dian Numeracion { set; get; }
+
         public bool Edicion { set; get; }
 
         public FacturaVenta Factura { set; get; }
@@ -373,6 +375,8 @@ namespace Aplicacion.Ventas.Factura
 
         Punto punto;
 
+        int cantidadNumeracion;
+
         public FrmFacturaPos()
         {
             InitializeComponent();
@@ -441,6 +445,7 @@ namespace Aplicacion.Ventas.Factura
                 txtValorUnitario.Visible = Convert.ToBoolean(AppConfiguracion.ValorSeccion("txt_valor_unitario"));
                 NameStation = AppConfiguracion.ValorSeccion("station_name");
                 ConsecutivoCaja = Convert.ToBoolean(AppConfiguracion.ValorSeccion("consecutivo_caja"));
+                cantidadNumeracion = Convert.ToInt32(AppConfiguracion.ValorSeccion("numero_restantes_alert"));
 
                 Electronic = SectionBoolValue("electronic_invoice");
 
@@ -1708,7 +1713,7 @@ namespace Aplicacion.Ventas.Factura
                 {
                     if (CodigoOrString())
                     {
-                        CodeWeight(txtCodigoArticulo.Text, codeWeight, CodeBarBasculaStart, CodBarrasCantPeso);
+                        UseObject.CodeWeight(txtCodigoArticulo.Text, codeWeight, CodeBarBasculaStart, CodBarrasCantPeso);
                         if (!codeWeight[1].Equals("0")) { txtCantidad.Text = codeWeight[1]; }
                         if (ExisteProducto(codeWeight[0]))
                         {
@@ -2757,14 +2762,14 @@ namespace Aplicacion.Ventas.Factura
             {
                 // Cambiar la forma en como valida la advertencia de numeracion. ACT 19/06/2019
                 Int64 numeracionRest = this.miBussinesDian.NumeracionRestante("IdRegistroDian", "Factura");
-                int cantidadNumeracion = Convert.ToInt32(AppConfiguracion.ValorSeccion("numero_restantes_alert"));
+                
                 if (numeracionRest <= cantidadNumeracion)
                 {
                     MessageBox.Show("Le restan " + numeracionRest + " números de facturas para finalizar la resolución actual.",
                             "Factura Venta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
-                /*var numeroBD = miBussinesFactura.ObtenerNumero(contado, miEmpresa.Regimen.IdRegimen);
+                /**var numeroBD = miBussinesFactura.ObtenerNumero(contado, miEmpresa.Regimen.IdRegimen);
                 if (miEmpresa.Regimen.IdRegimen.Equals(1))
                 {
                     long numero = 0;
@@ -2784,6 +2789,8 @@ namespace Aplicacion.Ventas.Factura
                 OptionPane.MessageError(ex.Message);
             }
         }
+
+        
 
         /// <summary>
         /// Obtiene un Número consecutivo temporal para ser asignado en la Factura.
@@ -6944,7 +6951,6 @@ namespace Aplicacion.Ventas.Factura
                         facturas.Last().IcoBolsaPlastica = ImpstoBolsa;
                         facturas.Last().Total += (ImpstoBolsa.Cantidad * ImpstoBolsa.Valor);
                     }
-
                 }
 
                 if (facturas.Count > 1)
@@ -7001,6 +7007,9 @@ namespace Aplicacion.Ventas.Factura
                         f.Punto = punto;
                         f.Id = miBussinesFactura.IngresarFactura(f, Edicion, chkAntigua.Checked, ConsecutivoCaja);
                     });
+                Numeracion = miBussinesDian.ConsultaDian(facturas.Last().IdResolucionDian);
+                Numeracion.Consecutivo = facturas.Last().Consecutivo;
+
                 //if (punto.EstadoPunto) puntos = CargarPuntos(f.Proveedor.NitProveedor, f.Id, f.AplicaDescuento);
 
                 /*
@@ -7140,7 +7149,6 @@ namespace Aplicacion.Ventas.Factura
                     }
                     //facturas.ForEach(f => PrintVoucherTransaction(f))
                 }
-
                 
                 if (IdEstado.Equals(1))
                 {
@@ -7153,8 +7161,13 @@ namespace Aplicacion.Ventas.Factura
                         UseObject.RemoveSeparatorMil(frmCambio.txtEfectivo.Text) - UseObject.RemoveSeparatorMil(frmCambio.txtTotal.Text)).ToString());
                     frmCambio.ShowDialog();
                 }
-                
 
+                string msnValidateNumbering =
+                    UseObject.MessageValidateNumbering(Numeracion.Consecutivo, (int)Numeracion.RangoFinal, cantidadNumeracion, Numeracion.Vigencia);
+                if(!String.IsNullOrEmpty(msnValidateNumbering))
+                {
+                    OptionPane.MessageWarning(msnValidateNumbering);
+                }
                 LimpiarCamposNewFactura();
 
                 //miFactura.Id = miBussinesFactura.IngresarFactura(miFactura, Edicion, chkAntigua.Checked, ConsecutivoCaja);

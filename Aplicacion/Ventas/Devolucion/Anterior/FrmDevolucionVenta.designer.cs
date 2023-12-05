@@ -120,7 +120,7 @@
             this.lblDataFecha.AutoSize = true;
             this.lblDataFecha.Location = new System.Drawing.Point(472, 27);
             this.lblDataFecha.Name = "lblDataFecha";
-            this.lblDataFecha.Size = new System.Drawing.Size(37, 16);
+            this.lblDataFecha.Size = new System.Drawing.Size(36, 16);
             this.lblDataFecha.TabIndex = 5;
             this.lblDataFecha.Text = "Data";
             // 
@@ -152,7 +152,7 @@
             // txtNumeroFactura
             // 
             this.txtNumeroFactura.Location = new System.Drawing.Point(141, 24);
-            this.txtNumeroFactura.MaxLength = 1000;
+            this.txtNumeroFactura.MaxLength = 20;
             this.txtNumeroFactura.Name = "txtNumeroFactura";
             this.txtNumeroFactura.Size = new System.Drawing.Size(216, 22);
             this.txtNumeroFactura.TabIndex = 0;
@@ -175,7 +175,7 @@
             this.lblNumeroFactura.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
             this.lblNumeroFactura.Location = new System.Drawing.Point(9, 27);
             this.lblNumeroFactura.Name = "lblNumeroFactura";
-            this.lblNumeroFactura.Size = new System.Drawing.Size(126, 16);
+            this.lblNumeroFactura.Size = new System.Drawing.Size(125, 16);
             this.lblNumeroFactura.TabIndex = 3;
             this.lblNumeroFactura.Text = "Número de Factura:";
             // 
@@ -185,7 +185,7 @@
             this.lblFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F);
             this.lblFecha.Location = new System.Drawing.Point(420, 27);
             this.lblFecha.Name = "lblFecha";
-            this.lblFecha.Size = new System.Drawing.Size(46, 16);
+            this.lblFecha.Size = new System.Drawing.Size(45, 16);
             this.lblFecha.TabIndex = 4;
             this.lblFecha.Text = "Fecha";
             // 
@@ -296,7 +296,7 @@
             this.tsBtnSalir.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnSalir.Image")));
             this.tsBtnSalir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnSalir.Name = "tsBtnSalir";
-            this.tsBtnSalir.Size = new System.Drawing.Size(87, 21);
+            this.tsBtnSalir.Size = new System.Drawing.Size(87, 22);
             this.tsBtnSalir.Text = "Salir [ESC]";
             this.tsBtnSalir.Click += new System.EventHandler(this.tsBtnSalir_Click);
             // 

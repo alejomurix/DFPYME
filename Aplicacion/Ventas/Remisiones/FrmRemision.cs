@@ -264,6 +264,8 @@ namespace Aplicacion.Ventas.Remisiones
 
         private BussinesFacturaProveedor miBussinesFacturaProveedor;
 
+        private BussinesConsecutivo miBussinesConsecutivo;
+
         private bool GraneroJhonRiosucio { set; get; }
 
         private double DesctoAplica { set; get; }
@@ -289,6 +291,8 @@ namespace Aplicacion.Ventas.Remisiones
         private bool DescuentoMarca;
 
         private bool Ticket_;
+
+        int CodeBarBasculaStart;
 
         public FrmRemision()
         {
@@ -317,6 +321,7 @@ namespace Aplicacion.Ventas.Remisiones
                 miBussinesPunto = new BussinesPunto();
                 miBussinesCaracteresEscape = new BussinesCaracteresEscape();
                 miBussinesBonoRifa = new BussinesBonoRifa();
+                miBussinesConsecutivo = new BussinesConsecutivo();
 
                 miCaracteresEscape = miBussinesCaracteresEscape.CaracteresPredeterminados();
                 miBono = this.miBussinesBonoRifa.BonoRifa();
@@ -335,6 +340,8 @@ namespace Aplicacion.Ventas.Remisiones
                 this.FuncionExpulsaCajon = Convert.ToBoolean(AppConfiguracion.ValorSeccion("activa_funcion_expulsa_cajon"));
                 _ConsultaInventario = Convert.ToBoolean(AppConfiguracion.ValorSeccion("frm_consulta_inventario"));
                 Ticket_ = Convert.ToBoolean(AppConfiguracion.ValorSeccion("ticket"));
+
+                CodeBarBasculaStart = Convert.ToInt32(miBussinesConsecutivo.Consecutivo("codeBarBasculaStart"));
 
                 miTallaYcolor = new TallaYcolor();
                 MiValidacion = new Validacion();
@@ -897,7 +904,7 @@ namespace Aplicacion.Ventas.Remisiones
             }
         }
 
-        private void txtCodigoArticulo_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtCodigoArticulo_KeyPress_(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
@@ -1069,6 +1076,56 @@ namespace Aplicacion.Ventas.Remisiones
                         ExtendForms = true;
                         formInventario.Show();
                         formInventario.dgvInventario.Focus();
+                    }
+                }
+            }
+        }
+
+        String[] codeWeight = new String[2];
+
+        private void txtCodigoArticulo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (!String.IsNullOrEmpty(this.txtCodigoArticulo.Text))
+                {
+                    if (CodigoOrString())
+                    {
+                        UseObject.CodeWeight(txtCodigoArticulo.Text, codeWeight, CodeBarBasculaStart, CodBarrasCantPeso);
+                        if (!codeWeight[1].Equals("0")) { txtCantidad.Text = codeWeight[1]; }
+                        if (ExisteProducto(codeWeight[0]))
+                        {
+                            miError.SetError(txtCodigoArticulo, null);
+                            if (CargarProducto(codeWeight[0]))
+                            {
+                                if (RequiereCantidad)
+                                {
+                                    txtCantidad.Focus();
+                                }
+                                else
+                                {
+                                    CargarColorOconsulta();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            miError.SetError(txtCodigoArticulo, "El código del producto no existe.");
+                        }
+                    }
+                    else
+                    {
+                        if (!ExtendForms)
+                        {
+                            var formInventario = new Inventario.Consulta.FrmConsultaInventario();
+                            formInventario.MdiParent = this.MdiParent;
+                            formInventario.ExtendVenta = true;
+                            formInventario.IsVenta = false;
+                            formInventario.txtCodigoNombre.Text = txtCodigoArticulo.Text;
+                            ExtendForms = true;
+                            formInventario.Show();
+                            formInventario.dgvInventario.Focus();
+                        }
                     }
                 }
             }

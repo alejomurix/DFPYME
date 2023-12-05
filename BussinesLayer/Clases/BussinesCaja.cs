@@ -33,6 +33,16 @@ namespace BussinesLayer.Clases
             return miDaoCaja.Cajas();
         }
 
+        public DataTable CajasOrder()
+        {
+            var cajas = miDaoCaja.Cajas();
+            var row = cajas.NewRow();
+            row["idcaja"] = 0;
+            row["numerocaja"] = 0;
+            cajas.Rows.Add(row);
+            return cajas.AsEnumerable().OrderBy(r => r.Field<int>("numerocaja")).CopyToDataTable();
+        }
+
         public void ReservarCaja(int id)
         {
             miDaoCaja.ReservarCaja(id);

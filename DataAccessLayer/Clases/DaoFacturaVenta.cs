@@ -437,11 +437,13 @@ namespace DataAccessLayer.Clases
                             if (preFijo.Equals("0"))
                             {
                                 factura.Numero = miDaoConsecutivo.Consecutivo("Factura");
+                                factura.Consecutivo = Convert.ToInt32(factura.Numero);
                             }
                             else
                             {
                                 //factura.Numero = miDaoConsecutivo.Consecutivo("FacturaPrefijo") + miDaoConsecutivo.Consecutivo("Factura");
-                                factura.Numero = preFijo + miDaoConsecutivo.Consecutivo("Factura");
+                                factura.Consecutivo = Convert.ToInt32(miDaoConsecutivo.Consecutivo("Factura"));
+                                factura.Numero = preFijo + factura.Consecutivo;
                             }
 
                             factura.IdResolucionDian = Convert.ToInt32(miDaoConsecutivo.Consecutivo("IdRegistroDian"));
@@ -455,11 +457,13 @@ namespace DataAccessLayer.Clases
                             if (preFijo.Equals("0"))
                             {
                                 factura.Numero = miDaoConsecutivo.Consecutivo("Factura");
+                                factura.Consecutivo = Convert.ToInt32(factura.Numero);
                             }
                             else
                             {
                                 //factura.Numero = miDaoConsecutivo.Consecutivo("FacturaPrefijo") + miDaoConsecutivo.Consecutivo("Factura");
-                                factura.Numero = preFijo + miDaoConsecutivo.Consecutivo("Factura");
+                                factura.Consecutivo = Convert.ToInt32(miDaoConsecutivo.Consecutivo("Factura"));
+                                factura.Numero = preFijo + factura.Consecutivo;
                             }
                             factura.IdResolucionDian = Convert.ToInt32(miDaoConsecutivo.Consecutivo("IdRegistroDian"));
                         }
@@ -485,6 +489,7 @@ namespace DataAccessLayer.Clases
                         if ((factura.EstadoFactura.IdEdit.Equals(3) || factura.EstadoFactura.IdEdit.Equals(4)) &&
                             (factura.EstadoFactura.Id.Equals(1) || factura.EstadoFactura.Id.Equals(2)))
                         {
+                            factura.Consecutivo = Convert.ToInt32(miCaja.NumeroFactura);
                             if (miCaja.Prefijo.Equals("0"))
                             {
                                 factura.Numero = miCaja.NumeroFactura;
@@ -500,6 +505,7 @@ namespace DataAccessLayer.Clases
                     {
                         if (factura.EstadoFactura.Id == 1 || factura.EstadoFactura.Id == 2)
                         {
+                            factura.Consecutivo = Convert.ToInt32(miCaja.NumeroFactura);
                             if (miCaja.Prefijo.Equals("0"))
                             {
                                 factura.Numero = miCaja.NumeroFactura;

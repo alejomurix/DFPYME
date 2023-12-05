@@ -47,6 +47,8 @@ namespace DTO.Clases
         /// </summary>
         public Usuario Usuario { set; get; }
 
+        public int Consecutivo { set; get; }
+
         /// <summary>
         /// Obtiene o establece el valor del número de la factura.
         /// </summary>
@@ -106,6 +108,7 @@ namespace DTO.Clases
             this.Caja = new Caja();
             this.Turno = new Turno();
             this.Usuario = new Usuario();
+            this.Consecutivo = 0;
             this.Numero = "";
             this.NumeroEdit = "";
             this.FechaFactura = DateTime.Today;

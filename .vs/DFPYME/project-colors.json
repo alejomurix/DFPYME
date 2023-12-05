@@ -25,7 +25,12 @@
       "ProjectGuid": "43e4321e-8ab8-4346-82c9-04d62648c754",
       "DisplayName": "FormulariosSistema",
       "ColorIndex": 4
+    },
+    "208deb37-9a0e-47a9-893f-8cc70de2b800": {
+      "ProjectGuid": "208deb37-9a0e-47a9-893f-8cc70de2b800",
+      "DisplayName": "DTO",
+      "ColorIndex": 5
     }
   },
-  "NextColorIndex": 5
+  "NextColorIndex": 6
 }

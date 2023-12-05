@@ -270,6 +270,8 @@ namespace Aplicacion.Ventas.Factura
 
         #endregion
 
+        private Dian Numeracion { set; get; }
+
         private bool GraneroJhonRiosucio { set; get; }
 
         private bool Transfer { set; get; }
@@ -1410,7 +1412,7 @@ namespace Aplicacion.Ventas.Factura
                 {
                     if (CodigoOrString())
                     {
-                        CodeWeight(txtCodigoArticulo.Text, codeWeight, CodeBarBasculaStart, CodBarrasCantPeso);
+                        UseObject.CodeWeight(txtCodigoArticulo.Text, codeWeight, CodeBarBasculaStart, CodBarrasCantPeso);
                         if (!codeWeight[1].Equals("0")) { txtCantidad.Text = codeWeight[1]; }
                         if (ExisteProducto(codeWeight[0]))
                         {
@@ -6107,6 +6109,9 @@ namespace Aplicacion.Ventas.Factura
                     f.Punto = punto;
                     f.Id = miBussinesFactura.IngresarFactura(f, Edicion, chkAntigua.Checked, ConsecutivoCaja);
                 });
+                Numeracion = miBussinesDian.ConsultaDian(facturas.Last().IdResolucionDian);
+                Numeracion.Consecutivo = facturas.Last().Consecutivo;
+
 
                 DialogResult rta = DialogResult.Yes;
                 if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("preguntaPrintVenta")))
