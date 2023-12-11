@@ -4072,13 +4072,14 @@ namespace DataAccessLayer.Clases
                 miAdapter.SelectCommand.Parameters.AddWithValue("", nitCliente);
                 var tabla = new DataTable();
                 miAdapter.Fill(tabla);
-
+                
                 foreach (DataRow row in tabla.Rows)
                 {
+                    /*
                     if (row["factura"].ToString().Equals("59511"))
                     {
                         var j = 0;
-                    }
+                    }*/
                     DataTable tProductos = ProductoFacturaVenta(Convert.ToInt32(row["id"]), true);
                     subTotal = tProductos.AsEnumerable().Sum(t => (t.Field<double>("ValorUnitario") * t.Field<double>("Cantidad")));
                     valorFactura = tProductos.AsEnumerable().Sum(t => t.Field<double>("Valor"));

@@ -516,8 +516,8 @@ namespace Aplicacion.Ventas.Factura
                         }
                         else
                         {
-                            var cartera = this.miBussinesFactura.CarteraCliente(this.dgvFactura.CurrentRow.Cells["Nit"].Value.ToString());
-                            ///var cartera = this.miBussinesFactura.CarteraCliente_(2, this.dgvFactura.CurrentRow.Cells["Nit"].Value.ToString());
+                            ///var cartera = this.miBussinesFactura.CarteraCliente(this.dgvFactura.CurrentRow.Cells["Nit"].Value.ToString());
+                            var cartera = this.miBussinesFactura.CarteraCliente_(2, this.dgvFactura.CurrentRow.Cells["Nit"].Value.ToString());
                             
                             //var cartera = this.miBussinesFactura.CarteraCliente(2, this.dgvFactura.CurrentRow.Cells["Nit"].Value.ToString());
                             //var total = miBussinesFactura.SaldoPorCliente(2, dgvFactura.CurrentRow.Cells["Nit"].Value.ToString());
@@ -3299,8 +3299,13 @@ namespace Aplicacion.Ventas.Factura
                     cliente != "22222222" &&
                     cliente != "222222222222")
                 {
-                    printTicket.Puntos = true;
-                    printTicket.DataPuntos = new double[] { Convert.ToDouble(printTicket.clienteRow["punto"]) };
+                    var punto = Convert.ToDouble(printTicket.clienteRow["punto"]);
+                    if (punto > 0)
+                    {
+                        printTicket.Puntos = true;
+                        printTicket.DataPuntos = new double[] { punto };
+                    }
+                    
                 }
                 printTicket.Pago = pago;
                 printTicket.DetalleIva = this.miBussinesFactura.IvaFacturado(id);
