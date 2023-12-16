@@ -15,6 +15,7 @@ using Utilities;
 using WSFTechSoapDemo;
 using WSFTechSoapPro;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Net.Http;
 
 namespace FormulariosSistema
@@ -93,10 +94,25 @@ namespace FormulariosSistema
 
         private ToolTip toolTip;
 
+        private Dictionary<string, string> uris;
+
+        private readonly string PROVIDER = "dataico";
+        private readonly string SERVER = "server";
+        private readonly string INVOICES = "invoices";
+        private readonly string CREDITNOTES = "credit_notes";
+
+        private readonly string AUTHTOKEN = "auth-token";
+
+        private CredentialWebService credential;
+
+        private HttpClient httpClient;
+
+        private string json;
+
         public FrmListDE()
         {
             InitializeComponent();
-
+            
             try
             {
                 this.IDIndex = 0;
@@ -182,7 +198,11 @@ namespace FormulariosSistema
         {
             try
             {
-                
+                uris = repositoryModel.Uris();
+                credential = repositoryModel.CredentialWS(Productive);
+
+                httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Add(AUTHTOKEN, credential.Token);
             }
             catch (Exception ex)
             {
@@ -334,20 +354,28 @@ namespace FormulariosSistema
                             }
                             this.Document.Estado = true;
                             this.Document.Numero = this.Document.Resolution.prefijo + this.Document.Resolution.consecutive;
-                            //this.Document.IdResolucion = this.Document.Resolution.id;
                             this.Document.NoItems = this.Document.Items.Count;
                             this.Document.Total = this.Document.Items.Sum(s => s.Total);
                             this.Document.Neto = this.Document.Total - Math.Round(this.Document.Retentions.Sum(s => s.Value), 2);
-                            //this.TotalInvoice.Retention = Math.Round(this.Document.Retentions.Sum(s => s.Value), 2);
-
-                            
-
-                            //this.repositoryModel.UpdateConsecutiveResolution();
-                            //this.repositoryModel.EditElectronicDocumentAll(Document);
                         }
 
                         //*************************************
+
+                        // -----  test con api local error 504
+
+                        /**
+                        var http = new HttpClient();
+                        string url2 = "​http://localhost:3000/";
+                        http.BaseAddress = new Uri("http://127.0.0.1:3000/api/");
                         
+                        var response = await http.GetAsync("products");
+                        Console.WriteLine("{0} {1}", response.IsSuccessStatusCode, response.StatusCode);
+                        DELoad.StreamToJson(response);
+                        */
+
+                        // -----
+
+                        /*
                         DELoad.Document = Document;
                         string json = DELoad.CreateJson();
 
@@ -355,17 +383,17 @@ namespace FormulariosSistema
                         var client = new HttpClient();
                         client.DefaultRequestHeaders.Add("auth-token", "4facc5070884f0e15d9dc05c3ee4fb6b");
 
+                        var miUrl = url.Insert(url.Length, "/invoices");
+
                         var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
                         var httpResponse = await client.PostAsync(url, content);
 
                         Console.WriteLine("{0} {1}", httpResponse.IsSuccessStatusCode, httpResponse.StatusCode);
                         DELoad.StreamToJson(httpResponse);
+                        */
                         //var jsonReader = new JsonTextReader(streamReader);
-                        
 
-                        
                         //Console.WriteLine(httpResponse.Content.ReadAsStringAsync());
-                        
 
                         //*************************************
 
@@ -375,29 +403,38 @@ namespace FormulariosSistema
                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                             if (rta.Equals(DialogResult.Yes))
                             {
-                                if (this.Document.IdResolucion == 0)
+                                if (Document.IdResolucion == 0)
                                 {
-                                    this.Document.IdResolucion = this.Document.Resolution.id;
-                                    this.repositoryModel.UpdateNumberConsecutiveED(this.Document);
+                                    Document.IdResolucion = Document.Resolution.id;
 
-                                    /// update stock 
-                                    //this.repositoryModel.UpdateStock(this.document.Items);
+                                    // considerar volver a cargar el numero de factura segun resolucion 
+                                    // para evitar tiempos de espera entre asignar el consecutivo y acutalizarlo. date=15-12-2023
+
+                                    repositoryModel.UpdateNumberConsecutiveED(Document);
                                 }
-                                /*if (!this.Document.Estado)
-                                {
-                                    this.repositoryModel.UpdateConsecutiveResolution();
-                                    this.repositoryModel.EditElectronicDocumentAll(Document);
-                                }*/
 
-                                this.cpElements.Enabled = false;
-                                this.lblMsnStandBy.Visible = true;
+                                cpElements.Enabled = false;
+                                lblMsnStandBy.Visible = true;
 
                                 // generar XML
                                 DELoad.Document = Document;
                                 //string xmlBase64 = DELoad.CreateXML();
-                                this.XmlBase64 = DELoad.CreateXML(this.Document.Numero);
+                                
                                 try
                                 {
+                                    if (!Document.Credential.User.Equals(PROVIDER))  // 1 FTech
+                                    {
+                                        XmlBase64 = DELoad.CreateXML(Document.Numero);
+                                        SendFTech();
+                                    }
+                                    else   // 2 Dataico
+                                    {
+                                        //var httpResponse = await client.PostAsync(url, content);
+                                        json = DELoad.CreateJson();
+                                        await SendDataico(json, INVOICES);
+                                    }
+
+                                    /**
                                     if (this.Productive)
                                     {
                                         this.WSFTechSProductive = new WSFTechSPro();
@@ -414,8 +451,6 @@ namespace FormulariosSistema
                                     {
                                         if (!String.IsNullOrEmpty(this.Response.TransaccionID)) // se obtubo transanccionID del WS.
                                         {
-                                            /// if (this.ValidateTrazability(this.Response.MsgError)) 
-
                                             this.Document.TransaccionID = this.Response.TransaccionID;
                                             this.repositoryModel.UpdateTransaccionIDDE(this.Document);
 
@@ -451,20 +486,21 @@ namespace FormulariosSistema
                                         {
                                             OptionPane.MessageError("Ocurrio un error al cargar la factura electronica.\nCode " +
                                                 this.Response.Code + "\nError " + this.Response.MsgError);
-                                            //this.btnBuscarDocument_Click(this.btnBuscarDocument, new EventArgs());
-                                            //this.IDIndex = 0;
                                         }
-
                                     }
+                                    */
                                 }
-                                catch (System.ServiceModel.EndpointNotFoundException)
+                                catch (Exception ex)
                                 {
-                                    OptionPane.MessageError("No se conectó al servicio web de factura electrónica.");
+                                    OptionPane.MessageError(ex.Message);
                                 }
-                                finally 
-                                { 
-                                    this.cpElements.Enabled = true; 
-                                    this.lblMsnStandBy.Visible = false;
+                                finally
+                                {
+                                    cpElements.Enabled = true;
+                                    lblMsnStandBy.Visible = false;
+
+                                    btnBuscarDocument_Click(btnBuscarDocument, new EventArgs());
+                                    IDIndex = 0;
 
                                     DialogResult r = DialogResult.Yes;
                                     if (Convert.ToBoolean(AppConfiguracion.ValorSeccion("preguntaPrintVenta")))
@@ -482,20 +518,20 @@ namespace FormulariosSistema
                                         catch (Exception ex) { OptionPane.MessageError(ex.Message); }
                                     }
 
-                                    if (this.Document.Estado &&                                 // Document electronico
-                                        this.Document.Tipo.Equals(this.TypeInvoice) &&          // tipo factura electronica
-                                        //!this.Document.MetodoPago.Equals(this.MetPayCredito) &&  // metodo de pago contado
-                                        !this.Document.Cancelled)                                // no esta cancelada
-                                        {
-                                            var frmPayment = new FrmPayment();
-                                            frmPayment.Document = this.Document;
+                                    if (Document.Estado &&                                 // Document electronico
+                                        Document.Tipo.Equals(TypeInvoice) &&          // tipo factura electronica
+                                                                                                //!this.Document.MetodoPago.Equals(this.MetPayCredito) &&  // metodo de pago contado
+                                        !Document.Cancelled)                                // no esta cancelada
+                                    {
+                                        var frmPayment = new FrmPayment();
+                                        frmPayment.Document = this.Document;
 
-                                            frmPayment.IdCaja = this.IdCaja;
-                                            frmPayment.IdUser = this.IdUser;
-                                            frmPayment.IDDE = this.Document.ID;
-                                            frmPayment.Total = Math.Round(this.Document.Neto - this.Document.Payment, 2);
-                                            frmPayment.ShowDialog();
-                                        }
+                                        frmPayment.IdCaja = this.IdCaja;
+                                        frmPayment.IdUser = this.IdUser;
+                                        frmPayment.IDDE = this.Document.ID;
+                                        frmPayment.Total = Math.Round(this.Document.Neto - this.Document.Payment, 2);
+                                        frmPayment.ShowDialog();
+                                    }
                                 }
                             }
                         }
@@ -520,8 +556,8 @@ namespace FormulariosSistema
                 this.lblMsnStandBy.Visible = false;
                 OptionPane.MessageError(ex.Message);
             }
-            finally 
-            { 
+            finally
+            {
                 this.cpElements.Enabled = true; this.lblMsnStandBy.Visible = false;
                 this.btnBuscarDocument_Click(this.btnBuscarDocument, new EventArgs());
                 this.IDIndex = 0;
@@ -1301,6 +1337,71 @@ namespace FormulariosSistema
             }
         }
 
+        private void SendFTech()
+        {
+            try
+            {
+                if (this.Productive)
+                {
+                    this.WSFTechSProductive = new WSFTechSPro();
+                }
+                else
+                {
+                    this.WSFTechSoapDemo = new WSFTechSoap();
+                }
+                NewThread = new Thread(UploadIvoice);
+                NewThread.Start();
+                NewThread.Join();
+
+                if (this.Response != null)
+                {
+                    if (!String.IsNullOrEmpty(this.Response.TransaccionID)) // se obtubo transanccionID del WS.
+                    {
+                        this.Document.TransaccionID = this.Response.TransaccionID;
+                        this.repositoryModel.UpdateTransaccionIDDE(this.Document);
+
+                        NewThread = new Thread(DocumentStatus);
+                        NewThread.Start();
+                        NewThread.Join();
+
+                        if (this.ResponseDoc != null && this.ResponseDoc.Code.Equals("201"))
+                        {
+                            this.repositoryModel.UpdateStatusSigned(this.Document.ID);
+
+                            OptionPane.MessageSuccess("El documento electrónico se registró con éxito.\n" +
+                                this.Response.Success + "\n" +
+                                this.ResponseDoc.Success);
+
+                            //this.btnBuscarDocument_Click(this.btnBuscarDocument, new EventArgs());
+                            //this.IDIndex = 0;
+                        }
+                        else
+                        {
+                            if (this.ResponseDoc != null)
+                            {
+                                OptionPane.MessageError("Ocurrio un error al firmar la factura electronica.\nCode " +
+                                    this.ResponseDoc.Code + "\nError " + this.ResponseDoc.MsgError);
+                            }
+                            else
+                            {
+                                OptionPane.MessageError("Ocurrio un error al firmar la factura electronica.\nResponeDOC = null.");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        OptionPane.MessageError("Ocurrio un error al cargar la factura electronica.\nCode " +
+                            this.Response.Code + "\nError " + this.Response.MsgError);
+                    }
+                }
+            }
+            catch (System.ServiceModel.EndpointNotFoundException)
+            {
+                throw new Exception("No se conectó al servicio web de factura electrónica.");
+                //OptionPane.MessageError("No se conectó al servicio web de factura electrónica.");
+            }
+        }
+
         private void UploadIvoice()
         {
             try
@@ -1356,6 +1457,42 @@ namespace FormulariosSistema
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+
+        private string Uri(string endPoint)
+        {
+            if(uris.TryGetValue(SERVER, out string miUrl) && 
+                uris.TryGetValue(endPoint, out string point))
+            {
+                return miUrl.Insert(miUrl.Length, point);
+            }
+            return "";
+        }
+
+        private StringContent StringContentUTF8(string json)
+        {
+            return new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+        }
+
+
+        private async Task SendDataico(string json, string endPoint)
+        {
+            var httpResponse = await httpClient.PostAsync(Uri(endPoint), StringContentUTF8(json));
+            if (httpResponse.IsSuccessStatusCode) // 
+            {
+                var invoiceResponse = await DELoad.DeserializeHttpResponseAsync<DataAccessLayer.Standard.InvoiceResponse>(httpResponse);
+
+                // save uuid & dian_status
+                repositoryModel.UpdateTransactionElectronic(Document.ID, invoiceResponse);
+            }
+            else
+            {
+                var error = await DELoad.DeserializeHttpResponseAsync<DataAccessLayer.Standard.ErrorResponse>(httpResponse);
+                OptionPane.MessageError(httpResponse.StatusCode + "\n" + error.ToString());
+            }
+            /// Console.WriteLine("{0} {1}", httpResponse.IsSuccessStatusCode, httpResponse.StatusCode);
+            /// DELoad.StreamToJson(httpResponse);
         }
 
 

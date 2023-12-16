@@ -163,6 +163,10 @@ namespace DataAccessLayer.Models
         public string User { set; get; }
 
         public string Password { set; get; }
+
+        public string Token { set; get; }
+
+        public int Provider { set; get; }
     }
 
     public class NumberResolution

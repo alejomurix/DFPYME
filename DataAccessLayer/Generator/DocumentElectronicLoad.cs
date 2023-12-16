@@ -78,12 +78,14 @@ namespace DataAccessLayer.Generator
             }
             LoadHeader();
             LoadItems();
+            LoadRetentions();
+
             
             DtoJson.Invoice = InvoiceType.Heading;
             DtoJson.Invoice.Customer = InvoiceType.Adquiriente;
             string json = JsonSerializer.Serialize(DtoJson, 
                 new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
-            Console.WriteLine(json);
+           // Console.WriteLine(json);
             
             return json;
         }
@@ -92,13 +94,18 @@ namespace DataAccessLayer.Generator
         {
             var jsonP = await response.Content.ReadAsStringAsync();
             var jsdes = JsonSerializer.Serialize(jsonP);
+            var des = JsonSerializer.Deserialize<ErrorResponse>(jsonP, JsonSerializerOptions.Default);
+            
 
-
-            //var contentStream = response.Content.ReadAsStreamAsync().Result;
-            //var streamReader = new System.IO.StreamReader(contentStream.Result);
-            //var json = new StringContent(streamReader.ReadToEnd(), System.Text.Encoding.UTF8, "application/json");
-            //var json = JsonSerializer.Serialize(contentStream);
             Console.WriteLine(jsonP);
+        }
+
+        public async System.Threading.Tasks.Task<TValue> DeserializeHttpResponseAsync<TValue>(HttpResponseMessage response)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(json);
+            var deserialize = JsonSerializer.Deserialize<TValue>(json, JsonSerializerOptions.Default);
+            return deserialize;
         }
 
 
@@ -892,7 +899,7 @@ namespace DataAccessLayer.Generator
                     var iTax = new ImpuestoItem { Category = tax.Description };
                     if (tax.Quantity > 0)
                     {
-                        iTax.BaseImponible = Math.Round(tax.Quantity * tax.Base);
+                        iTax.BaseImponible = Math.Round((tax.Quantity * tax.Base), 2);
                         iTax.Valor = null;
                     }
                     else
@@ -909,9 +916,23 @@ namespace DataAccessLayer.Generator
                     Quantity = item.Quantity,
                     Description = item.Description,
                     CodeMedida = item.UnitMedida,
-                    Price = Math.Round(item.UnitPrice),
+                    Price = Math.Round(item.UnitPrice, 2),
                     Taxes = taxes
                 });
+            }
+        }
+
+        private void LoadRetentions()
+        {
+            if(Document.Retentions.Count > 0)
+            {
+                InvoiceType.Heading.Retentions = new List<Retention>();
+                Document.Retentions
+                    .ForEach(t => InvoiceType.Heading.Retentions.Add(
+                        new Retention {
+                            Category = t.Description, 
+                            Rate = t.Tarifa 
+                        }));
             }
         }
 

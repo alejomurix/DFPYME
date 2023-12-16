@@ -146,6 +146,29 @@ namespace DataAccessLayer.Standard
         [JsonPropertyName("items")]
         [System.Xml.Serialization.XmlIgnore]
         public List<ItemField> Items { set; get; }
+
+        [JsonPropertyName("retentions")]
+        [System.Xml.Serialization.XmlIgnore]
+        public List<Retention> Retentions { set; get; }
+
+
+        /*
+        [JsonPropertyName("uuid")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string UUID { set; get; }
+
+        [JsonPropertyName("dian_status")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string DianStatus { set; get; }
+
+        [JsonPropertyName("qrcode")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string QRCode { set; get; }
+
+        [JsonPropertyName("cufe")]
+        [System.Xml.Serialization.XmlIgnore]
+        public string Cufe { set; get; }
+        */
     }
 
     [Serializable]
@@ -595,6 +618,15 @@ namespace DataAccessLayer.Standard
 
         [System.Xml.Serialization.XmlElement("IMP_10")]
         public string MonedaValorUnit { set; get; }
+    }
+
+    public class Retention
+    {
+        [JsonPropertyName("tax_category")]
+        public string Category { set; get; }
+
+        [JsonPropertyName("tax_rate")]
+        public double? Rate { set; get; }  // Valor del tributo.  producto del porcentaje aplicado sobre la base imponible
     }
 
     [Serializable]

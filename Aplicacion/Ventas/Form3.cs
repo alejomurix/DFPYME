@@ -480,7 +480,7 @@ namespace Aplicacion.Ventas
                 */
 
 
-                
+                /**
                 FechaActual = dtpFecha.Value;
                 FechaActual2 = dtpFecha2.Value;
 
@@ -492,16 +492,16 @@ namespace Aplicacion.Ventas
                 this.Enabled = false;
                 this.miThread = new Thread(Cargar);
                 this.miThread.Start();
-                
+                */
 
                 //miBussinesConsultaImpuesto.ConsultaCompras(dtpFecha.Value, dtpFecha2.Value);
                 
-                /**
+                
                 foreach (DataRow row in this.miBussUser.Usuarios().Rows)
                 {
                     Console.WriteLine(row["documento"].ToString() + "  " + row["usuario"].ToString() + "  " + Encode.Decrypt(row["contrasenia"].ToString()));
                 }
-                */
+                
 
                 /*var miBussinesInventario = new BussinesInventario();
                 miBussinesInventario.VerCodigosRepetidosInventario();*/

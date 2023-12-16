@@ -2447,6 +2447,31 @@ namespace DataAccessLayer.Repository
             finally { miConexion.MiConexion.Close(); }
         }
 
+        public void UpdateTransactionElectronic(int id, Standard.InvoiceResponse invoice)
+        {
+            try
+            {
+                string sql =
+                "update documento_electronico set transaccion_id = @uuid, id_status = @status, qrcode = @qr, cufe = @cufe, pdf_url = @pdf where id = @id;";
+                CargarComando(sql);
+                miComando.Parameters.AddWithValue("uuid", invoice.uuid);
+                miComando.Parameters.AddWithValue("status", invoice.DianStatus);
+                miComando.Parameters.AddWithValue("qr", invoice.qrcode);
+                miComando.Parameters.AddWithValue("cufe", invoice.cufe);
+                miComando.Parameters.AddWithValue("pdf", invoice.pdf_url);
+                miComando.Parameters.AddWithValue("id", id);
+                miConexion.MiConexion.Open();
+                miComando.ExecuteNonQuery();
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
         public void UpdateCancelledDocument(int id)
         {
             try
@@ -2525,10 +2550,35 @@ namespace DataAccessLayer.Repository
                 {
                     c.User = reader.GetString(2);
                     c.Password = reader.GetString(3);
+                    c.Token = reader.GetString(4);
                 }
                 miConexion.MiConexion.Close();
                 miComando.Dispose();
                 return c;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally { miConexion.MiConexion.Close(); }
+        }
+
+        public Dictionary<string, string> Uris()
+        {
+            Dictionary<string, string> uris = new Dictionary<string, string>();
+            try
+            {
+                string sql = "select * from consecutivos where idconsecutivos between 100 and 150;";
+                CargarComando(sql);
+                miConexion.MiConexion.Open();
+                NpgsqlDataReader reader = miComando.ExecuteReader();
+                while (reader.Read())
+                {
+                    uris.Add(reader.GetString(1), reader.GetString(2));
+                }
+                miConexion.MiConexion.Close();
+                miComando.Dispose();
+                return uris;
             }
             catch (Exception ex)
             {
