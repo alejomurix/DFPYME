@@ -431,6 +431,7 @@ namespace FormulariosSistema
                                     {
                                         //var httpResponse = await client.PostAsync(url, content);
                                         json = DELoad.CreateJson();
+                                        FilesIO.SaveDocumentsElectonic(Application.StartupPath, Document.Numero, json);
                                         await SendDataico(json, INVOICES);
                                     }
 
@@ -1478,18 +1479,27 @@ namespace FormulariosSistema
 
         private async Task SendDataico(string json, string endPoint)
         {
-            var httpResponse = await httpClient.PostAsync(Uri(endPoint), StringContentUTF8(json));
-            if (httpResponse.IsSuccessStatusCode) // 
+            HttpResponseMessage httpResponse = new HttpResponseMessage();
+            try
             {
-                var invoiceResponse = await DELoad.DeserializeHttpResponseAsync<DataAccessLayer.Standard.InvoiceResponse>(httpResponse);
+                httpResponse = await httpClient.PostAsync(Uri(endPoint), StringContentUTF8(json));
+                if (httpResponse.IsSuccessStatusCode) // 
+                {
+                    var invoiceResponse = await DELoad.DeserializeHttpResponseAsync<DataAccessLayer.Standard.InvoiceResponse>(httpResponse);
 
-                // save uuid & dian_status
-                repositoryModel.UpdateTransactionElectronic(Document.ID, invoiceResponse);
+                    // save uuid & dian_status
+                    repositoryModel.UpdateTransactionElectronic(Document.ID, invoiceResponse);
+                }
+                else
+                {
+                    var error = await DELoad.DeserializeHttpResponseAsync<DataAccessLayer.Standard.ErrorResponse>(httpResponse);
+                    OptionPane.MessageError("Status: " + httpResponse.StatusCode + "\n" + error.ToString());
+                }
             }
-            else
+            catch(Exception e)
             {
-                var error = await DELoad.DeserializeHttpResponseAsync<DataAccessLayer.Standard.ErrorResponse>(httpResponse);
-                OptionPane.MessageError(httpResponse.StatusCode + "\n" + error.ToString());
+                var errorJson = await httpResponse.Content.ReadAsStringAsync();
+                OptionPane.MessageError("Status: " + httpResponse.StatusCode + "\n" + errorJson + "\n" + e.Message);
             }
             /// Console.WriteLine("{0} {1}", httpResponse.IsSuccessStatusCode, httpResponse.StatusCode);
             /// DELoad.StreamToJson(httpResponse);

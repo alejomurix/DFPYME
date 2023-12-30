@@ -90,6 +90,8 @@ namespace DataAccessLayer.Generator
             return json;
         }
 
+        private void SaveFile() { }
+
         public async void StreamToJson(HttpResponseMessage response)
         {
             var jsonP = await response.Content.ReadAsStringAsync();
@@ -864,7 +866,7 @@ namespace DataAccessLayer.Generator
                     Quantity = item.Quantity,
                     CodeMedida = item.UnitMedida,
                     SubTotal = item.SubTotal,
-                    Price = item.UnitPrice,
+                    Price = (float)item.UnitPrice,
                     Description = item.Description,
                     TotalItem = item.SubTotal,
                     //Total = r.Sum(s => s.Valor),
@@ -916,7 +918,7 @@ namespace DataAccessLayer.Generator
                     Quantity = item.Quantity,
                     Description = item.Description,
                     CodeMedida = item.UnitMedida,
-                    Price = Math.Round(item.UnitPrice, 2),
+                    Price = (float)Math.Round(item.UnitPrice, 2),
                     Taxes = taxes
                 });
             }

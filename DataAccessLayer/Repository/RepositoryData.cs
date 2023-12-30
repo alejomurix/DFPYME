@@ -190,7 +190,7 @@ namespace DataAccessLayer.Repository
             try
             {
                 DataTable dtTypeInvoic = new DataTable();
-                string sql = "select * from tipo_factura_electronica where tipo_documento = @type;";
+                string sql = "select * from tipo_factura_electronica where tipo_documento = @type order by valor;";
                 CargarAdapter(sql);
                 miAdapter.SelectCommand.Parameters.AddWithValue("type", typeDoc);
                 miAdapter.Fill(dtTypeInvoic);

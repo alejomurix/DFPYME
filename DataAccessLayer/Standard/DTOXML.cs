@@ -706,7 +706,7 @@ namespace DataAccessLayer.Standard
 
         [JsonPropertyName("price")]
         [System.Xml.Serialization.XmlElement("ITE_7")]
-        public double Price { set; get; } // Costo unitario del producto
+        public float Price { set; get; } // Costo unitario del producto
 
         [JsonIgnore]
         [System.Xml.Serialization.XmlElement("ITE_8")]

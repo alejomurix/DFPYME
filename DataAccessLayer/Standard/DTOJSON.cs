@@ -26,6 +26,7 @@ namespace DataAccessLayer.Standard
     {
         private System.Text.StringBuilder sb;
         public Error[] errors { set; get; }
+        public string ReasonPhrase { set; get; }
 
         public class Error
         {
@@ -36,16 +37,20 @@ namespace DataAccessLayer.Standard
         public override string ToString()
         {
             sb = new System.Text.StringBuilder();
-            foreach (var e in errors)
+            if (errors != null)
             {
-                foreach (var p in e.path)
+                foreach (var e in errors)
                 {
-                    sb.Append(p);
-                    sb.Append(" | ");
+                    foreach (var p in e.path)
+                    {
+                        sb.Append(p);
+                        sb.Append(" | ");
+                    }
+                    sb.Append("\n");
+                    sb.Append(e.error);
                 }
-                sb.Append("\n");
-                sb.Append(e.error);
             }
+            if (!string.IsNullOrEmpty(ReasonPhrase)) sb.Append(ReasonPhrase);
             return sb.ToString();
         }
     }
@@ -73,6 +78,12 @@ namespace DataAccessLayer.Standard
                 }
                 return 4;
             }
+        }
+
+        public string GetQRCode()
+        {
+            var split = qrcode.Split('\n');
+            return split[split.Length - 1].Substring(7);
         }
 
         public string uuid { set; get; }
