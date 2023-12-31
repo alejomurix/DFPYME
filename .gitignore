@@ -2,6 +2,7 @@
 bin
 obj
 *.suo
+packages
 
 #
 .vs/*
@@ -404,3 +405,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+

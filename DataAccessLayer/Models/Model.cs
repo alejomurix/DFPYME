@@ -6,13 +6,18 @@ using DataAccessLayer.DataSets;
 
 namespace DataAccessLayer.Models
 {
-    public class EnvironmentDE 
+    public static class EnvironmentDE 
     {
-        public string UBL { set; get; }
+        public static string Enviroment(string code)
+        {
+            return code.Equals("1") ? "PRUEBAS" : "PRODUCCION";
+        }
+
+       /* public string UBL { set; get; }
 
         public string DIAN { set; get; }
 
-        public string Target { set; get; } 
+        public string Target { set; get; } */
     }
 
     public class IEntity
@@ -158,6 +163,10 @@ namespace DataAccessLayer.Models
         public string User { set; get; }
 
         public string Password { set; get; }
+
+        public string Token { set; get; }
+
+        public int Provider { set; get; }
     }
 
     public class NumberResolution
@@ -193,6 +202,8 @@ namespace DataAccessLayer.Models
 
         public string TipoFactura { set; get; }
 
+        public string TipoDescripcion { set; get; }
+
         public string TipoOperacion { set; get; }
 
         public string TipoAmbiente { set; get; }
@@ -220,6 +231,8 @@ namespace DataAccessLayer.Models
         public string MedioPago { set; get; }
 
         public DateTime FechaPago { set; get; }
+
+        public Payment MetPayment { set; get; }
 
         public string VUBL { set; get; }
 
@@ -261,7 +274,7 @@ namespace DataAccessLayer.Models
 
         public DataBaseDS.resolucion_electronicaRow Resolution { set; get; }
 
-        //public Payment MetPayment { set; get; }
+        
 
         public List<Item> Items { set; get; }
 
@@ -475,6 +488,17 @@ namespace DataAccessLayer.Models
         /// Código correspondiente al medio de pago.
         /// </summary>
         public string Code { set; get; }
+
+        public string Tipo
+        {
+            
+            get
+            {
+                return Code.Equals("1") ? "DEBITO" : "CRÉDITO";
+            }
+        }
+
+        public string Medio { set; get; }
 
         /// <summary>
         /// valor del monto pagado equivalente al valor de la factura.

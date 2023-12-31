@@ -193,7 +193,8 @@ namespace Utilities
                 {
                     this.miTicket.AddHeaderLine(datos);
                 }
-                foreach (var datos in UseObject.StringBuilderDataCenter(empresaRow["Regimen"].ToString(), this.MaxCharacters))
+                foreach (var datos in 
+                    UseObject.StringBuilderDataCenter(empresaRow["Regimen"].ToString().Replace('_', ' '), MaxCharacters))
                 {
                     this.miTicket.AddHeaderLine(datos);
                 }

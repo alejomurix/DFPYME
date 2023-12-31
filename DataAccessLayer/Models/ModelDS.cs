@@ -21,6 +21,8 @@ namespace DataAccessLayer.Models
 
         public DataBaseDS.clienteRow Cliente { set; get; }
 
+        public CustomerDetail CustomerDetail { set; get; }
+
         public CustomerModel()
         {
             this.Document = "";
@@ -29,6 +31,15 @@ namespace DataAccessLayer.Models
             this.DetailsTributary = new DataBaseDS.details_tributary_clientDataTable();
             this.DetailsRUT = new DataBaseDS.details_rut_clientDataTable();
         }
+    }
+
+    public class CustomerDetail
+    {
+        public string DocumentType { set; get; }
+
+        public string PersonType { set; get; }
+
+        public string TaxLevel { set; get; }
     }
 
     public class CompanyModel

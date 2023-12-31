@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 using DataAccessLayer.DataSets;
 using DataAccessLayer.Models;
@@ -16,9 +19,12 @@ namespace DataAccessLayer.Generator
 
         private InvoiceType InvoiceType { set; get; }
 
+        private DTOJSON DtoJson { set; get; }
+
         public DocumentElectronicLoad()
         {
             this.InvoiceType = new InvoiceType();
+            DtoJson = new DTOJSON { Action = new Standard.Action() };
         }
 
 
@@ -61,6 +67,49 @@ namespace DataAccessLayer.Generator
             return xmlBase64;
         }
 
+        public string CreateJson()
+        {
+            LoadResolution();
+            LoadAdquiriente();
+            InvoiceType.Adquiriente.CodMunicipio = InvoiceType.Adquiriente.CodMunicipio.Substring(2);
+            if (InvoiceType.Adquiriente.Tipo.Equals("2")) // persona natural
+            {
+                InvoiceType.Adquiriente.RazonSocial = null;
+            }
+            LoadHeader();
+            LoadItems();
+            LoadRetentions();
+
+            
+            DtoJson.Invoice = InvoiceType.Heading;
+            DtoJson.Invoice.Customer = InvoiceType.Adquiriente;
+            string json = JsonSerializer.Serialize(DtoJson, 
+                new JsonSerializerOptions { WriteIndented = true, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull });
+           // Console.WriteLine(json);
+            
+            return json;
+        }
+
+        private void SaveFile() { }
+
+        public async void StreamToJson(HttpResponseMessage response)
+        {
+            var jsonP = await response.Content.ReadAsStringAsync();
+            var jsdes = JsonSerializer.Serialize(jsonP);
+            var des = JsonSerializer.Deserialize<ErrorResponse>(jsonP, JsonSerializerOptions.Default);
+            
+
+            Console.WriteLine(jsonP);
+        }
+
+        public async System.Threading.Tasks.Task<TValue> DeserializeHttpResponseAsync<TValue>(HttpResponseMessage response)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(json);
+            var deserialize = JsonSerializer.Deserialize<TValue>(json, JsonSerializerOptions.Default);
+            return deserialize;
+        }
+
 
         private void LoadHeader()
         {
@@ -78,7 +127,17 @@ namespace DataAccessLayer.Generator
             InvoiceType.Heading.CodMoneda = this.Document.Moneda; // Header.Moneda;
             InvoiceType.Heading.NoItems = this.Document.NoItems.ToString(); // Header.NumberItems.ToString();
             InvoiceType.Heading.CodAmbiente = this.Document.TipoAmbiente; // Header.CodeEnvironment.ToString();
+
+            InvoiceType.Heading.Number = Document.Resolution.consecutive.ToString();
+            InvoiceType.Heading.PaymentDate = UseDate.DateToStringYMD(Document.FechaPago);
+            InvoiceType.Heading.Ambiente = EnvironmentDE.Enviroment(Document.TipoAmbiente);
+            InvoiceType.Heading.AcountId = Document.Credential.Password;
             InvoiceType.Heading.TipoOperation = this.Document.TipoOperacion; // Header.TypeOperation;
+            InvoiceType.Heading.TipoDescripcion = Document.TipoDescripcion;
+            InvoiceType.Heading.Opertation = "ESTANDAR";
+            InvoiceType.Heading.PaymentType = Document.MetPayment.Tipo;
+            InvoiceType.Heading.PaymentMean = Document.MetPayment.Medio;
+            InvoiceType.Heading.Resolucion = InvoiceType.Resolucion;
         }
 
         private string DateString(DateTime date)
@@ -181,6 +240,8 @@ namespace DataAccessLayer.Generator
 
         private void LoadAdquiriente()
         {
+            DataBaseDS.details_rut_clientRow regimen = Document.Customer.DetailsRUT.FirstOrDefault();
+
             InvoiceType.Adquiriente = new Adquiriente
             {
                 Tipo = this.Document.Customer.Cliente.type_person.ToString(), // Customer.Type_,
@@ -224,12 +285,13 @@ namespace DataAccessLayer.Generator
                     Telefono = this.Document.Customer.Cliente.celularcliente, //  Customer.Contact.Phone,
                     Email = this.Document.Customer.Cliente.emailcliente, //  Customer.Contact.Email
                 },
-                /*GrupoTributoAdquiriente = new GrupoTributoAdquiriente
-                {
-                    Codigo = Customer.IdentifyTax.Code,
-                    Nombre = Customer.IdentifyTax.Description
-                }*/
+                
+                IdentifyType = Document.Customer.CustomerDetail.DocumentType,
+                PersonType = Document.Customer.CustomerDetail.PersonType,
+                TaxLevel = Document.Customer.CustomerDetail.TaxLevel,
+                RegimenType = regimen.descripcion
             };
+            
             if (InvoiceType.Adquiriente.Tipo.Equals("2")) // persona natural
             {
                 InvoiceType.Adquiriente.Name = this.Document.Customer.Cliente.name;
@@ -804,7 +866,7 @@ namespace DataAccessLayer.Generator
                     Quantity = item.Quantity,
                     CodeMedida = item.UnitMedida,
                     SubTotal = item.SubTotal,
-                    Price = item.UnitPrice,
+                    Price = (float)item.UnitPrice,
                     Description = item.Description,
                     TotalItem = item.SubTotal,
                     //Total = r.Sum(s => s.Valor),
@@ -825,6 +887,54 @@ namespace DataAccessLayer.Generator
                         CodeStandard = item.TypeStandar.CodeStandard
                     }
                 });
+            }
+        }
+
+        private void LoadItems()
+        {
+            InvoiceType.Heading.Items = new List<ItemField>();
+            foreach (var item in Document.Items)
+            {
+                var taxes = new List<ImpuestoItem>();
+                foreach (var tax in item.Taxes)
+                {
+                    var iTax = new ImpuestoItem { Category = tax.Description };
+                    if (tax.Quantity > 0)
+                    {
+                        iTax.BaseImponible = Math.Round((tax.Quantity * tax.Base), 2);
+                        iTax.Valor = null;
+                    }
+                    else
+                    {
+                        iTax.Valor = tax.Tarifa;
+                        iTax.BaseImponible = null;
+                    }
+                    taxes.Add(iTax);
+                }
+                if (!(taxes.Count > 0)) taxes = null;
+                InvoiceType.Heading.Items.Add(new ItemField
+                {
+                    Code = item.Code,
+                    Quantity = item.Quantity,
+                    Description = item.Description,
+                    CodeMedida = item.UnitMedida,
+                    Price = (float)Math.Round(item.UnitPrice, 2),
+                    Taxes = taxes
+                });
+            }
+        }
+
+        private void LoadRetentions()
+        {
+            if(Document.Retentions.Count > 0)
+            {
+                InvoiceType.Heading.Retentions = new List<Retention>();
+                Document.Retentions
+                    .ForEach(t => InvoiceType.Heading.Retentions.Add(
+                        new Retention {
+                            Category = t.Description, 
+                            Rate = t.Tarifa 
+                        }));
             }
         }
 

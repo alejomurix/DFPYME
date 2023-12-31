@@ -99,7 +99,7 @@ namespace Aplicacion.Clases
             ///Application.Run(new FormulariosSistema.FrmCustomer());
             ///Application.Run(new FormulariosSistema.FrmCompany());
 
-            ///Application.Run(new Aplicacion.Ventas.Form3());
+            ///* Application.Run(new Aplicacion.Ventas.Form3());
             ///
 
             ///Application.Run(new FormulariosSistema.FrmElectronicDocument());
